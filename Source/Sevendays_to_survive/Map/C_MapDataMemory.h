@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "Map/C_MapEnums.h"
+#include "STS/C_STSMacros.h"
 #include "C_MapDataMemory.generated.h"
 
 class UC_STSInstance;
@@ -33,6 +34,27 @@ public:
 
 private:
     void Init(UC_STSInstance* _Inst);
+
+    template<typename RowStructType, typename ItemObjectType>
+    UC_Item* CreateItemObject(UDataTable* _ItemTable, FName _RowName)
+    {
+        RowStructType* ItemData = _ItemTable->FindRow<RowStructType>(_RowName, TEXT(""));
+        if (nullptr == ItemData)
+        {
+            STS_FATAL("[%s] There is no row %s in the table %s", _RowName, *_ItemTable->GetName());
+            return nullptr;
+        }
+
+        ItemObjectType* ItemObject = NewObject<ItemObjectType>(this);
+        if (nullptr == ItemObject)
+        {
+            STS_FATAL("[%s] Failed to create item with row name %s.", _RowName);
+            return nullptr;
+        }
+
+        ItemObject->Init(_RowName, ItemData);
+        return Cast<UC_Item>(ItemObject);
+    }
 
     int BisectRight(TArray<int>& _Arr, int _Value);
 

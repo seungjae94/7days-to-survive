@@ -32,36 +32,28 @@ void UC_MapDataMemory::Init(UC_STSInstance* _Inst)
 
         for (FName RowName : RowNames)
         {
-            FC_ItemRow* ItemRow = ItemTable->FindRow<FC_ItemRow>(RowName, ContextString);
-
-            if (nullptr == ItemRow)
-            {
-                STS_FATAL("[%s] ItemRow is null.", __FUNCTION__);
-                return;
-            }
-
             // Convert FC_ItemRow to UC_Item.
             UC_Item* NewItem = nullptr;
             switch (ItemType)
             {
             case EItemType::Material:
             {
-                NewItem = NewObject<UC_ItemMaterial>();
+                NewItem = CreateItemObject<FC_MaterialRow, UC_ItemMaterial>(ItemTable, RowName);
                 break;
             }
             case EItemType::Weapon:
             {
-                NewItem = NewObject<UC_Weapon>();
+                NewItem = CreateItemObject<FC_WeaponRow, UC_Weapon>(ItemTable, RowName);
                 break;
             }
             case EItemType::Consumable:
             {
-                NewItem = NewObject<UC_Consumable>();
+                NewItem = CreateItemObject<FC_ConsumableRow, UC_Consumable>(ItemTable, RowName);
                 break;
             }
             case EItemType::BuildingPart:
             {
-                NewItem = NewObject<UC_ItemBuildingPart>();
+                NewItem = CreateItemObject<FC_ItemBuildingPartRow, UC_ItemBuildingPart>(ItemTable, RowName);
                 break;
             }
             default:
@@ -69,7 +61,6 @@ void UC_MapDataMemory::Init(UC_STSInstance* _Inst)
                 return;
             }
 
-            NewItem->Init(RowName, ItemRow);
             Items.Emplace(RowName, NewItem);
 
             if (false == NewItem->CraftMaterials.IsEmpty())

@@ -46,7 +46,7 @@ void UC_MapDataMemory::Init(UC_STSInstance* _Inst)
             {
             case EItemType::Material:
             {
-                NewItem = NewObject<UC_Material>();
+                NewItem = NewObject<UC_ItemMaterial>();
                 break;
             }
             case EItemType::Weapon:

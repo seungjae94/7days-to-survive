@@ -28,7 +28,7 @@ bool UC_Item::IsCraftable() const
     return !CraftMaterials.IsEmpty();
 }
 
-void UC_Material::Init(FName _Id, FC_ItemRow* _ItemRow)
+void UC_ItemMaterial::Init(FName _Id, FC_ItemRow* _ItemRow)
 {
     Super::Init(_Id, _ItemRow);
 

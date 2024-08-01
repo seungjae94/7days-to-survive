@@ -49,7 +49,7 @@ private:
 };
 
 UCLASS(BlueprintType)
-class SEVENDAYS_TO_SURVIVE_API UC_Material : public UC_Item
+class SEVENDAYS_TO_SURVIVE_API UC_ItemMaterial : public UC_Item
 {
     GENERATED_BODY()
 

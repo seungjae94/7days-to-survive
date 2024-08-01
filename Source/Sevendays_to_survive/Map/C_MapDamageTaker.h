@@ -9,6 +9,7 @@
 
 class UC_HealthBar;
 
+// It can be damaged and has HP-bar widget.
 UCLASS(Abstract)
 class SEVENDAYS_TO_SURVIVE_API AC_MapDamageTaker : public AC_MapActor
 {

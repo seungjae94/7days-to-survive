@@ -37,7 +37,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_MaterialRow : public FTableRowBase
+struct SEVENDAYS_TO_SURVIVE_API FC_MaterialRow : public FC_ItemRow
 {
 	GENERATED_BODY()
 
@@ -51,7 +51,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_WeaponRow : public FTableRowBase
+struct SEVENDAYS_TO_SURVIVE_API FC_WeaponRow : public FC_ItemRow
 {
 	GENERATED_BODY()
 
@@ -78,7 +78,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_ConsumableRow : public FTableRowBase
+struct SEVENDAYS_TO_SURVIVE_API FC_ConsumableRow : public FC_ItemRow
 {
 	GENERATED_BODY()
 
@@ -95,7 +95,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_ItemBuildingPartRow : public FTableRowBase
+struct SEVENDAYS_TO_SURVIVE_API FC_ItemBuildingPartRow : public FC_ItemRow
 {
 	GENERATED_BODY()
 

@@ -23,82 +23,81 @@ void UC_MapDataMemory::Init(UC_STSInstance* _Inst)
 
     FString ContextString;
 
-    TArray<FName> RowNames = Asset->ItemTable->GetRowNames();
-    for (FName RowName : RowNames)
+    for (TPair<EItemType, UDataTable*> Pair : Asset->ItemTableForTypes)
     {
-        FC_ItemRow* ItemRow = Asset->ItemTable->FindRow<FC_ItemRow>(RowName, ContextString);
+        EItemType ItemType = Pair.Key;
+        UDataTable* ItemTable = Pair.Value;
 
-        if (nullptr == ItemRow)
+        TArray<FName> RowNames = ItemTable->GetRowNames();
+
+        for (FName RowName : RowNames)
         {
-            STS_FATAL("[%s] ItemRow is null.", __FUNCTION__);
-            return;
+            FC_ItemRow* ItemRow = ItemTable->FindRow<FC_ItemRow>(RowName, ContextString);
+
+            if (nullptr == ItemRow)
+            {
+                STS_FATAL("[%s] ItemRow is null.", __FUNCTION__);
+                return;
+            }
+
+            // Convert FC_ItemRow to UC_Item.
+            UC_Item* NewItem = nullptr;
+            switch (ItemType)
+            {
+            case EItemType::Material:
+            {
+                NewItem = NewObject<UC_Material>();
+                break;
+            }
+            case EItemType::Weapon:
+            {
+                NewItem = NewObject<UC_Weapon>();
+                break;
+            }
+            case EItemType::Consumable:
+            {
+                NewItem = NewObject<UC_Consumable>();
+                break;
+            }
+            case EItemType::BuildingPart:
+            {
+                NewItem = NewObject<UC_ItemBuildingPart>();
+                break;
+            }
+            default:
+                STS_FATAL("[%s] Item type is unset.", __FUNCTION__);
+                return;
+            }
+
+            NewItem->Init(RowName, ItemRow);
+            Items.Emplace(RowName, NewItem);
+
+            if (false == NewItem->CraftMaterials.IsEmpty())
+            {
+                CraftItems.Add(NewItem->Id);
+            }
+
+            if (EItemType::BuildingPart == ItemType)
+            {
+                continue;
+            }
+
+            int PrevAcc = 0;
+            if (false == Type_To_AccDropWeights[ItemType].IsEmpty())
+            {
+                PrevAcc = Type_To_AccDropWeights[ItemType].Last();
+            }
+            Type_To_AccDropWeights[ItemType].Add(PrevAcc + NewItem->DropWeight);
+            Type_To_AccDropIds[ItemType].Add(RowName);
         }
 
-        // Convert FC_ItemRow to UC_Item.
-        EItemType ItemType = ItemRow->Type;
-
-        UC_Item* FoundItem = nullptr;
-        switch (ItemType)
-        {
-        case EItemType::Material:
-        {
-            FC_MaterialRow* TypeRow = Asset->MaterialTable->FindRow<FC_MaterialRow>(RowName, ContextString);
-            FoundItem = NewObject<UC_Material>();
-            FoundItem->Init(RowName, { ItemRow, TypeRow });
-            break;
-        }
-        case EItemType::Weapon:
-        {
-            FC_WeaponRow* TypeRow = Asset->WeaponTable->FindRow<FC_WeaponRow>(RowName, ContextString);
-            FoundItem = NewObject<UC_Weapon>();
-            FoundItem->Init(RowName, { ItemRow, TypeRow });
-            break;
-        }
-        case EItemType::Consumable:
-        {
-            FC_ConsumableRow* TypeRow = Asset->ConsumableTable->FindRow<FC_ConsumableRow>(RowName, ContextString);
-            FoundItem = NewObject<UC_Consumable>();
-            FoundItem->Init(RowName, { ItemRow, TypeRow });
-            break;
-        }
-        case EItemType::BuildingPart:
-        {
-            FC_ItemBuildingPartRow* TypeRow = Asset->BuildingPartTable->FindRow<FC_ItemBuildingPartRow>(RowName, ContextString);
-            FoundItem = NewObject<UC_ItemBuildingPart>();
-            FoundItem->Init(RowName, { ItemRow, TypeRow });
-            break;
-        }
-        default:
-            STS_FATAL("[%s] Item type is unset.", __FUNCTION__);
-            break;
-        }
-
-        Items.Emplace(RowName, FoundItem);
-
-        if (false == FoundItem->CraftMaterials.IsEmpty())
-        {
-            CraftItems.Add(FoundItem->Id);
-        }
-
-        if (EItemType::BuildingPart == ItemType)
-        {
-            continue;
-        }
-
-        int PrevAcc = 0;
-        if (false == Type_To_AccDropWeights[ItemType].IsEmpty())
-        {
-            PrevAcc = Type_To_AccDropWeights[ItemType].Last();
-        }
-        Type_To_AccDropWeights[ItemType].Add(PrevAcc + FoundItem->DropWeight);
-        Type_To_AccDropIds[ItemType].Add(RowName);
     }
 }
 
 
-TArray<FC_ItemAndCount> UC_MapDataMemory::GetRandomDropItems()
+TMap<FName, int> UC_MapDataMemory::GetRandomDropItems()
 {
-    TArray<FC_ItemAndCount> Result;
+    TMap<FName, int> Result;
 
     for (TPair<EItemType, int>& Pair : Asset->Type_To_DropPouchCount)
     {
@@ -135,12 +134,9 @@ TArray<FC_ItemAndCount> UC_MapDataMemory::GetRandomDropItems()
 
             int MinCount = Asset->Type_To_DropItemMinCount[Type];
             int MaxCount = Asset->Type_To_DropItemMaxCount[Type];
+            int RandomCount = Inst->GenerateRandomInt(MinCount, MaxCount);
 
-            FC_ItemAndCount ItemAndCount;
-            ItemAndCount.Item = FindItem(Id);
-            ItemAndCount.Count = Inst->GenerateRandomInt(MinCount, MaxCount);
-
-            Result.Add(ItemAndCount);
+            Result.Emplace(Id, RandomCount);
         }
     }
 

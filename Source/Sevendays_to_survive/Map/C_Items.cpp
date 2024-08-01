@@ -7,21 +7,20 @@
 #include "STS/C_STSGlobalFunctions.h"
 #include "Player/Global/C_MapPlayer.h"
 
-void UC_Item::Init(FName _Id, TArray<FTableRowBase*> _JoinRows)
+void UC_Item::Init(FName _Id, FC_ItemRow* _ItemRow)
 {
-    FC_ItemRow* Row = reinterpret_cast<FC_ItemRow*>(_JoinRows[UC_Item::RowIndex]);
-
-    if (nullptr == Row)
+    if (nullptr == _ItemRow)
     {
         UE_LOG(LogTemp, Fatal, TEXT("Row should be a FC_ItemRow type."));
+        return;
     }
 
     Id = _Id;
-    Name = Row->Name;
-    Type = Row->Type;
-    Icon = Row->Icon;
-    DropWeight = Row->DropWeight;
-    CraftMaterials = Row->CraftMaterials;
+    Name = _ItemRow->Name;
+    Type = _ItemRow->Type;
+    Icon = _ItemRow->Icon;
+    DropWeight = _ItemRow->DropWeight;
+    CraftMaterials = _ItemRow->CraftMaterials;
 }
 
 bool UC_Item::IsCraftable() const
@@ -29,11 +28,11 @@ bool UC_Item::IsCraftable() const
     return !CraftMaterials.IsEmpty();
 }
 
-void UC_Material::Init(FName _Id, TArray<FTableRowBase*> _JoinRows)
+void UC_Material::Init(FName _Id, FC_ItemRow* _ItemRow)
 {
-    Super::Init(_Id, _JoinRows);
+    Super::Init(_Id, _ItemRow);
 
-    FC_MaterialRow* Row = reinterpret_cast<FC_MaterialRow*>(_JoinRows[UC_Material::RowIndex]);
+    FC_MaterialRow* Row = reinterpret_cast<FC_MaterialRow*>(_ItemRow);
 
     if (nullptr == Row)
     {
@@ -43,15 +42,16 @@ void UC_Material::Init(FName _Id, TArray<FTableRowBase*> _JoinRows)
     MaxCount = Row->MaxCount;
 }
 
-void UC_Weapon::Init(FName _Id, TArray<FTableRowBase*> _JoinRows)
+void UC_Weapon::Init(FName _Id, FC_ItemRow* _ItemRow)
 {
-    Super::Init(_Id, _JoinRows);
+    Super::Init(_Id, _ItemRow);
 
-    FC_WeaponRow* TypeRow = reinterpret_cast<FC_WeaponRow*>(_JoinRows[UC_Weapon::RowIndex]);
+    FC_WeaponRow* TypeRow = reinterpret_cast<FC_WeaponRow*>(_ItemRow);
 
     if (nullptr == TypeRow)
     {
         UE_LOG(LogTemp, Fatal, TEXT("Row should be a FC_WeaponRow type."));
+        return;
     }
 
     Damage = TypeRow->Damage;
@@ -62,15 +62,16 @@ void UC_Weapon::Init(FName _Id, TArray<FTableRowBase*> _JoinRows)
 }
 
 
-void UC_Consumable::Init(FName _Id, TArray<FTableRowBase*> _JoinRows)
+void UC_Consumable::Init(FName _Id, FC_ItemRow* _ItemRow)
 {
-    Super::Init(_Id, _JoinRows);
+    Super::Init(_Id, _ItemRow);
 
-    FC_ConsumableRow* TypeRow = reinterpret_cast<FC_ConsumableRow*>(_JoinRows[UC_Consumable::RowIndex]);
+    FC_ConsumableRow* TypeRow = reinterpret_cast<FC_ConsumableRow*>(_ItemRow);
 
     if (nullptr == TypeRow)
     {
         UE_LOG(LogTemp, Fatal, TEXT("Row should be a FC_ConsumableRow type."));
+        return;
     }
 
     Hp = TypeRow->Hp;
@@ -90,15 +91,16 @@ void UC_Consumable::Use(UWorld* _World) const
     Player->Addstamina(Stamina);
 }
 
-void UC_ItemBuildingPart::Init(FName _Id, TArray<FTableRowBase*> _JoinRows)
+void UC_ItemBuildingPart::Init(FName _Id, FC_ItemRow* _ItemRow)
 {
-    Super::Init(_Id, _JoinRows);
+    Super::Init(_Id, _ItemRow);
 
-    FC_ItemBuildingPartRow* TypeRow = reinterpret_cast<FC_ItemBuildingPartRow*>(_JoinRows[UC_ItemBuildingPart::RowIndex]);
+    FC_ItemBuildingPartRow* TypeRow = reinterpret_cast<FC_ItemBuildingPartRow*>(_ItemRow);
 
     if (nullptr == TypeRow)
     {
         UE_LOG(LogTemp, Fatal, TEXT("Row should be a FC_ItemBuildingPartRow type."));
+        return;
     }
 
     MaxHp = TypeRow->MaxHp;

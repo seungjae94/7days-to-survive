@@ -38,11 +38,11 @@ void AC_ItemBox::PreDestroy()
 
 void AC_ItemBox::SpawnItems_Implementation()
 {
-	TArray<FC_ItemAndCount> DropItems = MapDataMemory->GetRandomDropItems();
+	TMap<FName, int> DropItems = MapDataMemory->GetRandomDropItems();
 
-	for (FC_ItemAndCount& ItemAndCount : DropItems)
+	for (TPair<FName, int>& ItemAndCount : DropItems)
 	{
 		AC_ItemPouch* ItemPouch = GetWorld()->SpawnActor<AC_ItemPouch>(ItemPouchClass.Get(), GetActorTransform());
-		ItemPouch->SetItemAndCount(ItemAndCount.Item->Id, ItemAndCount.Count);
+		ItemPouch->SetItemAndCount(ItemAndCount.Key, ItemAndCount.Value);
 	}
 }

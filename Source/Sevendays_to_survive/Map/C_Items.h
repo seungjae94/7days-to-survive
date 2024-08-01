@@ -9,26 +9,18 @@
 #include "Player/Global/C_PlayerEnum.h"
 #include "C_Items.generated.h"
 
-USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_ItemAndCount
-{
-    GENERATED_BODY()
-
-public:
-    UPROPERTY()
-    const class UC_Item* Item = nullptr;
-
-    UPROPERTY()
-    int Count = 0;
-};
+class UC_MapDataMemory;
+struct FC_ItemRow;
 
 UCLASS(BlueprintType)
 class SEVENDAYS_TO_SURVIVE_API UC_Item : public UObject
 {
     GENERATED_BODY()
 
+    friend UC_MapDataMemory;
+
 public:
-    virtual void Init(FName _Id, TArray<FTableRowBase*> _JoinRows);
+    virtual void Init(FName _Id, FC_ItemRow* _ItemRow);
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
     FName Id;
@@ -62,7 +54,7 @@ class SEVENDAYS_TO_SURVIVE_API UC_Material : public UC_Item
     GENERATED_BODY()
 
 public:
-    void Init(FName _Id, TArray<FTableRowBase*> _JoinRows) override;
+    void Init(FName _Id, FC_ItemRow* _ItemRow) override;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
     int MaxCount = 0;
@@ -76,7 +68,7 @@ class SEVENDAYS_TO_SURVIVE_API UC_Weapon : public UC_Item
 {
     GENERATED_BODY()
 public:
-    void Init(FName _Id, TArray<FTableRowBase*> _JoinRows) override;
+    void Init(FName _Id, FC_ItemRow* _ItemRow) override;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     int Damage = 0;
@@ -102,7 +94,7 @@ class SEVENDAYS_TO_SURVIVE_API UC_Consumable : public UC_Item
 {
     GENERATED_BODY()
 public:
-    void Init(FName _Id, TArray<FTableRowBase*> _JoinRows) override;
+    void Init(FName _Id, FC_ItemRow* _ItemRow) override;
     void Use(UWorld* _World) const;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -120,7 +112,7 @@ class SEVENDAYS_TO_SURVIVE_API UC_ItemBuildingPart : public UC_Item
 {
     GENERATED_BODY()
 public:
-    void Init(FName _Id, TArray<FTableRowBase*> _JoinRows) override;
+    void Init(FName _Id, FC_ItemRow* _ItemRow) override;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
     int MaxHp = 0;

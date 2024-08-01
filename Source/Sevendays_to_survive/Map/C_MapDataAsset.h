@@ -43,17 +43,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
 	UDataTable* ItemSourceTable = nullptr;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
-	UDataTable* ItemTable = nullptr;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
-	UDataTable* MaterialTable = nullptr;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
-	UDataTable* WeaponTable = nullptr;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
-	UDataTable* ConsumableTable = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
+	TMap<EItemType, UDataTable*> ItemTableForTypes;
 
 	UPROPERTY(EditDefaultsOnly, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
 	UDataTable* BuildingPartTable;

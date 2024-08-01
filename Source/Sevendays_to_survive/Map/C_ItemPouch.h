@@ -21,7 +21,10 @@ public:
 	void GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const override;
 
 	UFUNCTION(BlueprintPure)
-	FC_ItemAndCount GetItemAndCount() const;
+	const UC_Item* GetItem() const;
+
+	UFUNCTION(BlueprintPure)
+	int GetCount() const;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void SetItemAndCount(FName _Id, int _Count);
@@ -51,5 +54,8 @@ private:
 	UStaticMeshComponent* StaticMeshComponent = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	FC_ItemAndCount ItemAndCount;
+	const UC_Item* Item = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	int Count = 0;
 };

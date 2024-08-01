@@ -24,27 +24,32 @@ void AC_ItemPouch::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 }
 
-FC_ItemAndCount AC_ItemPouch::GetItemAndCount() const
+const UC_Item* AC_ItemPouch::GetItem() const
 {
-	return ItemAndCount;
+	return Item;
+}
+
+int AC_ItemPouch::GetCount() const
+{
+	return Count;
 }
 
 void AC_ItemPouch::SetItemAndCount_Implementation(FName _Id, int _Count)
 {
-	ItemAndCount.Item = UC_STSGlobalFunctions::FindItem(GetWorld(), _Id);
-	ItemAndCount.Count = _Count;
+	Item = UC_STSGlobalFunctions::FindItem(GetWorld(), _Id);
+	Count = _Count;
 }
 
 void AC_ItemPouch::MapInteract()
 {
 	UC_InventoryComponent* Inventory = UC_STSGlobalFunctions::GetInventoryComponent(GetWorld());
 	
-	if (nullptr == ItemAndCount.Item)
+	if (nullptr == Item)
 	{
 		return;
 	}
 
-	Inventory->AddItem(ItemAndCount.Item, ItemAndCount.Count);
+	Inventory->AddItem(Item, Count);
 	DestroyOnServer();
 }
 
@@ -55,12 +60,12 @@ void AC_ItemPouch::ShowInteractionWidget()
 	FVector Location = GetActorLocation() + FVector::UpVector * 50.0f;
 	MapInteractionWidgetComponent->SetWorldLocation(Location);
 
-	if (nullptr == ItemAndCount.Item)
+	if (nullptr == Item)
 	{
 		return;
 	}
 
-	FString Text = ItemAndCount.Item->Name + TEXT(" × ") + FString::FromInt(ItemAndCount.Count);
+	FString Text = Item->Name + TEXT(" × ") + FString::FromInt(Count);
 	MapInteractionWidget->SetMessage(Text);
 }
 

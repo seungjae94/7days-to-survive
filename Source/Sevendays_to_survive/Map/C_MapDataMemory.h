@@ -26,7 +26,7 @@ public:
     int GetCraftListMaxPage(int _PageSize);
 
     UFUNCTION(BlueprintPure)
-    TArray<FC_ItemAndCount> GetRandomDropItems();
+    TMap<FName, int> GetRandomDropItems();
 
     UFUNCTION(BlueprintPure)
     const UC_Item* FindItem(FName _Id);

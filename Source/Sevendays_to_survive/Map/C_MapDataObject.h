@@ -6,14 +6,14 @@
 #include "UObject/NoExportTypes.h"
 #include "Map/C_MapEnums.h"
 #include "STS/C_STSMacros.h"
-#include "C_MapDataMemory.generated.h"
+#include "C_MapDataObject.generated.h"
 
 class UC_STSInstance;
 class UC_MapDataAsset;
 class UC_Item;
 
 UCLASS(BlueprintType)
-class SEVENDAYS_TO_SURVIVE_API UC_MapDataMemory : public UObject
+class SEVENDAYS_TO_SURVIVE_API UC_MapDataObject : public UObject
 {
     GENERATED_BODY()
 

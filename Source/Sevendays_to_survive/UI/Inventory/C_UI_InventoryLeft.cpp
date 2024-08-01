@@ -2,14 +2,14 @@
 
 
 #include "UI/Inventory/C_UI_InventoryLeft.h"
-#include "Map/C_MapDataMemory.h"
+#include "Map/C_MapDataObject.h"
 #include "Map/C_Items.h"
 #include "UI/Inventory/C_UI_CraftItemButton.h"
 #include "Kismet/KismetMathLibrary.h"
 
 void UC_UI_InventoryLeft::Refresh(int _Page)
 {
-    UC_MapDataMemory* MapDataMemory = UC_STSGlobalFunctions::GetMapDataMemory(GetWorld());
+    UC_MapDataObject* MapDataMemory = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
     TArray<FName> ItemIds = MapDataMemory->GetCraftItems(_Page, PageSize);
     
     for (int i = 0; i < PageSize; ++i)
@@ -35,14 +35,14 @@ void UC_UI_InventoryLeft::RefreshCurPage()
 
 void UC_UI_InventoryLeft::IncPage()
 {
-    UC_MapDataMemory* MapDataMemory = UC_STSGlobalFunctions::GetMapDataMemory(GetWorld());
+    UC_MapDataObject* MapDataMemory = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
     CurPage = UKismetMathLibrary::Clamp(CurPage + 1, 0, MapDataMemory->GetCraftListMaxPage(PageSize));
     Refresh(CurPage);
 }
 
 void UC_UI_InventoryLeft::DecPage()
 {
-    UC_MapDataMemory* MapDataMemory = UC_STSGlobalFunctions::GetMapDataMemory(GetWorld());
+    UC_MapDataObject* MapDataMemory = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
     CurPage = UKismetMathLibrary::Clamp(CurPage - 1, 0, MapDataMemory->GetCraftListMaxPage(PageSize));
     Refresh(CurPage);
 }

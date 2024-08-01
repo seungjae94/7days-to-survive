@@ -13,7 +13,7 @@
 #include "Map/C_MapInteractionComponent.h"
 #include "STS/C_STSInstance.h"
 #include "Map/C_MapDataAsset.h"
-#include "Map/C_MapDataMemory.h"
+#include "Map/C_MapDataObject.h"
 #include "UI/C_UI_InGameHUD.h"
 #include "UI/Inventory/C_UI_InventoryCore.h"
 
@@ -68,7 +68,7 @@ UC_MapDataAsset* UC_STSGlobalFunctions::GetMapDataAsset(const UObject* WorldCont
     return GetInst(WorldContextObject)->GetMapDataAsset();
 }
 
-UC_MapDataMemory* UC_STSGlobalFunctions::GetMapDataMemory(const UObject* WorldContextObject)
+UC_MapDataObject* UC_STSGlobalFunctions::GetMapDataObject(const UObject* WorldContextObject)
 {
     UC_STSInstance* Inst = GetInst(WorldContextObject);
     if (false == Inst->IsValidLowLevel())
@@ -102,12 +102,12 @@ void UC_STSGlobalFunctions::Day_And_Night_Cycle(ALight* _DirectionLight)
 
 const UC_Item* UC_STSGlobalFunctions::FindItem(const UObject* WorldContextObject, FName _Id)
 {
-    UC_MapDataMemory* DataMemory = GetMapDataMemory(WorldContextObject);
+    UC_MapDataObject* DataMemory = GetMapDataObject(WorldContextObject);
     if (false == DataMemory->IsValidLowLevel())
     {
         return nullptr;
     }
-    return GetMapDataMemory(WorldContextObject)->FindItem(_Id);
+    return GetMapDataObject(WorldContextObject)->FindItem(_Id);
 }
 
 AC_UI_InGameHUD* UC_STSGlobalFunctions::GetInGameHUD(const UObject* WorldContextObject)

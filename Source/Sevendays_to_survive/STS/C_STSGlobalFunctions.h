@@ -14,7 +14,7 @@ class UC_BuildingComponent;
 class UC_InventoryComponent;
 class UC_MapInteractionComponent;
 class UC_MapDataAsset;
-class UC_MapDataMemory;
+class UC_MapDataObject;
 class UC_UI_InventoryCore;
 class UC_UI_QuickSlot;
 class UC_STSInstance;
@@ -47,7 +47,7 @@ public:
 	static UC_MapDataAsset* GetMapDataAsset(const UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintPure, Category = "Content", meta = (WorldContext = "WorldContextObject"))
-	static UC_MapDataMemory* GetMapDataMemory(const UObject* WorldContextObject);
+	static UC_MapDataObject* GetMapDataObject(const UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintCallable, Category = "Content")
 	static void Day_And_Night_Cycle(ALight* _DirectionLight);

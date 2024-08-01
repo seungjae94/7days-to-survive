@@ -9,7 +9,7 @@
 class UC_HealthBar;
 class AC_ItemPouch;
 class UC_MapDataAsset;
-class UC_MapDataMemory;
+class UC_MapDataObject;
 
 UCLASS()
 class SEVENDAYS_TO_SURVIVE_API AC_ItemBox : public AC_MapDamageTaker
@@ -36,7 +36,7 @@ private:
     void SpawnItems_Implementation();
 
     UC_MapDataAsset* MapDataAsset = nullptr;
-    UC_MapDataMemory* MapDataMemory = nullptr;
+    UC_MapDataObject* MapDataMemory = nullptr;
 
     TSubclassOf<AC_ItemPouch> ItemPouchClass = nullptr;
 };

@@ -9,7 +9,7 @@
 #include "Player/Global/C_PlayerEnum.h"
 #include "C_Items.generated.h"
 
-class UC_MapDataMemory;
+class UC_MapDataObject;
 struct FC_ItemRow;
 struct FC_MaterialRow;
 struct FC_WeaponRow;
@@ -52,7 +52,7 @@ class SEVENDAYS_TO_SURVIVE_API UC_ItemMaterial : public UC_Item
 {
     GENERATED_BODY()
 
-    friend UC_MapDataMemory;
+    friend UC_MapDataObject;
 
 public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -67,7 +67,7 @@ class SEVENDAYS_TO_SURVIVE_API UC_Weapon : public UC_Item
 {
     GENERATED_BODY()
 
-    friend UC_MapDataMemory;
+    friend UC_MapDataObject;
 
 public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -94,7 +94,7 @@ class SEVENDAYS_TO_SURVIVE_API UC_Consumable : public UC_Item
 {
     GENERATED_BODY()
 
-    friend UC_MapDataMemory;
+    friend UC_MapDataObject;
 
 public:
     void Use(UWorld* _World) const;
@@ -114,7 +114,7 @@ class SEVENDAYS_TO_SURVIVE_API UC_ItemBuildingPart : public UC_Item
 {
     GENERATED_BODY()
 
-    friend UC_MapDataMemory;
+    friend UC_MapDataObject;
 
 public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

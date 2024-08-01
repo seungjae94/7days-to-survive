@@ -1,7 +1,7 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Map/C_MapDataMemory.h"
+#include "Map/C_MapDataObject.h"
 #include "Map/C_Items.h"
 #include "Map/C_ItemRows.h"
 #include "Map/C_MapDataAsset.h"
@@ -9,7 +9,7 @@
 #include "STS/C_STSGlobalFunctions.h"
 #include "STS/C_STSMacros.h"
 
-void UC_MapDataMemory::Init(UC_STSInstance* _Inst)
+void UC_MapDataObject::Init(UC_STSInstance* _Inst)
 {
     Inst = _Inst;
     Asset = _Inst->GetMapDataAsset();
@@ -86,7 +86,7 @@ void UC_MapDataMemory::Init(UC_STSInstance* _Inst)
 }
 
 
-TMap<FName, int> UC_MapDataMemory::GetRandomDropItems()
+TMap<FName, int> UC_MapDataObject::GetRandomDropItems()
 {
     TMap<FName, int> Result;
 
@@ -135,7 +135,7 @@ TMap<FName, int> UC_MapDataMemory::GetRandomDropItems()
 }
 
 
-TArray<FName> UC_MapDataMemory::GetCraftItems(int _Page, int _PageSize)
+TArray<FName> UC_MapDataObject::GetCraftItems(int _Page, int _PageSize)
 {
     TArray<FName> Result;
 
@@ -163,12 +163,12 @@ TArray<FName> UC_MapDataMemory::GetCraftItems(int _Page, int _PageSize)
     return Result;
 }
 
-int UC_MapDataMemory::GetCraftListMaxPage(int _PageSize)
+int UC_MapDataObject::GetCraftListMaxPage(int _PageSize)
 {
     return (CraftItems.Num() - 1) / _PageSize;
 }
 
-int UC_MapDataMemory::BisectRight(TArray<int>& _Arr, int _Value)
+int UC_MapDataObject::BisectRight(TArray<int>& _Arr, int _Value)
 {
     // 0 3 1 2 0 Weights
     // 0 3 4 6 6 AccWeights
@@ -202,7 +202,7 @@ int UC_MapDataMemory::BisectRight(TArray<int>& _Arr, int _Value)
     return R;
 }
 
-const UC_Item* UC_MapDataMemory::FindItem(FName _Id)
+const UC_Item* UC_MapDataObject::FindItem(FName _Id)
 {
     if (true == Items.Contains(_Id))
     {

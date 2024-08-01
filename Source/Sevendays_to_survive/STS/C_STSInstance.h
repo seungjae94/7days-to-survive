@@ -10,7 +10,7 @@
 #include "C_STSInstance.generated.h"
 
 class UC_MapDataAsset;
-class UC_MapDataMemory;
+class UC_MapDataObject;
 struct FC_PlayerDataTable;
 struct FC_PlayerSpawnData;
 struct FC_WeaponDataTable;
@@ -33,7 +33,7 @@ public:
 	UC_MapDataAsset* GetMapDataAsset();
 
 	UFUNCTION(BlueprintPure)
-	UC_MapDataMemory* GetMapDataMemory();
+	UC_MapDataObject* GetMapDataMemory();
 
 	FMonsterDataRow* GetMonsterData(FName _Name);
 
@@ -152,7 +152,7 @@ private:
 	UC_MapDataAsset* MapDataAsset = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "DataAsset", meta = (AllowPrivateAccess = "true"))
-	UC_MapDataMemory* MapDataMemory = nullptr;
+	UC_MapDataObject* MapDataMemory = nullptr;
 
 	FRandomStream RandomStream;
 

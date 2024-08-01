@@ -6,7 +6,7 @@
 #include "STS/C_STSGlobalFunctions.h"
 #include "Map/C_ItemPouch.h"
 #include "Map/C_MapDataAsset.h"
-#include "Map/C_MapDataMemory.h"
+#include "Map/C_MapDataObject.h"
 
 // Sets default values
 AC_ItemBox::AC_ItemBox()
@@ -19,7 +19,7 @@ void AC_ItemBox::BeginPlay()
 	Super::BeginPlay();
 
 	MapDataAsset = UC_STSGlobalFunctions::GetMapDataAsset(GetWorld());
-	MapDataMemory = UC_STSGlobalFunctions::GetMapDataMemory(GetWorld());
+	MapDataMemory = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
 	ItemPouchClass = MapDataAsset->GetItemPouchClass();
 
 	SetMaxHp(MapDataAsset->GetItemBoxMaxHp());

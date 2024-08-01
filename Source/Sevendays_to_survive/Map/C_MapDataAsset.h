@@ -16,7 +16,7 @@ class SEVENDAYS_TO_SURVIVE_API UC_MapDataAsset : public UPrimaryDataAsset
 {
 	GENERATED_BODY()
 
-	friend class UC_MapDataMemory;
+	friend class UC_MapDataObject;
 
 public:
 	UFUNCTION(BlueprintPure)

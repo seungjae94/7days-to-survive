@@ -3,7 +3,7 @@
 
 #include "STS/C_STSInstance.h"
 #include "Map/C_MapDataAsset.h"
-#include "Map/C_MapDataMemory.h"
+#include "Map/C_MapDataObject.h"
 #include "Player/Global/DataTable/C_PlayerDataTable.h"
 #include "UI/C_UITableRow.h"
 #include "Weapon/Global/DataTable/C_WeaponDataTable.h"
@@ -23,7 +23,7 @@ void UC_STSInstance::Init()
 {
 	Super::Init();
 
-	MapDataMemory = NewObject<UC_MapDataMemory>(this);
+	MapDataMemory = NewObject<UC_MapDataObject>(this);
 	MapDataMemory->Init(this);
 }
 
@@ -32,7 +32,7 @@ UC_MapDataAsset* UC_STSInstance::GetMapDataAsset()
 	return MapDataAsset;
 }
 
-UC_MapDataMemory* UC_STSInstance::GetMapDataMemory()
+UC_MapDataObject* UC_STSInstance::GetMapDataMemory()
 {
 	return MapDataMemory;
 }

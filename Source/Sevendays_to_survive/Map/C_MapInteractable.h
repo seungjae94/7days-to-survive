@@ -4,11 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Components/WidgetComponent.h"
-
 #include "C_MapInteractable.generated.h"
 
-class UC_MapInteractionWidget;
+class UC_InteractionMessageWidgetComponent;
 
 UCLASS(Abstract, BlueprintType)
 class SEVENDAYS_TO_SURVIVE_API AC_MapInteractable : public AActor
@@ -19,24 +17,13 @@ class SEVENDAYS_TO_SURVIVE_API AC_MapInteractable : public AActor
 public:
 	AC_MapInteractable();
 
-	void GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const override;
-
 	UFUNCTION(BlueprintCallable)
 	virtual void MapInteract() PURE_VIRTUAL(MapInteract, )
-
-	UFUNCTION(BlueprintCallable)
-	virtual void ShowInteractionWidget();
-
-	UFUNCTION(BlueprintCallable)
-	virtual void HideInteractionWidget();
-
 
 protected:
 	virtual void BeginPlay() override;
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UWidgetComponent* MapInteractionWidgetComponent = nullptr;
-
-	UC_MapInteractionWidget* MapInteractionWidget = nullptr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UC_InteractionMessageWidgetComponent* InteractionMessageWidgetComponent = nullptr;
 };

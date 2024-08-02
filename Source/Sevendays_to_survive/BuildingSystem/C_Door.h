@@ -37,9 +37,6 @@ protected:
 
 private:
 	UFUNCTION(BlueprintCallable)
-	void OpenOrClose();
-
-	UFUNCTION(BlueprintCallable)
 	void Open();
 
 	UFUNCTION(BlueprintCallable)

@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "C_MapInteractionWidget.generated.h"
+#include "C_InteractionMessageWidget.generated.h"
 
 UCLASS(Blueprintable)
-class SEVENDAYS_TO_SURVIVE_API UC_MapInteractionWidget : public UUserWidget
+class SEVENDAYS_TO_SURVIVE_API UC_InteractionMessageWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	

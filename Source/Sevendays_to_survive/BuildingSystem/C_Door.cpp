@@ -11,7 +11,20 @@ AC_Door::AC_Door()
 
 void AC_Door::MapInteract()
 {
-	UC_STSGlobalFunctions::GetMapInteractionComponent(GetWorld())->DoorInteraction(this);
+	switch (DoorState)
+	{
+	case EDoorState::Opened:
+		Close();
+		break;
+	case EDoorState::Closed:
+		Open();
+		break;
+	case EDoorState::Opening:
+	case EDoorState::Closing:
+		return;
+	default:
+		break;
+	}
 }
 
 void AC_Door::BeginPlay()
@@ -60,24 +73,6 @@ void AC_Door::Tick(float DeltaSeconds)
 	double RCoeff = (BoxExtent.X + RotAxisRadius) * (1.0 - FMath::Cos(FMath::DegreesToRadians(Theta)));
 	SetActorRotation(SpawnRotation + FRotator(0.0, Theta, 0.0));
 	SetActorLocation(SpawnLocation + FCoeff * DoorForward + RCoeff * DoorRight);
-}
-
-void AC_Door::OpenOrClose()
-{
-	switch (DoorState)
-	{
-	case EDoorState::Opened:
-		Close();
-		break;
-	case EDoorState::Closed:
-		Open();
-		break;
-	case EDoorState::Opening:
-	case EDoorState::Closing:
-		return;
-	default:
-		break;
-	}
 }
 
 void AC_Door::Open()

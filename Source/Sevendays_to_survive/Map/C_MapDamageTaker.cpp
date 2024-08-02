@@ -2,9 +2,8 @@
 
 #include "Map/C_MapDamageTaker.h"
 
-#include "Net/UnrealNetwork.h"
 #include "STS/C_STSMacros.h"
-#include "UI/C_HealthBar.h"
+#include "Map/UI/C_HpBarWidgetComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 AC_MapDamageTaker::AC_MapDamageTaker()
@@ -15,16 +14,14 @@ AC_MapDamageTaker::AC_MapDamageTaker()
 	SMComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SM Component"));
 	SetRootComponent(SMComponent);
 
-	HpBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("HpBar"));
-	HpBar->SetupAttachment(SMComponent);
+	HpBarWidgetComponent = CreateDefaultSubobject<UC_HpBarWidgetComponent>(TEXT("HpBar"));
+	HpBarWidgetComponent->SetupAttachment(SMComponent);
+	HpBarWidgetComponent->SetIsReplicated(true);
 }
 
-void AC_MapDamageTaker::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+void AC_MapDamageTaker::SetMaxHp_Implementation(int _MaxHp)
 {
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	DOREPLIFETIME(AC_MapDamageTaker, MaxHp);
-	DOREPLIFETIME(AC_MapDamageTaker, Hp);
+	HpBarWidgetComponent->SetMaxHp(_MaxHp);
 }
 
 float AC_MapDamageTaker::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -37,66 +34,13 @@ float AC_MapDamageTaker::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 void AC_MapDamageTaker::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	Hp = MaxHp;
-
-	HpBarWidget = Cast<UC_HealthBar>(HpBar->GetWidget());
-
-	if (nullptr == HpBarWidget)
-	{
-		STS_FATAL("[%s] HpBarWidget is NULL.", __FUNCTION__);
-		return;
-	}
-
-	HideHpBar();
-}
-
-// Called every frame
-void AC_MapDamageTaker::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-
-void AC_MapDamageTaker::UpdateHpBar()
-{
-	if (Hp <= 0)
-	{
-		STS_LOG("UpdateHpBar failed. Given BuildingPart is already destroyed.", 0);
-		return;
-	}
-
-	if (false == HpBarWidget->IsVisible())
-	{
-		HpBarWidget->SetVisibility(ESlateVisibility::Visible);
-	}
-
-	FVector InstLocation = GetActorLocation() + FVector::UpVector * HpBarHeight;
-	FVector DrawLocation = InstLocation;
-
-	// HpBar 갱신
-	HpBar->SetWorldLocation(DrawLocation);
-	HpBarWidget->SetCurHealth(Hp);
-	HpBarWidget->SetMaxHealth(MaxHp);
-}
-
-void AC_MapDamageTaker::HideHpBar()
-{
-	HpBarWidget->SetVisibility(ESlateVisibility::Collapsed);
-}
-
-void AC_MapDamageTaker::SetMaxHp(int _MaxHp)
-{
-	MaxHp = _MaxHp;
-	Hp = MaxHp;
 }
 
 void AC_MapDamageTaker::ReceiveDamage_Implementation(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	Hp -= DamageAmount;
+	HpBarWidgetComponent->DecHp(DamageAmount);
 
-	if (Hp <= 0.0f)
+	if (true == HpBarWidgetComponent->IsZero())
 	{
 		PreDestroy();
 		Destroy();

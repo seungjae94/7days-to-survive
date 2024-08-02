@@ -7,7 +7,7 @@
 #include "Components/WidgetComponent.h"
 #include "C_MapDamageTaker.generated.h"
 
-class UC_HealthBar;
+class UC_HpBarWidgetComponent;
 
 // It can be damaged and has HP-bar widget.
 UCLASS(Abstract)
@@ -24,24 +24,14 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	void GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const;
+	UFUNCTION(Server, Reliable)
+	void SetMaxHp(int _MaxHp);
+	void SetMaxHp_Implementation(int _MaxHp);
 
 	float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	UFUNCTION(BlueprintCallable)
-	void UpdateHpBar();
-
-	UFUNCTION(BlueprintCallable)
-	void HideHpBar();
-
-	UFUNCTION(BlueprintCallable)
-	void SetMaxHp(int _MaxHp);
-
 protected:
-	UFUNCTION(NetMulticast, Reliable)
+	UFUNCTION(Server, Reliable)
 	void ReceiveDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser);
 
 	void ReceiveDamage_Implementation(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser);
@@ -51,18 +41,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* SMComponent = nullptr;
 
-private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	UWidgetComponent* HpBar = nullptr;
-
-	UC_HealthBar* HpBarWidget = nullptr;
-
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	float Hp = 100.0f;
-
-	UPROPERTY(Replicated, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	float MaxHp = 100.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	float HpBarHeight = 100.0f;
+	UC_HpBarWidgetComponent* HpBarWidgetComponent = nullptr;
 };

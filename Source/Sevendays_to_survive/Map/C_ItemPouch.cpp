@@ -6,7 +6,6 @@
 #include "STS/C_STSGlobalFunctions.h"
 #include "Inventory/C_InventoryComponent.h"
 #include "Map/C_MapDataAsset.h"
-#include "Map/UI/C_MapInteractionWidget.h"
 #include "Map/C_MapInteractionComponent.h"
 
 // Sets default values
@@ -50,28 +49,8 @@ void AC_ItemPouch::MapInteract()
 	}
 
 	Inventory->AddItem(Item, Count);
-	DestroyOnServer();
-}
-
-void AC_ItemPouch::ShowInteractionWidget()
-{
-	Super::ShowInteractionWidget();
 	
-	FVector Location = GetActorLocation() + FVector::UpVector * 50.0f;
-	MapInteractionWidgetComponent->SetWorldLocation(Location);
-
-	if (nullptr == Item)
-	{
-		return;
-	}
-
-	FString Text = Item->Name + TEXT(" × ") + FString::FromInt(Count);
-	MapInteractionWidget->SetMessage(Text);
-}
-
-void AC_ItemPouch::HideInteractionWidget()
-{
-	Super::HideInteractionWidget();
+	UC_STSGlobalFunctions::GetMapInteractionComponent(GetWorld())->Server_DestroyActor(this);
 }
 
 // Called when the game starts or when spawned
@@ -86,10 +65,5 @@ void AC_ItemPouch::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-}
-
-void AC_ItemPouch::DestroyOnServer()
-{
-	UC_STSGlobalFunctions::GetMapInteractionComponent(GetWorld())->DestroyActor(this);
 }
 

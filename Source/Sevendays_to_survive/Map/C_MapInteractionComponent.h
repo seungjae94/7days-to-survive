@@ -37,13 +37,8 @@ public:
 
 public:
     UFUNCTION(BlueprintCallable, Server, Reliable)
-    void DestroyActor(AActor* _Actor);
-    void DestroyActor_Implementation(AActor* _Actor);
-
-    UFUNCTION(BlueprintCallable, Server, Reliable)
-    void DoorInteraction(AC_Door* _Door);
-    void DoorInteraction_Implementation(AC_Door* _Door);
-
+    void Server_DestroyActor(AActor* _Actor);
+    void Server_DestroyActor_Implementation(AActor* _Actor);
 private:
     UFUNCTION(BlueprintPure)
     bool IsServer() const;
@@ -63,6 +58,10 @@ private:
     UFUNCTION(BlueprintCallable)
     void OnMapInteractionKeyDown();
 
+    UFUNCTION(Server, Reliable)
+    void Server_MapInteract(AC_MapInteractable* _MapInteractable);
+    void Server_MapInteract_Implementation(AC_MapInteractable* _MapInteractable);
+
 private:
     UPROPERTY(Category = "HpBar", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
     float TraceStartRange = 200.0f;
@@ -76,28 +75,21 @@ private:
     AC_MapPlayer* Owner = nullptr;
     UCameraComponent* CameraComponent = nullptr;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    AC_ItemSourceHISMA* ViewingItemSource = nullptr;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    AC_MapInteractable* ViewingItemPouch = nullptr;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    AC_MapDamageTaker* ViewingDamageTaker = nullptr;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    AC_Door* ViewingDoor = nullptr;
+    UPROPERTY()
+    AActor* ViewingActor = nullptr;
 
 private:
     void ViewItemSource(AC_ItemSourceHISMA* _ItemSource, int _Index);
     void ViewMapDamageTaker(AC_MapDamageTaker* _DamageTaker);
     void ViewItemPouch(AC_MapInteractable* _MapInteractable);
     void ViewDoor(AC_Door* _DamageTaker);
+    void View(AActor* _Actor);
 
     void UnviewItemSource();
     void UnviewMapDamageTaker();
     void UnviewItemPouch();
     void UnviewDoor();
+    void Unview();
 
     void ResetIsInteractingMap();
 

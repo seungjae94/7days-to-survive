@@ -26,16 +26,12 @@ public:
 	UFUNCTION(BlueprintPure)
 	int GetCount() const;
 
-	UFUNCTION(NetMulticast, Reliable)
+	UFUNCTION(Server, Reliable)
 	void SetItemAndCount(FName _Id, int _Count);
 
 	void SetItemAndCount_Implementation(FName _Id, int _Count);
 
 	void MapInteract() override;
-
-	void ShowInteractionWidget() override;
-
-	void HideInteractionWidget() override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -44,10 +40,6 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-private:
-	UFUNCTION(BlueprintCallable)
-	void DestroyOnServer();
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

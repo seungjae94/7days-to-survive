@@ -7,7 +7,7 @@
 #include "Components/WidgetComponent.h"
 #include "C_MapDamageTaker.generated.h"
 
-class UC_HpBarWidgetComponent;
+class UC_MapDamageTakerComponent;
 
 // It can be damaged and has HP-bar widget.
 UCLASS(Abstract)
@@ -42,5 +42,5 @@ protected:
 	UStaticMeshComponent* SMComponent = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	UC_HpBarWidgetComponent* HpBarWidgetComponent = nullptr;
+	UC_MapDamageTakerComponent* HpBarWidgetComponent = nullptr;
 };

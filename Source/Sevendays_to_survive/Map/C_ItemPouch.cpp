@@ -7,6 +7,7 @@
 #include "Inventory/C_InventoryComponent.h"
 #include "Map/C_MapDataAsset.h"
 #include "Map/C_MapInteractionComponent.h"
+#include "Map/UI/C_PickUpItemComponent.h"
 
 // Sets default values
 AC_ItemPouch::AC_ItemPouch()
@@ -16,6 +17,10 @@ AC_ItemPouch::AC_ItemPouch()
 
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh Component"));
 	SetRootComponent(StaticMeshComponent);
+
+	PickUpItemComponent = CreateDefaultSubobject<UC_PickUpItemComponent>(TEXT("Interaction Widget Component"));
+	PickUpItemComponent->SetupAttachment(StaticMeshComponent);
+	PickUpItemComponent->SetIsReplicated(true);
 }
 
 void AC_ItemPouch::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -36,21 +41,7 @@ int AC_ItemPouch::GetCount() const
 void AC_ItemPouch::SetItemAndCount_Implementation(FName _Id, int _Count)
 {
 	Item = UC_STSGlobalFunctions::FindItem(GetWorld(), _Id);
-	Count = _Count;
-}
-
-void AC_ItemPouch::MapInteract()
-{
-	UC_InventoryComponent* Inventory = UC_STSGlobalFunctions::GetInventoryComponent(GetWorld());
-	
-	if (nullptr == Item)
-	{
-		return;
-	}
-
-	Inventory->AddItem(Item, Count);
-	
-	UC_STSGlobalFunctions::GetMapInteractionComponent(GetWorld())->Server_DestroyActor(this);
+	PickUpItemComponent->SetItemAndCount(Item, _Count);
 }
 
 // Called when the game starts or when spawned

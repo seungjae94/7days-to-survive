@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Map/C_MapInteractable.h"
 #include "Map/C_Items.h"
 
 #include "C_ItemPouch.generated.h"
 
+class UC_PickUpItemComponent;
+
 UCLASS()
-class SEVENDAYS_TO_SURVIVE_API AC_ItemPouch : public AC_MapInteractable
+class SEVENDAYS_TO_SURVIVE_API AC_ItemPouch : public AActor
 {
 	GENERATED_BODY()
 	
@@ -31,8 +32,6 @@ public:
 
 	void SetItemAndCount_Implementation(FName _Id, int _Count);
 
-	void MapInteract() override;
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -44,6 +43,9 @@ public:
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* StaticMeshComponent = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UC_PickUpItemComponent* PickUpItemComponent = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	const UC_Item* Item = nullptr;

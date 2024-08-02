@@ -4,8 +4,8 @@
 
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
+#include "Map/UI/C_MapActorInteractionComponent.h"
 #include "Map/C_ItemSourceHISMA.h"
-#include "Map/C_MapInteractable.h"
 #include "Map/C_MapDamageTaker.h"
 #include "BuildingSystem/C_Door.h"
 #include "Player/Global/C_MapPlayer.h"
@@ -25,11 +25,6 @@ void UC_MapInteractionComponent::BeginPlay()
 
     Owner = GetOwner<AC_MapPlayer>();
     CameraComponent = Owner->GetComponentByClass<UCameraComponent>();
-
-    IsInteractingMap.Emplace(EMapInteractionTarget::ItemSource, false);
-    IsInteractingMap.Emplace(EMapInteractionTarget::MapDamageTaker, false);
-    IsInteractingMap.Emplace(EMapInteractionTarget::ItemPouch, false);
-    IsInteractingMap.Emplace(EMapInteractionTarget::Door, false);
 }
 
 void UC_MapInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -102,15 +97,17 @@ void UC_MapInteractionComponent::OnMapInteractionKeyDown()
         return;
     }
     
-    if (AC_MapInteractable* MapInteractable = Cast<AC_MapInteractable>(ViewingActor))
+    TArray<UC_MapActorInteractionComponent*> Comps;
+    ViewingActor->GetComponents<UC_MapActorInteractionComponent>(Comps);
+    for (UC_MapActorInteractionComponent* Comp : Comps)
     {
-        Server_MapInteract(MapInteractable);
+        Server_MapInteract(Comp);
     }
 }
 
-void UC_MapInteractionComponent::Server_MapInteract_Implementation(AC_MapInteractable* _MapInteractable)
+void UC_MapInteractionComponent::Server_MapInteract_Implementation(UC_MapActorInteractionComponent* _Component)
 {
-    _MapInteractable->MapInteract();
+    _Component->MapInteract();
 }
 
 void UC_MapInteractionComponent::Server_DestroyActor_Implementation(AActor* _Actor)

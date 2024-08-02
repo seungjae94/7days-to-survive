@@ -1,4 +1,5 @@
-﻿#include "Map/UI/C_ItemInfoMessageWidgetComponent.h"
+﻿#include "Map/UI/C_DoorInteractionComponent.h"
+//#include "Map/UI/C_InteractionMessageWidget.h"
 //
 //UC_InteractionMessageWidgetComponent::UC_InteractionMessageWidgetComponent()
 //{
@@ -28,6 +29,12 @@
 //    HideWidget();
 //}
 
-UC_ItemInfoMessageWidgetComponent::UC_ItemInfoMessageWidgetComponent()
+void UC_DoorInteractionComponent::MapInteract()
 {
+
+}
+
+void UC_DoorInteractionComponent::SetMessage_Implementation()
+{
+    Message = TEXT("Open Door");
 }

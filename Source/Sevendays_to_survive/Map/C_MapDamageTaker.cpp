@@ -3,7 +3,7 @@
 #include "Map/C_MapDamageTaker.h"
 
 #include "STS/C_STSMacros.h"
-#include "Map/UI/C_HpBarWidgetComponent.h"
+#include "Map/UI/C_MapDamageTakerComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 AC_MapDamageTaker::AC_MapDamageTaker()
@@ -14,7 +14,7 @@ AC_MapDamageTaker::AC_MapDamageTaker()
 	SMComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SM Component"));
 	SetRootComponent(SMComponent);
 
-	HpBarWidgetComponent = CreateDefaultSubobject<UC_HpBarWidgetComponent>(TEXT("HpBar"));
+	HpBarWidgetComponent = CreateDefaultSubobject<UC_MapDamageTakerComponent>(TEXT("HpBar"));
 	HpBarWidgetComponent->SetupAttachment(SMComponent);
 	HpBarWidgetComponent->SetIsReplicated(true);
 }

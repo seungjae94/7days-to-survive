@@ -5,7 +5,6 @@
 
 #include "BuildingSystem/C_BuildingComponent.h"
 #include "Inventory/C_InventoryComponent.h"
-
 #include "Map/C_MapInteractionComponent.h"
 
 AC_MapPlayer::AC_MapPlayer()
@@ -32,10 +31,10 @@ AC_MapPlayer::AC_MapPlayer()
 		UE_LOG(LogTemp, Fatal, TEXT("Can't find BP Inventory Component"));
 	}
 
-	static ConstructorHelpers::FClassFinder<UC_MapInteractionComponent> BpMapInteractionComponentAsset(TEXT("/Script/Engine.Blueprint'/Game/Level/Main_Level/MapContent/BP/BP_MapInteractionComponent.BP_MapInteractionComponent_C'"));
-	if (true == BpMapInteractionComponentAsset.Succeeded())
+	static ConstructorHelpers::FClassFinder<UC_MapInteractionComponent> BpPlayerInteractionComponentAsset(TEXT("/Script/Engine.Blueprint'/Game/Level/Main_Level/MapContent/BP/BP_MapInteractionComponent.BP_MapInteractionComponent_C'"));
+	if (true == BpPlayerInteractionComponentAsset.Succeeded())
 	{
-		TSubclassOf<UActorComponent> BpClass = BpMapInteractionComponentAsset.Class;
+		TSubclassOf<UActorComponent> BpClass = BpPlayerInteractionComponentAsset.Class;
 		MapInteractionComp = Cast<UC_MapInteractionComponent>(CreateDefaultSubobject(TEXT("Map Interaction Component"), UC_MapInteractionComponent::StaticClass(), BpClass.Get(), true, false));
 	}
 	else

@@ -6,20 +6,9 @@
 #include "Components/ActorComponent.h"
 #include "C_MapInteractionComponent.generated.h"
 
-class AC_ItemSourceHISMA;
-class AC_MapInteractable;
-class AC_MapPlayer;
-class AC_MapDamageTaker;
-class AC_Door;
+class UC_MapActorInteractionComponent;
 class UCameraComponent;
-
-enum class EMapInteractionTarget : uint8
-{
-    ItemSource,
-    MapDamageTaker,
-    ItemPouch,
-    Door,
-};
+class AC_MapPlayer;
 
 UCLASS(Blueprintable, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SEVENDAYS_TO_SURVIVE_API UC_MapInteractionComponent : public UActorComponent
@@ -59,8 +48,8 @@ private:
     void OnMapInteractionKeyDown();
 
     UFUNCTION(Server, Reliable)
-    void Server_MapInteract(AC_MapInteractable* _MapInteractable);
-    void Server_MapInteract_Implementation(AC_MapInteractable* _MapInteractable);
+    void Server_MapInteract(UC_MapActorInteractionComponent* _Component);
+    void Server_MapInteract_Implementation(UC_MapActorInteractionComponent* _Component);
 
 private:
     UPROPERTY(Category = "HpBar", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -79,19 +68,6 @@ private:
     AActor* ViewingActor = nullptr;
 
 private:
-    void ViewItemSource(AC_ItemSourceHISMA* _ItemSource, int _Index);
-    void ViewMapDamageTaker(AC_MapDamageTaker* _DamageTaker);
-    void ViewItemPouch(AC_MapInteractable* _MapInteractable);
-    void ViewDoor(AC_Door* _DamageTaker);
     void View(AActor* _Actor);
-
-    void UnviewItemSource();
-    void UnviewMapDamageTaker();
-    void UnviewItemPouch();
-    void UnviewDoor();
     void Unview();
-
-    void ResetIsInteractingMap();
-
-    TMap<EMapInteractionTarget, bool> IsInteractingMap;
 };

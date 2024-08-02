@@ -7,16 +7,17 @@
 
 UC_HpBarWidgetComponent::UC_HpBarWidgetComponent()
 {
-    //static ConstructorHelpers::FClassFinder<UC_HealthBar> BpBuildingComponentAsset(TEXT("/Script/Engine.Blueprint'/Game/Level/Main_Level/MapContent/BP/BP_BuildingComponent.BP_BuildingComponent_C'"));
-    //if (true == BpBuildingComponentAsset.Succeeded())
-    //{
-    //    TSubclassOf<UActorComponent> BpClass = BpBuildingComponentAsset.Class;
-    //    BuildingComp = Cast<UC_BuildingComponent>(CreateDefaultSubobject(TEXT("Building Component"), UC_BuildingComponent::StaticClass(), BpClass.Get(), true, false));
-    //}
-    //else
-    //{
-    //    UE_LOG(LogTemp, Fatal, TEXT("Can't find BP Building Component"));
-    //}
+    static const TCHAR* ResourcePath = TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Level/TestLevel/UI/WidgetBP/InGame/BP_ObjectHealthBar.BP_ObjectHealthBar_C'");
+    static ConstructorHelpers::FClassFinder<UC_HealthBar> WidgetAsset(ResourcePath);
+    if (true == WidgetAsset.Succeeded())
+    {
+        WidgetClass = WidgetAsset.Class;
+    }
+    else
+    {
+        UE_LOG(LogTemp, Fatal, TEXT("Can't find asset."));
+        return;
+    }
 }
 
 void UC_HpBarWidgetComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

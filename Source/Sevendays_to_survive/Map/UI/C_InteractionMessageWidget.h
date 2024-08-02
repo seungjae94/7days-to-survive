@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/TextBlock.h"
 #include "C_InteractionMessageWidget.generated.h"
 
 UCLASS(Blueprintable)
@@ -12,6 +13,9 @@ class SEVENDAYS_TO_SURVIVE_API UC_InteractionMessageWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION()
 	void SetMessage(const FString& _Text);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	UTextBlock* GetTextBlock();
 };

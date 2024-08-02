@@ -3,3 +3,7 @@
 
 #include "Map/UI/C_InteractionMessageWidget.h"
 
+void UC_InteractionMessageWidget::SetMessage(const FString& _Text)
+{
+    GetTextBlock()->SetText(FText::FromString(_Text));
+}

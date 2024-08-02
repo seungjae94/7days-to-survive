@@ -160,6 +160,7 @@ void UC_MapInteractionComponent::View(AActor* _Actor)
     // 액터를 안보고 있다가 보는 경우 
     if (false == IsValid(ViewingActor))
     {
+        ViewingActor = _Actor;
         MapWidgetComp->ShowWidget();
         return;
     }

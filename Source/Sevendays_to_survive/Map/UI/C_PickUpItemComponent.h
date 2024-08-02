@@ -20,6 +20,8 @@ public:
 
 	void SetItemAndCount(const UC_Item* _Item, int _Count);
 
+	void MapInteract() override;
+
 	/*
 * 	UC_InventoryComponent* Inventory = UC_STSGlobalFunctions::GetInventoryComponent(GetWorld());
 

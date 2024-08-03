@@ -11,6 +11,7 @@
 // Sets default values
 AC_ItemBox::AC_ItemBox()
 {
+	bReplicates = true;
 }
 
 // Called when the game starts or when spawned

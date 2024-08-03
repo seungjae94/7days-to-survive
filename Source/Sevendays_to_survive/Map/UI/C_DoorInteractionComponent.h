@@ -14,5 +14,6 @@ class SEVENDAYS_TO_SURVIVE_API UC_DoorInteractionComponent : public UC_MapActorI
 public:
     void MapInteract() override;
 
-    void SetMessage_Implementation() override;
+private:
+    void SetMessage() override;
 };

@@ -16,15 +16,20 @@ class SEVENDAYS_TO_SURVIVE_API UC_PickUpItemComponent : public UC_MapActorIntera
 public:
     UC_PickUpItemComponent();
 
-	void SetMessage_Implementation() override;
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	UFUNCTION(Server, Reliable)
-	void SetItemAndCount(const UC_Item* _Item, int _Count);
-	void SetItemAndCount_Implementation(const UC_Item* _Item, int _Count);
+	void SetItemAndCount(FName _ItemId, int _Count);
+	void SetItemAndCount_Implementation(FName _ItemId, int _Count);
 
 	void MapInteract() override;
 
 private:
-	const UC_Item* Item = nullptr;
+	UPROPERTY(ReplicatedUsing = SetMessage)
+	FName ItemId;
+
+	UPROPERTY(ReplicatedUsing = SetMessage)
 	int Count = 0;
+
+	void SetMessage() override;
 };

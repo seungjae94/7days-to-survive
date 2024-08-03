@@ -14,6 +14,7 @@ AC_ItemPouch::AC_ItemPouch()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	bReplicates = true;
 
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh Component"));
 	SetRootComponent(StaticMeshComponent);
@@ -30,8 +31,7 @@ void AC_ItemPouch::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
 
 void AC_ItemPouch::SetItemAndCount_Implementation(FName _Id, int _Count)
 {
-	const UC_Item* Item = UC_STSGlobalFunctions::FindItem(GetWorld(), _Id);
-	PickUpItemComponent->SetItemAndCount(Item, _Count);
+	PickUpItemComponent->SetItemAndCount(_Id, _Count);
 }
 
 // Called when the game starts or when spawned

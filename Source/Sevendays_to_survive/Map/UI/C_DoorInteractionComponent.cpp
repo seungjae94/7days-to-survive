@@ -37,7 +37,7 @@ void UC_DoorInteractionComponent::MapInteract()
 
 }
 
-void UC_DoorInteractionComponent::SetMessage_Implementation()
+void UC_DoorInteractionComponent::SetMessage()
 {
-    MessageWidget->SetMessage("Open Door");
+    GetMessageWidget()->SetMessage("Open Door");
 }

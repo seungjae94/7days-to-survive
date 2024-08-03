@@ -16,15 +16,18 @@ class SEVENDAYS_TO_SURVIVE_API UC_MapActorInteractionComponent : public UC_MapWi
 public:
     UC_MapActorInteractionComponent();
 
-    UFUNCTION(NetMulticast, Reliable)
-    void SetMessage();
-    virtual void SetMessage_Implementation() PURE_VIRTUAL(SetMessage_Implementation, );
-
-    virtual void MapInteract() PURE_VIRTUAL(MapInteract,);
+    virtual void MapInteract() PURE_VIRTUAL(MapInteract, );
 
 protected:
     virtual void BeginPlay() override;
 
-protected:
-    UC_InteractionMessageWidget* MessageWidget = nullptr;
+    UFUNCTION()
+    virtual void SetMessage() PURE_VIRTUAL(SetMessage, );
+
+    UFUNCTION()
+    UC_InteractionMessageWidget* GetMessageWidget();
+
+private:
+    UPROPERTY()
+    TSubclassOf<UUserWidget> MessageWidgetClass;
 };

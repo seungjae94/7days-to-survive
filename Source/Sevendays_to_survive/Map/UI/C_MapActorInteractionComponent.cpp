@@ -9,7 +9,7 @@ UC_MapActorInteractionComponent::UC_MapActorInteractionComponent()
     static ConstructorHelpers::FClassFinder<UC_InteractionMessageWidget> WidgetAsset(ResourcePath);
     if (true == WidgetAsset.Succeeded())
     {
-        WidgetClass = WidgetAsset.Class;
+        SetWidgetClass(WidgetAsset.Class);
     }
     else
     {
@@ -21,8 +21,11 @@ UC_MapActorInteractionComponent::UC_MapActorInteractionComponent()
 void UC_MapActorInteractionComponent::BeginPlay()
 {
     Super::BeginPlay();
-
-    MessageWidget = Cast<UC_InteractionMessageWidget>(GetWidget());
     
     HideWidget();
+}
+
+UC_InteractionMessageWidget* UC_MapActorInteractionComponent::GetMessageWidget()
+{
+    return Cast<UC_InteractionMessageWidget>(GetWidget());
 }

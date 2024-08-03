@@ -101,7 +101,7 @@ void UC_MapInteractionComponent::OnMapInteractionKeyDown()
     ViewingActor->GetComponents<UC_MapActorInteractionComponent>(Comps);
     for (UC_MapActorInteractionComponent* Comp : Comps)
     {
-        Server_MapInteract(Comp);
+        Comp->MapInteract();
     }
 }
 

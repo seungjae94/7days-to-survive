@@ -28,19 +28,9 @@ void AC_ItemPouch::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 }
 
-const UC_Item* AC_ItemPouch::GetItem() const
-{
-	return Item;
-}
-
-int AC_ItemPouch::GetCount() const
-{
-	return Count;
-}
-
 void AC_ItemPouch::SetItemAndCount_Implementation(FName _Id, int _Count)
 {
-	Item = UC_STSGlobalFunctions::FindItem(GetWorld(), _Id);
+	const UC_Item* Item = UC_STSGlobalFunctions::FindItem(GetWorld(), _Id);
 	PickUpItemComponent->SetItemAndCount(Item, _Count);
 }
 

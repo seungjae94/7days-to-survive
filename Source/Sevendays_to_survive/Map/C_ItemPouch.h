@@ -21,12 +21,6 @@ public:
 
 	void GetLifetimeReplicatedProps(TArray< FLifetimeProperty >& OutLifetimeProps) const override;
 
-	UFUNCTION(BlueprintPure)
-	const UC_Item* GetItem() const;
-
-	UFUNCTION(BlueprintPure)
-	int GetCount() const;
-
 	UFUNCTION(Server, Reliable)
 	void SetItemAndCount(FName _Id, int _Count);
 
@@ -46,10 +40,4 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UC_PickUpItemComponent* PickUpItemComponent = nullptr;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	const UC_Item* Item = nullptr;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	int Count = 0;
 };

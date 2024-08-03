@@ -18,7 +18,7 @@ public:
 
     void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
-    UFUNCTION(Server, Reliable, BlueprintCallable)
+    UFUNCTION(Server, Reliable)
     void SetMaxHp(int _MaxHp);
     void SetMaxHp_Implementation(int _MaxHp);
 
@@ -42,15 +42,14 @@ protected:
 private:
     UC_HealthBar* HpBarWidget = nullptr;
 
-    UPROPERTY(ReplicatedUsing = OnReplicated_MaxHp)
+    UPROPERTY(ReplicatedUsing = OnRep_MaxHp)
     int MaxHp = 0;
 
-    UPROPERTY(ReplicatedUsing = OnReplicated_Hp)
+    UPROPERTY(ReplicatedUsing = OnRep_Hp)
     int Hp = 0;
 
     UFUNCTION()
-    void OnReplicated_MaxHp();
-
+    void OnRep_MaxHp();
     UFUNCTION()
-    void OnReplicated_Hp();
+    void OnRep_Hp();
 };

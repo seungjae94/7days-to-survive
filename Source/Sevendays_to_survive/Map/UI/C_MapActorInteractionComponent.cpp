@@ -18,13 +18,6 @@ UC_MapActorInteractionComponent::UC_MapActorInteractionComponent()
     }
 }
 
-void UC_MapActorInteractionComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
-{
-    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-    DOREPLIFETIME(UC_MapActorInteractionComponent, Message);
-}
-
 void UC_MapActorInteractionComponent::BeginPlay()
 {
     Super::BeginPlay();
@@ -32,9 +25,4 @@ void UC_MapActorInteractionComponent::BeginPlay()
     MessageWidget = Cast<UC_InteractionMessageWidget>(GetWidget());
     
     HideWidget();
-}
-
-void UC_MapActorInteractionComponent::OnReplicated_Message()
-{
-    MessageWidget->SetMessage(Message);
 }

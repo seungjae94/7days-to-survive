@@ -16,9 +16,7 @@ class SEVENDAYS_TO_SURVIVE_API UC_MapActorInteractionComponent : public UC_MapWi
 public:
     UC_MapActorInteractionComponent();
 
-    void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-
-    UFUNCTION(Server, Reliable)
+    UFUNCTION(NetMulticast, Reliable)
     void SetMessage();
     virtual void SetMessage_Implementation() PURE_VIRTUAL(SetMessage_Implementation, );
 
@@ -29,10 +27,4 @@ protected:
 
 protected:
     UC_InteractionMessageWidget* MessageWidget = nullptr;
-
-    UPROPERTY(ReplicatedUsing = OnReplicated_Message)
-    FString Message;
-
-    UFUNCTION()
-    void OnReplicated_Message();
 };

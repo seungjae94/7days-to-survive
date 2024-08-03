@@ -18,22 +18,12 @@ public:
 
 	void SetMessage_Implementation() override;
 
+	UFUNCTION(Server, Reliable)
 	void SetItemAndCount(const UC_Item* _Item, int _Count);
+	void SetItemAndCount_Implementation(const UC_Item* _Item, int _Count);
 
 	void MapInteract() override;
 
-	/*
-* 	UC_InventoryComponent* Inventory = UC_STSGlobalFunctions::GetInventoryComponent(GetWorld());
-
-if (nullptr == Item)
-{
-	return;
-}
-
-Inventory->AddItem(Item, Count);
-
-UC_STSGlobalFunctions::GetMapInteractionComponent(GetWorld())->Server_DestroyActor(this);
-*/
 private:
 	const UC_Item* Item = nullptr;
 	int Count = 0;

@@ -1,4 +1,7 @@
 ﻿#include "Map/UI/C_DoorInteractionComponent.h"
+
+#include "Map/UI/C_InteractionMessageWidget.h"
+
 //#include "Map/UI/C_InteractionMessageWidget.h"
 //
 //UC_InteractionMessageWidgetComponent::UC_InteractionMessageWidgetComponent()
@@ -36,5 +39,5 @@ void UC_DoorInteractionComponent::MapInteract()
 
 void UC_DoorInteractionComponent::SetMessage_Implementation()
 {
-    Message = TEXT("Open Door");
+    MessageWidget->SetMessage("Open Door");
 }

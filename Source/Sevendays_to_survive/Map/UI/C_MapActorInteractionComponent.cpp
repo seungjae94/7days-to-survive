@@ -22,6 +22,8 @@ void UC_MapActorInteractionComponent::BeginPlay()
 {
     Super::BeginPlay();
     
+    SetMessage();
+
     HideWidget();
 }
 

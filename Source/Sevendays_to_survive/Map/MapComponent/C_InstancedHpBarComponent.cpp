@@ -4,132 +4,125 @@
 
 #include "Net/UnrealNetwork.h"
 #include "UI/C_HealthBar.h"
-
-//UC_HpBarComponent::UC_HpBarComponent()
-//{
-//    static const TCHAR* ResourcePath = TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Level/TestLevel/UI/WidgetBP/InGame/BP_ObjectHealthBar.BP_ObjectHealthBar_C'");
-//    static ConstructorHelpers::FClassFinder<UC_HealthBar> WidgetAsset(ResourcePath);
-//    if (true == WidgetAsset.Succeeded())
-//    {
-//        WidgetClass = WidgetAsset.Class;
-//    }
-//    else
-//    {
-//        UE_LOG(LogTemp, Fatal, TEXT("Can't find asset."));
-//        return;
-//    }
-//}
-//
-//void UC_HpBarComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
-//{
-//    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-//
-//    DOREPLIFETIME(UC_HpBarComponent, MaxHp);
-//    DOREPLIFETIME(UC_HpBarComponent, Hp);
-//}
-//
-//void UC_HpBarComponent::BeginPlay()
-//{
-//    Super::BeginPlay();
-//
-//    GetHpBarWidget()->SetCurHealth(Hp);
-//    GetHpBarWidget()->SetMaxHealth(MaxHp);
-//
-//    HideWidget();
-//}
-//
-//UC_HealthBar* UC_HpBarComponent::GetHpBarWidget()
-//{
-//    return Cast<UC_HealthBar>(GetWidget());
-//}
-//
-//void UC_HpBarComponent::SetMaxHp_Implementation(int _MaxHp)
-//{
-//    MaxHp = _MaxHp;
-//    GetHpBarWidget()->SetMaxHealth(MaxHp);
-//}
-//
-//int UC_HpBarComponent::GetHp() const
-//{
-//    return Hp;
-//}
-//
-//void UC_HpBarComponent::SetHp_Implementation(int _Hp)
-//{
-//    Hp = _Hp;
-//    GetHpBarWidget()->SetCurHealth(Hp);
-//}
-//
-//void UC_HpBarComponent::DecHp_Implementation(int _Hp)
-//{
-//    Hp -= _Hp;
-//
-//    if (Hp <= 0)
-//    {
-//        Hp = 0;
-//    }
-//
-//    GetHpBarWidget()->SetCurHealth(Hp);
-//}
-//
-//bool UC_HpBarComponent::IsZero() const
-//{
-//    return Hp <= 0;
-//}
-//
-//void UC_HpBarComponent::OnRep_MaxHp()
-//{
-//    GetHpBarWidget()->SetMaxHealth(MaxHp);
-//}
-//
-//void UC_HpBarComponent::OnRep_Hp()
-//{
-//    GetHpBarWidget()->SetCurHealth(Hp);
-//}
+#include "Components/InstancedStaticMeshComponent.h"
+#include "STS/C_STSMacros.h"
 
 UC_InstancedHpBarComponent::UC_InstancedHpBarComponent()
 {
+    static const TCHAR* ResourcePath = TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Level/TestLevel/UI/WidgetBP/InGame/BP_ObjectHealthBar.BP_ObjectHealthBar_C'");
+    static ConstructorHelpers::FClassFinder<UC_HealthBar> WidgetAsset(ResourcePath);
+    if (true == WidgetAsset.Succeeded())
+    {
+        WidgetClass = WidgetAsset.Class;
+    }
+    else
+    {
+        UE_LOG(LogTemp, Fatal, TEXT("Can't find asset."));
+        return;
+    }
 }
 
 void UC_InstancedHpBarComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+    DOREPLIFETIME(UC_InstancedHpBarComponent, MaxHp);
+    DOREPLIFETIME(UC_InstancedHpBarComponent, HpArray);
 }
 
-void UC_InstancedHpBarComponent::SetMaxHp_Implementation(int _MaxHp)
+void UC_InstancedHpBarComponent::ShowWidget(int _Index)
 {
+    Super::ShowWidget(_Index);
+    IsViewing = true;
+    ViewingIndex = _Index;
+
+    GetHpBarWidget()->SetCurHealth(HpArray[_Index]);
+    GetHpBarWidget()->SetMaxHealth(MaxHp);
+
+    UInstancedStaticMeshComponent* ISMComp = GetOwner()->GetComponentByClass<UInstancedStaticMeshComponent>();
+    if (false == ISMComp->IsValidLowLevel())
+    {
+        STS_FATAL("[%s] ISMComp is null.", __FUNCTION__);
+        return;
+    }
+
+    FTransform Trans;
+    ISMComp->GetInstanceTransform(_Index, Trans, true);
+
+    FVector Loc = Trans.GetLocation() + FVector::UpVector * 100.0f;
+    SetWorldLocation(Loc);
 }
 
-int UC_InstancedHpBarComponent::GetHp() const
+void UC_InstancedHpBarComponent::HideWidget(int _Index)
 {
-    return 0;
+    Super::HideWidget(_Index);
+    IsViewing = false;
 }
 
-void UC_InstancedHpBarComponent::SetHp_Implementation(int _Hp)
+void UC_InstancedHpBarComponent::SetMaxHp_Implementation(int _MaxHp, int _InstCount)
 {
+    // 서버
+    MaxHp = _MaxHp;
+    for (int i = 0; i < _InstCount; ++i)
+    {
+        HpArray.Add(MaxHp);
+    }
+
+    GetHpBarWidget()->SetCurHealth(MaxHp);
+    GetHpBarWidget()->SetMaxHealth(MaxHp);
 }
 
-void UC_InstancedHpBarComponent::DecHp_Implementation(int _Hp)
+int UC_InstancedHpBarComponent::GetHp(int _Index) const
 {
+    return HpArray[_Index];
 }
 
-bool UC_InstancedHpBarComponent::IsZero() const
+void UC_InstancedHpBarComponent::SetHp_Implementation(int _Index, int _Hp)
 {
-    return false;
+    // 서버
+    HpArray[_Index] = _Hp;
+
+    if (true == IsViewing && ViewingIndex == _Index)
+    {
+        GetHpBarWidget()->SetCurHealth(HpArray[ViewingIndex]);
+    }
 }
 
-void UC_InstancedHpBarComponent::BeginPlay()
+void UC_InstancedHpBarComponent::DecHp_Implementation(int _Index, int _Hp)
 {
+    HpArray[_Index] -= _Hp;
+
+    if (0 >= HpArray[_Index])
+    {
+        HpArray[_Index] = 0;
+    }
+
+    if (true == IsViewing && ViewingIndex == _Index)
+    {
+        GetHpBarWidget()->SetCurHealth(HpArray[ViewingIndex]);
+    }
+}
+
+bool UC_InstancedHpBarComponent::IsZero(int _Index) const
+{
+    return HpArray[_Index] <= 0;
 }
 
 UC_HealthBar* UC_InstancedHpBarComponent::GetHpBarWidget()
 {
-    return nullptr;
+    InitWidget();
+    return Cast<UC_HealthBar>(GetWidget());
 }
 
 void UC_InstancedHpBarComponent::OnRep_MaxHp()
 {
+    GetHpBarWidget()->SetMaxHealth(MaxHp);
 }
 
 void UC_InstancedHpBarComponent::OnRep_Hp()
 {
+    if (true == IsViewing)
+    {
+        GetHpBarWidget()->SetCurHealth(HpArray[ViewingIndex]);
+    }
 }

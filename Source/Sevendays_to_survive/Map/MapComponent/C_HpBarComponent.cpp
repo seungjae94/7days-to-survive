@@ -28,14 +28,11 @@ void UC_HpBarComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
     DOREPLIFETIME(UC_HpBarComponent, Hp);
 }
 
-void UC_HpBarComponent::BeginPlay()
+void UC_HpBarComponent::ShowWidget(int _Index)
 {
-    Super::BeginPlay();
-
+    Super::ShowWidget(_Index);
     GetHpBarWidget()->SetCurHealth(Hp);
     GetHpBarWidget()->SetMaxHealth(MaxHp);
-
-    HideWidget();
 }
 
 UC_HealthBar* UC_HpBarComponent::GetHpBarWidget()
@@ -46,6 +43,7 @@ UC_HealthBar* UC_HpBarComponent::GetHpBarWidget()
 
 void UC_HpBarComponent::SetMaxHp_Implementation(int _MaxHp)
 {
+    // 서버
     MaxHp = _MaxHp;
     GetHpBarWidget()->SetMaxHealth(MaxHp);
 }

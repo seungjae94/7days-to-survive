@@ -18,13 +18,9 @@ UC_MapMessageComponent::UC_MapMessageComponent()
     }
 }
 
-void UC_MapMessageComponent::BeginPlay()
+void UC_MapMessageComponent::ShowWidget(int _Index)
 {
-    Super::BeginPlay();
-
     SetMessage();
-
-    HideWidget();
 }
 
 UC_MapMessageWidget* UC_MapMessageComponent::GetMessageWidget()

@@ -54,11 +54,11 @@ void UC_MapInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickT
 
     if (nullptr == OutHit.GetActor())
     {
-        Unview();
+        Unview(OutHit.Item);
         return;
     }
 
-    View(OutHit.GetActor());
+    View(OutHit.Item, OutHit.GetActor());
 }
 
 bool UC_MapInteractionComponent::IsServer() const
@@ -120,77 +120,49 @@ void UC_MapInteractionComponent::Server_DestroyActor_Implementation(AActor* _Act
     _Actor->Destroy();
 }
 
-//
-//void UC_MapInteractionComponent::ViewItemSource(AC_ItemSourceHISMA* _ItemSource, int _Index)
-//{
-//    // 같은 아이템 소스를 계속 보는 경우
-//    if (ViewingItemSource == _ItemSource)
-//    {
-//        ViewingItemSource->UpdateHpBar(_Index);
-//        return;
-//    }
-//
-//    // 다른 아이템 소스를 보게 되는 경우
-//    if (true == IsValid(ViewingItemSource))
-//    {
-//        ViewingItemSource->HideHpBar();
-//    }
-//    ViewingItemSource = _ItemSource;
-//    if (true == IsValid(ViewingItemSource))
-//    {
-//        ViewingItemSource->UpdateHpBar(_Index);
-//    }
-//}
-
-void UC_MapInteractionComponent::View(AActor* _Actor)
+void UC_MapInteractionComponent::View(int _Index, AActor* _Actor)
 {
     UC_MapWidgetComponent* MapWidgetComp = _Actor->GetComponentByClass<UC_MapWidgetComponent>();
 
-    if (nullptr == MapWidgetComp)
+    if (nullptr == MapWidgetComp || false == MapWidgetComp->IsActive())
     {
-        Unview();
+        Unview(_Index);
         return;
     }
-
-    /*if (true == OutHit.GetActor()->IsA<AC_ItemSourceHISMA>())
-    {
-        ViewItemSource(Cast<AC_ItemSourceHISMA>(OutHit.GetActor()), OutHit.Item);
-    }*/
 
     // 액터를 안보고 있다가 보는 경우 
     if (false == IsValid(ViewingActor))
     {
         ViewingActor = _Actor;
-        MapWidgetComp->ShowWidget();
+        MapWidgetComp->ShowWidget(_Index);
         return;
     }
     
     // 같은 액터를 계속 보는 경우
     if (ViewingActor == _Actor)
     {
-        MapWidgetComp->ShowWidget();
         return;
     }
 
     // 다른 액터를 보게 되는 경우
-    Unview();
+    Unview(_Index);
     ViewingActor = _Actor;
-    MapWidgetComp->ShowWidget();
+    MapWidgetComp->ShowWidget(_Index);
 }
 
-void UC_MapInteractionComponent::Unview()
+void UC_MapInteractionComponent::Unview(int _Index)
 {
     if (true == IsValid(ViewingActor))
     {
         UC_MapWidgetComponent* MapWidgetComp = ViewingActor->GetComponentByClass<UC_MapWidgetComponent>();
         
-        if (nullptr == MapWidgetComp)
+        if (nullptr == MapWidgetComp || false == MapWidgetComp->IsActive())
         {
             STS_FATAL("[%s] ViewingActor has no MapWidgetComp.", __FUNCTION__);
             return;
         }
         
-        MapWidgetComp->HideWidget();
+        MapWidgetComp->HideWidget(_Index);
         ViewingActor = nullptr;
     }
 }

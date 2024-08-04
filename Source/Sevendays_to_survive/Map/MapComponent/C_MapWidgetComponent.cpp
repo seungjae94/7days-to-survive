@@ -7,12 +7,19 @@ UC_MapWidgetComponent::UC_MapWidgetComponent()
     PrimaryComponentTick.bCanEverTick = true;
 }
 
-void UC_MapWidgetComponent::ShowWidget()
+void UC_MapWidgetComponent::ShowWidget(int _Index)
 {
     GetWidget()->SetVisibility(ESlateVisibility::HitTestInvisible);
 }
 
-void UC_MapWidgetComponent::HideWidget()
+void UC_MapWidgetComponent::HideWidget(int _Index)
 {
     GetWidget()->SetVisibility(ESlateVisibility::Collapsed);
+}
+
+void UC_MapWidgetComponent::BeginPlay()
+{
+    Super::BeginPlay();
+    InitWidget();
+    HideWidget();
 }

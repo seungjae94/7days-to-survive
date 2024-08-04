@@ -16,6 +16,7 @@
 #include "Map/Inventory/C_InventoryComponent.h"
 #include "STS/C_STSMacros.h"
 #include "UI/C_HealthBar.h"
+#include "Map/MapComponent/C_InstancedHpBarComponent.h"
 
 AC_ItemSourceHISMA::AC_ItemSourceHISMA()
 {
@@ -25,28 +26,18 @@ AC_ItemSourceHISMA::AC_ItemSourceHISMA()
     HISMComponent = CreateDefaultSubobject<UHierarchicalInstancedStaticMeshComponent>(TEXT("HierarchicalInstancedStaticMesh"));
     SetRootComponent(HISMComponent);
 
-    HpBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("HpBar"));
-    HpBar->SetupAttachment(HISMComponent);
+    HpBarComponent = CreateDefaultSubobject<UC_InstancedHpBarComponent>(TEXT("Hp Bar Component"));
+    HpBarComponent->SetupAttachment(HISMComponent);
+    HpBarComponent->SetIsReplicated(true);
 }
 
 void AC_ItemSourceHISMA::BeginPlay()
 {
     Super::BeginPlay();
 
-    AActor* GameMode = UGameplayStatics::GetGameMode(GetWorld());
-    //SetOwner(GameMode);
-
-    HpBarWidget = Cast<UC_HealthBar>(HpBar->GetWidget());
-
-    if (nullptr == HpBarWidget)
-    {
-        STS_FATAL("[%s] HpBarWidget is NULL.", __FUNCTION__);
-    }
-
-    HideHpBar();
-
     if (true == Id.IsNone())
     {
+        HpBarComponent->SetActive(false);
         return;
     }
 
@@ -57,18 +48,8 @@ void AC_ItemSourceHISMA::BeginPlay()
 
     int MaxHp = MapDataAsset->GetItemSourceMaxHp(Id);
     int InstCount = HISMComponent->GetInstanceCount();
-    for (int i = 0; i < InstCount; ++i)
-    {
-        MaxHpMap.Emplace(i, MaxHp);
-        HpMap.Emplace(i, MaxHp);
-    }
 
-    HpBarWidget->SetMaxHealth(MaxHp);
-}
-
-void AC_ItemSourceHISMA::Tick(float _DeltaSeconds)
-{
-    Super::Tick(_DeltaSeconds);
+    HpBarComponent->SetMaxHp(MaxHp, InstCount);
 }
 
 void AC_ItemSourceHISMA::Damage_Implementation(int _Index, int _Damage, AActor* _HitActor)
@@ -78,48 +59,30 @@ void AC_ItemSourceHISMA::Damage_Implementation(int _Index, int _Damage, AActor* 
         return;
     }
 
-    HpMap[_Index] -= _Damage;
-    STS_LOG("[%s:%d] damaged by % d", *GetName(), _Index, _Damage);
-    STS_LOG("[%s:%d] HP: %d/%d", *GetName(), _Index, HpMap[_Index], MaxHpMap[_Index]);
+    HpBarComponent->DecHp(_Index, _Damage);
 
     // 아이템 획득
-    AC_MapPlayer* ItemGainer = Cast<AC_MapPlayer>(_HitActor);
-    if (nullptr != ItemGainer && ItemGainer->IsLocallyControlled())
-    {
-        GainDropItems(ItemGainer);
-    }
+    GainDropItems(Cast<AC_MapPlayer>(_HitActor));
 
-    if (HpMap[_Index] <= 0)
+    if (true == HpBarComponent->IsZero(_Index))
     {
         bool Result = HISMComponent->RemoveInstance(_Index);
-
-        if (false == Result)
-        {
-            STS_FATAL("[%s:%d] destroy failed.", *GetName(), _Index);
-        }
-        else
-        {
-            HideHpBar();
-            STS_LOG("[%s:%d] destroyed successfully.", *GetName(), _Index);
-        }
-
         return;
-    }
-
-    // 위젯 업데이트
-    if (true == HpBar->IsActive() && _Index == HpBarTargetIndex)
-    {
-        HpBarWidget->SetCurHealth(HpMap[HpBarTargetIndex]);
-        HpBarWidget->SetMaxHealth(MaxHpMap[HpBarTargetIndex]);
     }
 }
 
-void AC_ItemSourceHISMA::GainDropItems(AC_MapPlayer* _HitCharacter)
+void AC_ItemSourceHISMA::GainDropItems_Implementation(AC_MapPlayer* _ItemGainer)
 {
-    UC_InventoryComponent* InventoryComponent = _HitCharacter->GetComponentByClass<UC_InventoryComponent>();
+    if (false == _ItemGainer->IsValidLowLevel() || false == _ItemGainer->IsLocallyControlled())
+    {
+        return;
+    }
+
+    UC_InventoryComponent* InventoryComponent = _ItemGainer->GetComponentByClass<UC_InventoryComponent>();
     if (nullptr == InventoryComponent)
     {
         STS_FATAL("[%s] InventoryComponent is NULL.", __FUNCTION__);
+        return;
     }
 
     for (TPair<FName, int>& DropItem : DropItems)
@@ -128,45 +91,4 @@ void AC_ItemSourceHISMA::GainDropItems(AC_MapPlayer* _HitCharacter)
         InventoryComponent->AddItem(Item, DropItem.Value);
         STS_LOG("got %d %ss.", DropItem.Value, *Item->Name);
     }
-}
-
-void AC_ItemSourceHISMA::UpdateHpBar(int _Index)
-{
-    if (true == Id.IsNone())
-    {
-        return;
-    }
-
-    if (_Index < 0 || _Index >= HpMap.Num())
-    {
-        STS_LOG("UpdateHpBar failed. Given Index %d is out of range.", _Index);
-        return;
-    }
-
-    if (HpMap[_Index] <= 0)
-    {
-        STS_LOG("UpdateHpBar failed. Given instance(%d) is already destroyed.", _Index);
-        return;
-    }
-
-    if (false == HpBarWidget->IsVisible())
-    {
-        HpBarWidget->SetVisibility(ESlateVisibility::Visible);
-    }
-
-    HpBarTargetIndex = _Index;
-
-    HISMComponent->GetInstanceTransform(_Index, HpBarTransform, true);
-    FVector InstLocation = HpBarTransform.GetLocation() + FVector::UpVector * HpBarHeight;
-    FVector DrawLocation = InstLocation;
-
-    // HpBar 갱신
-    HpBar->SetWorldLocation(DrawLocation);
-    HpBarWidget->SetCurHealth(HpMap[HpBarTargetIndex]);
-    HpBarWidget->SetMaxHealth(MaxHpMap[HpBarTargetIndex]);
-}
-
-void AC_ItemSourceHISMA::HideHpBar()
-{
-    HpBarWidget->SetVisibility(ESlateVisibility::Hidden);
 }

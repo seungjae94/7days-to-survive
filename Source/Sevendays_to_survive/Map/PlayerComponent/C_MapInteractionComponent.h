@@ -68,6 +68,6 @@ private:
     AActor* ViewingActor = nullptr;
 
 private:
-    void View(AActor* _Actor);
-    void Unview();
+    void View(int _Index, AActor* _Actor);
+    void Unview(int _Index);
 };

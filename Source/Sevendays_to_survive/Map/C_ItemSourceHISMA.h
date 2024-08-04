@@ -12,8 +12,8 @@
 
 class UC_Item;
 class AC_MapPlayer;
-struct FC_ItemAndCount;
 class UC_HealthBar;
+class UC_InstancedHpBarComponent;
 
 UCLASS()
 class SEVENDAYS_TO_SURVIVE_API AC_ItemSourceHISMA : public AActor
@@ -25,44 +25,24 @@ public:
 
 
 public:
-	UFUNCTION(BlueprintCallable, NetMulticast, Reliable)
+	UFUNCTION(BlueprintCallable, Server, Reliable)
 	virtual void Damage(int _Index, int _Damage, AActor* _HitActor);
 	void Damage_Implementation(int _Index, int _Damage, AActor* _HitActor);
 
-	virtual void GainDropItems(AC_MapPlayer* _HitCharacter);
-
-	UFUNCTION(BlueprintCallable)
-	void UpdateHpBar(int _Index);
-
-	UFUNCTION(BlueprintCallable)
-	void HideHpBar();
+	UFUNCTION(NetMulticast, Reliable)
+	void GainDropItems(AC_MapPlayer* _ItemGainer);
+	void GainDropItems_Implementation(AC_MapPlayer* _ItemGainer);
 
 protected:
 	virtual void BeginPlay() override;
-	virtual void Tick(float _DeltaSeconds) override;
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UHierarchicalInstancedStaticMeshComponent* HISMComponent = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	UWidgetComponent* HpBar = nullptr;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	float HpBarHeight = 100.0f;
-
-	UC_HealthBar* HpBarWidget = nullptr;
-
-	FTransform HpBarTransform;
-
-	int HpBarTargetIndex = 0;
-
-	// MaxHP of each instance.
-	TMap<int, int> MaxHpMap;
-
-	// HP of each instance.
-	TMap<int, int> HpMap;
-
+	UC_InstancedHpBarComponent* HpBarComponent = nullptr;
+	
 	// Drop items.
 	TMap<FName, int> DropItems;
 

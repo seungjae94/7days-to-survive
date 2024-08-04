@@ -24,6 +24,7 @@ void AC_ItemBox::BeginPlay()
 	MapDataMemory = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
 	ItemPouchClass = MapDataAsset->GetItemPouchClass();
 
+	// 서버만
 	HpBarComp->SetMaxHp(MapDataAsset->GetItemBoxMaxHp());
 	HpBarComp->SetHp(MapDataAsset->GetItemBoxMaxHp());
 }

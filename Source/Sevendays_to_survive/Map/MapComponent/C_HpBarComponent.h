@@ -18,6 +18,8 @@ public:
 
     void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+    void ShowWidget(int _Index = 0) override;
+
     UFUNCTION(Server, Reliable)
     void SetMaxHp(int _MaxHp);
     void SetMaxHp_Implementation(int _MaxHp);
@@ -35,9 +37,6 @@ public:
 
     UFUNCTION()
     bool IsZero() const;
-
-protected:
-    virtual void BeginPlay() override;
 
 private:
     UC_HealthBar* GetHpBarWidget();

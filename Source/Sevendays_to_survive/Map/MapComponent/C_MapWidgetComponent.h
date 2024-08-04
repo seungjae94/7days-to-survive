@@ -15,8 +15,11 @@ public:
     UC_MapWidgetComponent();
 
     UFUNCTION(BlueprintCallable)
-    virtual void ShowWidget();
+    virtual void ShowWidget(int _Index = 0);
 
     UFUNCTION(BlueprintCallable)
-    virtual void HideWidget();
+    virtual void HideWidget(int _Index = 0);
+
+protected:
+    void BeginPlay() override;
 };

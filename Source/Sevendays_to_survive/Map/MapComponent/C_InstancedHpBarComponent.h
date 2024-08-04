@@ -18,26 +18,26 @@ public:
 
     void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+    void ShowWidget(int _Index = 0) override;
+    void HideWidget(int _Index = 0) override;
+
     UFUNCTION(Server, Reliable)
-    void SetMaxHp(int _MaxHp);
-    void SetMaxHp_Implementation(int _MaxHp);
+    void SetMaxHp(int _MaxHp, int _InstCount);
+    void SetMaxHp_Implementation(int _MaxHp, int _InstCount);
 
     UFUNCTION()
-    int GetHp() const;
+    int GetHp(int _Index) const;
 
     UFUNCTION(Server, Reliable)
-    void SetHp(int _Hp);
-    void SetHp_Implementation(int _Hp);
+    void SetHp(int _Index, int _Hp);
+    void SetHp_Implementation(int _Index, int _Hp);
 
     UFUNCTION(Server, Reliable)
-    void DecHp(int _Hp);
-    void DecHp_Implementation(int _Hp);
+    void DecHp(int _Index, int _Hp);
+    void DecHp_Implementation(int _Index, int _Hp);
 
     UFUNCTION()
-    bool IsZero() const;
-
-protected:
-    virtual void BeginPlay() override;
+    bool IsZero(int _Index) const;
 
 private:
     UC_HealthBar* GetHpBarWidget();
@@ -46,11 +46,14 @@ private:
     int MaxHp = 0;
 
     UPROPERTY(ReplicatedUsing = OnRep_Hp)
-    int Hp = 0;
+    TArray<int> HpArray;
 
     UFUNCTION()
     void OnRep_MaxHp();
 
     UFUNCTION()
     void OnRep_Hp();
+
+    bool IsViewing = false;
+    int ViewingIndex = 0;
 };

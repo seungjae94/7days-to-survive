@@ -18,9 +18,9 @@ public:
 
     virtual void MapInteract() PURE_VIRTUAL(MapInteract, );
 
-protected:
-    virtual void BeginPlay() override;
+    void ShowWidget(int _Index) override;
 
+protected:
     UFUNCTION()
     virtual void SetMessage() PURE_VIRTUAL(SetMessage, );
 

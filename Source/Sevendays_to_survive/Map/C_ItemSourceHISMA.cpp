@@ -24,6 +24,7 @@ AC_ItemSourceHISMA::AC_ItemSourceHISMA()
     bReplicates = true;
 
     HISMComponent = CreateDefaultSubobject<UHierarchicalInstancedStaticMeshComponent>(TEXT("HierarchicalInstancedStaticMesh"));
+    HISMComponent->SetIsReplicated(true);
     SetRootComponent(HISMComponent);
 
     HpBarComponent = CreateDefaultSubobject<UC_InstancedHpBarComponent>(TEXT("Hp Bar Component"));
@@ -37,7 +38,7 @@ void AC_ItemSourceHISMA::BeginPlay()
 
     if (true == Id.IsNone())
     {
-        HpBarComponent->SetActive(false);
+        HpBarComponent->SetIsViewable(false);
         return;
     }
 
@@ -62,16 +63,16 @@ void AC_ItemSourceHISMA::Damage_Implementation(int _Index, int _Damage, AActor* 
     HpBarComponent->DecHp(_Index, _Damage);
 
     // 아이템 획득
-    GainDropItems(Cast<AC_MapPlayer>(_HitActor));
+    NetMulticast_GainDropItems(Cast<AC_MapPlayer>(_HitActor));
 
     if (true == HpBarComponent->IsZero(_Index))
     {
-        bool Result = HISMComponent->RemoveInstance(_Index);
+        NetMulticast_RemoveInst(_Index);
         return;
     }
 }
 
-void AC_ItemSourceHISMA::GainDropItems_Implementation(AC_MapPlayer* _ItemGainer)
+void AC_ItemSourceHISMA::NetMulticast_GainDropItems_Implementation(AC_MapPlayer* _ItemGainer)
 {
     if (false == _ItemGainer->IsValidLowLevel() || false == _ItemGainer->IsLocallyControlled())
     {
@@ -91,4 +92,9 @@ void AC_ItemSourceHISMA::GainDropItems_Implementation(AC_MapPlayer* _ItemGainer)
         InventoryComponent->AddItem(Item, DropItem.Value);
         STS_LOG("got %d %ss.", DropItem.Value, *Item->Name);
     }
+}
+
+void AC_ItemSourceHISMA::NetMulticast_RemoveInst_Implementation(int _Index)
+{
+    HISMComponent->RemoveInstance(_Index);
 }

@@ -29,14 +29,18 @@ public:
 	virtual void Damage(int _Index, int _Damage, AActor* _HitActor);
 	void Damage_Implementation(int _Index, int _Damage, AActor* _HitActor);
 
-	UFUNCTION(NetMulticast, Reliable)
-	void GainDropItems(AC_MapPlayer* _ItemGainer);
-	void GainDropItems_Implementation(AC_MapPlayer* _ItemGainer);
-
 protected:
 	virtual void BeginPlay() override;
 
 private:
+	UFUNCTION(NetMulticast, Reliable)
+	void NetMulticast_GainDropItems(AC_MapPlayer* _ItemGainer);
+	void NetMulticast_GainDropItems_Implementation(AC_MapPlayer* _ItemGainer);
+
+	UFUNCTION(NetMulticast, Reliable)
+	void NetMulticast_RemoveInst(int _Index);
+	void NetMulticast_RemoveInst_Implementation(int _Index);
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UHierarchicalInstancedStaticMeshComponent* HISMComponent = nullptr;
 

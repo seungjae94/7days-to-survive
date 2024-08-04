@@ -124,7 +124,7 @@ void UC_MapInteractionComponent::View(int _Index, AActor* _Actor)
 {
     UC_MapWidgetComponent* MapWidgetComp = _Actor->GetComponentByClass<UC_MapWidgetComponent>();
 
-    if (nullptr == MapWidgetComp || false == MapWidgetComp->IsActive())
+    if (nullptr == MapWidgetComp || false == MapWidgetComp->IsViewable())
     {
         Unview(_Index);
         return;
@@ -156,7 +156,7 @@ void UC_MapInteractionComponent::Unview(int _Index)
     {
         UC_MapWidgetComponent* MapWidgetComp = ViewingActor->GetComponentByClass<UC_MapWidgetComponent>();
         
-        if (nullptr == MapWidgetComp || false == MapWidgetComp->IsActive())
+        if (nullptr == MapWidgetComp || false == MapWidgetComp->IsViewable())
         {
             STS_FATAL("[%s] ViewingActor has no MapWidgetComp.", __FUNCTION__);
             return;

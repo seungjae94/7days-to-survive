@@ -7,6 +7,16 @@ UC_MapWidgetComponent::UC_MapWidgetComponent()
     PrimaryComponentTick.bCanEverTick = true;
 }
 
+void UC_MapWidgetComponent::SetIsViewable(bool _bIsViewable)
+{
+    bIsViewable = _bIsViewable;
+}
+
+bool UC_MapWidgetComponent::IsViewable() const
+{
+    return bIsViewable;
+}
+
 void UC_MapWidgetComponent::ShowWidget(int _Index)
 {
     GetWidget()->SetVisibility(ESlateVisibility::HitTestInvisible);

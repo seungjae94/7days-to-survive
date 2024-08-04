@@ -14,6 +14,9 @@ class SEVENDAYS_TO_SURVIVE_API UC_MapWidgetComponent : public UWidgetComponent
 public:
     UC_MapWidgetComponent();
 
+    void SetIsViewable(bool _bIsViewable);
+    bool IsViewable() const;
+
     UFUNCTION(BlueprintCallable)
     virtual void ShowWidget(int _Index = 0);
 
@@ -22,4 +25,7 @@ public:
 
 protected:
     void BeginPlay() override;
+
+private:
+    bool bIsViewable = true;
 };

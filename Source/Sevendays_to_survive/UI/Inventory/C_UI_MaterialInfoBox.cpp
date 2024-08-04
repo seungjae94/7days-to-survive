@@ -3,7 +3,7 @@
 
 #include "UI/Inventory/C_UI_MaterialInfoBox.h"
 #include "STS/C_STSGlobalFunctions.h"
-#include "Inventory/C_InventoryComponent.h"
+#include "Map/Inventory/C_InventoryComponent.h"
 #include "Map/C_Items.h"
 
 const UC_Item* UC_UI_MaterialInfoBox::GetItem()

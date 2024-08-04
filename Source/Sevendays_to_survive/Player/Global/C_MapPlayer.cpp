@@ -3,9 +3,9 @@
 
 #include "Player/Global/C_MapPlayer.h"
 
-#include "BuildingSystem/C_BuildingComponent.h"
-#include "Inventory/C_InventoryComponent.h"
-#include "Map/C_MapInteractionComponent.h"
+#include "Map/BuildingSystem/C_BuildingComponent.h"
+#include "Map/Inventory/C_InventoryComponent.h"
+#include "Map/PlayerComponent/C_MapInteractionComponent.h"
 
 AC_MapPlayer::AC_MapPlayer()
 {

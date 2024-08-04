@@ -1,6 +1,6 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Map/UI/C_MapWidgetComponent.h"
+#include "Map/MapComponent/C_MapWidgetComponent.h"
 
 UC_MapWidgetComponent::UC_MapWidgetComponent()
 {

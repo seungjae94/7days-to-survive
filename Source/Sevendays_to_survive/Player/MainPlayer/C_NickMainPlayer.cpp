@@ -12,8 +12,8 @@
 #include <Kismet/GameplayStatics.h>
 #include "Components/CapsuleComponent.h"
 #include "Map/C_Items.h"
-#include "BuildingSystem/C_BuildingComponent.h"
-#include "Inventory/C_InventoryComponent.h"
+#include "Map/BuildingSystem/C_BuildingComponent.h"
+#include "Map/Inventory/C_InventoryComponent.h"
 #include "STS/C_STSInstance.h"
 #include "STS/C_STSGlobalFunctions.h"
 

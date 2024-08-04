@@ -5,7 +5,7 @@
 #include "Components/PanelWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "STS/C_STSGlobalFunctions.h"
-#include "Inventory/C_InventoryComponent.h"
+#include "Map/Inventory/C_InventoryComponent.h"
 
 
 void UC_UI_InventorySlot::SetIcon(const FC_ItemRow& _ItemData)

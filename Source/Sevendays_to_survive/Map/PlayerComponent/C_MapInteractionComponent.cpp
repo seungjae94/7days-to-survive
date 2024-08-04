@@ -1,18 +1,18 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Map/C_MapInteractionComponent.h"
+#include "Map/PlayerComponent/C_MapInteractionComponent.h"
 
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
-#include "Map/UI/C_MapActorInteractionComponent.h"
+#include "Map/MapComponent/C_MapMessageComponent.h"
 #include "Map/C_ItemSourceHISMA.h"
 #include "Map/C_MapDamageTaker.h"
-#include "BuildingSystem/C_Door.h"
+#include "Map/BuildingSystem/C_Door.h"
+#include "Map/BuildingSystem/C_Door.h"
 #include "Player/Global/C_MapPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "STS/C_STSMacros.h"
-#include "BuildingSystem/C_Door.h"
-#include "Map/UI/C_MapWidgetComponent.h"
+#include "Map/MapComponent/C_MapWidgetComponent.h"
 
 UC_MapInteractionComponent::UC_MapInteractionComponent()
 {
@@ -97,15 +97,15 @@ void UC_MapInteractionComponent::OnMapInteractionKeyDown()
         return;
     }
     
-    TArray<UC_MapActorInteractionComponent*> Comps;
-    ViewingActor->GetComponents<UC_MapActorInteractionComponent>(Comps);
-    for (UC_MapActorInteractionComponent* Comp : Comps)
+    TArray<UC_MapMessageComponent*> Comps;
+    ViewingActor->GetComponents<UC_MapMessageComponent>(Comps);
+    for (UC_MapMessageComponent* Comp : Comps)
     {
         Comp->MapInteract();
     }
 }
 
-void UC_MapInteractionComponent::Server_MapInteract_Implementation(UC_MapActorInteractionComponent* _Component)
+void UC_MapInteractionComponent::Server_MapInteract_Implementation(UC_MapMessageComponent* _Component)
 {
     _Component->MapInteract();
 }

@@ -1,8 +1,8 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Inventory/C_InventoryComponent.h"
+#include "Map/Inventory/C_InventoryComponent.h"
 
-#include "Inventory/C_ItemSlot.h"
+#include "Map/Inventory/C_ItemSlot.h"
 #include "STS/C_STSMacros.h"
 #include "STS/C_STSInstance.h"
 #include "STS/C_STSGlobalFunctions.h"

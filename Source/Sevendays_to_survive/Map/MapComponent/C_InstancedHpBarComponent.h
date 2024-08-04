@@ -3,18 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Map/UI/C_MapWidgetComponent.h"
-#include "C_MapDamageTakerComponent.generated.h"
+#include "Map/MapComponent/C_MapWidgetComponent.h"
+#include "C_InstancedHpBarComponent.generated.h"
 
 class UC_HealthBar;
 
 UCLASS(Blueprintable, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class SEVENDAYS_TO_SURVIVE_API UC_MapDamageTakerComponent : public UC_MapWidgetComponent
+class SEVENDAYS_TO_SURVIVE_API UC_InstancedHpBarComponent : public UC_MapWidgetComponent
 {
     GENERATED_BODY()
 
 public:
-    UC_MapDamageTakerComponent();
+    UC_InstancedHpBarComponent();
 
     void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

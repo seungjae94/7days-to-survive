@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BuildingSystem/C_BuildingPart.h"
+#include "Map/BuildingSystem/C_BuildingPart.h"
 #include "C_Door.generated.h"
 
 enum class EDoorState : uint8

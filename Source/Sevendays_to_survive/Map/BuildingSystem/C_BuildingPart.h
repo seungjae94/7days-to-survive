@@ -7,6 +7,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "C_BuildingPart.generated.h"
 
+class UC_MapDataAsset;
+class UC_MapDataObject;
 
 UCLASS()
 class SEVENDAYS_TO_SURVIVE_API AC_BuildingPart : public AC_MapDamageTaker
@@ -15,4 +17,11 @@ class SEVENDAYS_TO_SURVIVE_API AC_BuildingPart : public AC_MapDamageTaker
 	
 public:
 	AC_BuildingPart();
+
+protected:
+	void BeginPlay() override;
+
+private:
+	UC_MapDataAsset* MapDataAsset = nullptr;
+	UC_MapDataObject* MapDataMemory = nullptr;
 };

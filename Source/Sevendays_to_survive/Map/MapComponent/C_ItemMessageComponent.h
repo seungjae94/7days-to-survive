@@ -3,18 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Map/UI/C_MapActorInteractionComponent.h"
-#include "C_PickUpItemComponent.generated.h"
+#include "Map/MapComponent/C_MapMessageComponent.h"
+#include "C_ItemMessageComponent.generated.h"
 
 class UC_Item;
 
 UCLASS(Blueprintable, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class SEVENDAYS_TO_SURVIVE_API UC_PickUpItemComponent : public UC_MapActorInteractionComponent
+class SEVENDAYS_TO_SURVIVE_API UC_ItemMessageComponent : public UC_MapMessageComponent
 {
     GENERATED_BODY()
 
 public:
-    UC_PickUpItemComponent();
+    UC_ItemMessageComponent();
 
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

@@ -7,7 +7,7 @@
 #include "Map/C_ItemPouch.h"
 #include "Map/C_MapDataAsset.h"
 #include "Map/C_MapDataObject.h"
-#include "Map/UI/C_MapDamageTakerComponent.h"
+#include "Map/MapComponent/C_HpBarComponent.h"
 
 // Sets default values
 AC_ItemBox::AC_ItemBox()
@@ -24,8 +24,8 @@ void AC_ItemBox::BeginPlay()
 	MapDataMemory = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
 	ItemPouchClass = MapDataAsset->GetItemPouchClass();
 
-	DamageTakerComponent->SetMaxHp(MapDataAsset->GetItemBoxMaxHp());
-	DamageTakerComponent->SetHp(MapDataAsset->GetItemBoxMaxHp());
+	HpBarComp->SetMaxHp(MapDataAsset->GetItemBoxMaxHp());
+	HpBarComp->SetHp(MapDataAsset->GetItemBoxMaxHp());
 }
 
 // Called every frame

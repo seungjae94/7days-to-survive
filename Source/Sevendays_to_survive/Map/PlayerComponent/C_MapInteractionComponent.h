@@ -6,7 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "C_MapInteractionComponent.generated.h"
 
-class UC_MapActorInteractionComponent;
+class UC_MapMessageComponent;
 class UCameraComponent;
 class AC_MapPlayer;
 
@@ -48,8 +48,8 @@ private:
     void OnMapInteractionKeyDown();
 
     UFUNCTION(Server, Reliable)
-    void Server_MapInteract(UC_MapActorInteractionComponent* _Component);
-    void Server_MapInteract_Implementation(UC_MapActorInteractionComponent* _Component);
+    void Server_MapInteract(UC_MapMessageComponent* _Component);
+    void Server_MapInteract_Implementation(UC_MapMessageComponent* _Component);
 
 private:
     UPROPERTY(Category = "HpBar", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

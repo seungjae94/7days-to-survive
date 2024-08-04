@@ -1,11 +1,11 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Map/UI/C_MapDamageTakerComponent.h"
+#include "Map/MapComponent/C_HpBarComponent.h"
 
 #include "Net/UnrealNetwork.h"
 #include "UI/C_HealthBar.h"
 
-UC_MapDamageTakerComponent::UC_MapDamageTakerComponent()
+UC_HpBarComponent::UC_HpBarComponent()
 {
     static const TCHAR* ResourcePath = TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Level/TestLevel/UI/WidgetBP/InGame/BP_ObjectHealthBar.BP_ObjectHealthBar_C'");
     static ConstructorHelpers::FClassFinder<UC_HealthBar> WidgetAsset(ResourcePath);
@@ -20,15 +20,15 @@ UC_MapDamageTakerComponent::UC_MapDamageTakerComponent()
     }
 }
 
-void UC_MapDamageTakerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+void UC_HpBarComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-    DOREPLIFETIME(UC_MapDamageTakerComponent, MaxHp);
-    DOREPLIFETIME(UC_MapDamageTakerComponent, Hp);
+    DOREPLIFETIME(UC_HpBarComponent, MaxHp);
+    DOREPLIFETIME(UC_HpBarComponent, Hp);
 }
 
-void UC_MapDamageTakerComponent::BeginPlay()
+void UC_HpBarComponent::BeginPlay()
 {
     Super::BeginPlay();
 
@@ -38,29 +38,30 @@ void UC_MapDamageTakerComponent::BeginPlay()
     HideWidget();
 }
 
-UC_HealthBar* UC_MapDamageTakerComponent::GetHpBarWidget()
+UC_HealthBar* UC_HpBarComponent::GetHpBarWidget()
 {
+    InitWidget();
     return Cast<UC_HealthBar>(GetWidget());
 }
 
-void UC_MapDamageTakerComponent::SetMaxHp_Implementation(int _MaxHp)
+void UC_HpBarComponent::SetMaxHp_Implementation(int _MaxHp)
 {
     MaxHp = _MaxHp;
     GetHpBarWidget()->SetMaxHealth(MaxHp);
 }
 
-int UC_MapDamageTakerComponent::GetHp() const
+int UC_HpBarComponent::GetHp() const
 {
     return Hp;
 }
 
-void UC_MapDamageTakerComponent::SetHp_Implementation(int _Hp)
+void UC_HpBarComponent::SetHp_Implementation(int _Hp)
 {
     Hp = _Hp;
     GetHpBarWidget()->SetCurHealth(Hp);
 }
 
-void UC_MapDamageTakerComponent::DecHp_Implementation(int _Hp)
+void UC_HpBarComponent::DecHp_Implementation(int _Hp)
 {
     Hp -= _Hp;
 
@@ -72,17 +73,17 @@ void UC_MapDamageTakerComponent::DecHp_Implementation(int _Hp)
     GetHpBarWidget()->SetCurHealth(Hp);
 }
 
-bool UC_MapDamageTakerComponent::IsZero() const
+bool UC_HpBarComponent::IsZero() const
 {
     return Hp <= 0;
 }
 
-void UC_MapDamageTakerComponent::OnRep_MaxHp()
+void UC_HpBarComponent::OnRep_MaxHp()
 {
     GetHpBarWidget()->SetMaxHealth(MaxHp);
 }
 
-void UC_MapDamageTakerComponent::OnRep_Hp()
+void UC_HpBarComponent::OnRep_Hp()
 {
     GetHpBarWidget()->SetCurHealth(Hp);
 }

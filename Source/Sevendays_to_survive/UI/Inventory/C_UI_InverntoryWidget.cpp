@@ -4,7 +4,7 @@
 #include "UI/Inventory/C_UI_InverntoryWidget.h"
 #include "Components/ListView.h"
 #include "Player/Global/C_MapPlayer.h"
-#include "Inventory/C_InventoryComponent.h"
+#include "Map/Inventory/C_InventoryComponent.h"
 
 
 

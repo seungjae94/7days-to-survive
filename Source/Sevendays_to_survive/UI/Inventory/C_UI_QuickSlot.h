@@ -7,7 +7,7 @@
 #include "Components/TileView.h"
 #include "Components/Image.h"
 #include "Player/Global/C_PlayerEnum.h"
-#include "Inventory/C_InventoryComponent.h"
+#include "Map/Inventory/C_InventoryComponent.h"
 #include "C_UI_InverntoryWidget.h"
 #include "Components/PanelWidget.h"
 

@@ -3,18 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Map/UI/C_MapWidgetComponent.h"
-#include "C_MapActorInteractionComponent.generated.h"
+#include "Map/MapComponent/C_MapWidgetComponent.h"
+#include "C_MapMessageComponent.generated.h"
 
-class UC_InteractionMessageWidget;
+class UC_MapMessageWidget;
 
 UCLASS(Abstract, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class SEVENDAYS_TO_SURVIVE_API UC_MapActorInteractionComponent : public UC_MapWidgetComponent
+class SEVENDAYS_TO_SURVIVE_API UC_MapMessageComponent : public UC_MapWidgetComponent
 {
     GENERATED_BODY()
 
 public:
-    UC_MapActorInteractionComponent();
+    UC_MapMessageComponent();
 
     virtual void MapInteract() PURE_VIRTUAL(MapInteract, );
 
@@ -25,7 +25,7 @@ protected:
     virtual void SetMessage() PURE_VIRTUAL(SetMessage, );
 
     UFUNCTION()
-    UC_InteractionMessageWidget* GetMessageWidget();
+    UC_MapMessageWidget* GetMessageWidget();
 
 private:
     UPROPERTY()

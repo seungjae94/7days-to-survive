@@ -3,7 +3,7 @@
 
 #include "UI/Inventory/C_UI_CraftItemButton.h"
 #include "STS/C_STSGlobalFunctions.h"
-#include "Inventory/C_InventoryComponent.h"
+#include "Map/Inventory/C_InventoryComponent.h"
 
 const UC_Item* UC_UI_CraftItemButton::GetItem()
 {

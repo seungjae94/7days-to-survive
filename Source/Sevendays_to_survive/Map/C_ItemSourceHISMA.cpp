@@ -13,7 +13,7 @@
 #include "Map/C_ItemSourceTableRow.h"
 #include "Map/C_Items.h"
 #include "Player/Global/C_MapPlayer.h"
-#include "Inventory/C_InventoryComponent.h"
+#include "Map/Inventory/C_InventoryComponent.h"
 #include "STS/C_STSMacros.h"
 #include "UI/C_HealthBar.h"
 

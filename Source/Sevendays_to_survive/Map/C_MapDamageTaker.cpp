@@ -3,7 +3,7 @@
 #include "Map/C_MapDamageTaker.h"
 
 #include "STS/C_STSMacros.h"
-#include "Map/UI/C_MapDamageTakerComponent.h"
+#include "Map/MapComponent/C_HpBarComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 AC_MapDamageTaker::AC_MapDamageTaker()
@@ -14,14 +14,14 @@ AC_MapDamageTaker::AC_MapDamageTaker()
 	SMComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SM Component"));
 	SetRootComponent(SMComponent);
 
-	DamageTakerComponent = CreateDefaultSubobject<UC_MapDamageTakerComponent>(TEXT("HpBar"));
-	DamageTakerComponent->SetupAttachment(SMComponent);
-	DamageTakerComponent->SetIsReplicated(true);
+	HpBarComp = CreateDefaultSubobject<UC_HpBarComponent>(TEXT("HpBar"));
+	HpBarComp->SetupAttachment(SMComponent);
+	HpBarComp->SetIsReplicated(true);
 }
 
 void AC_MapDamageTaker::SetMaxHp_Implementation(int _MaxHp)
 {
-	DamageTakerComponent->SetMaxHp(_MaxHp);
+	HpBarComp->SetMaxHp(_MaxHp);
 }
 
 float AC_MapDamageTaker::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -38,9 +38,9 @@ void AC_MapDamageTaker::BeginPlay()
 
 void AC_MapDamageTaker::ReceiveDamage_Implementation(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	DamageTakerComponent->DecHp(DamageAmount);
+	HpBarComp->DecHp(DamageAmount);
 
-	if (true == DamageTakerComponent->IsZero())
+	if (true == HpBarComp->IsZero())
 	{
 		PreDestroy();
 		Destroy();

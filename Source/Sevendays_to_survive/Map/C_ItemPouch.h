@@ -8,7 +8,7 @@
 
 #include "C_ItemPouch.generated.h"
 
-class UC_PickUpItemComponent;
+class UC_ItemMessageComponent;
 
 UCLASS()
 class SEVENDAYS_TO_SURVIVE_API AC_ItemPouch : public AActor
@@ -39,5 +39,5 @@ private:
 	UStaticMeshComponent* StaticMeshComponent = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	UC_PickUpItemComponent* PickUpItemComponent = nullptr;
+	UC_ItemMessageComponent* ItemMessageComp = nullptr;
 };

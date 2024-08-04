@@ -4,7 +4,7 @@
 #include "UI/Inventory/C_UI_InventoryTipDetail.h"
 #include "Map/C_Items.h"
 #include "STS/C_STSGlobalFunctions.h"
-#include "Inventory/C_InventoryComponent.h"
+#include "Map/Inventory/C_InventoryComponent.h"
 #include "UI/Inventory/C_UI_MaterialInfoBox.h"
 
 void UC_UI_InventoryTipDetail::Refresh(const UC_Item* _Item)

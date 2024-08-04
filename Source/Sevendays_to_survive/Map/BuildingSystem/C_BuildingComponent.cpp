@@ -1,16 +1,16 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
-#include "BuildingSystem/C_BuildingComponent.h"
+#include "Map/BuildingSystem/C_BuildingComponent.h"
 
 #include "Engine/StaticMeshActor.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "GameFramework/Character.h"
-#include "BuildingSystem/C_BuildingPreview.h"
-#include "BuildingSystem/C_BuildingPart.h"
-#include "BuildingSystem/C_BuildingPartInterface.h"
-#include "BuildingSystem/C_BuildingPart.h"
-#include "Inventory/C_InventoryComponent.h"
+#include "Map/BuildingSystem/C_BuildingPreview.h"
+#include "Map/BuildingSystem/C_BuildingPart.h"
+#include "Map/BuildingSystem/C_BuildingPartInterface.h"
+#include "Map/BuildingSystem/C_BuildingPart.h"
+#include "Map/Inventory/C_InventoryComponent.h"
 #include "Map/C_Items.h"
 #include "Landscape.h"
 #include "STS/C_STSGlobalFunctions.h"

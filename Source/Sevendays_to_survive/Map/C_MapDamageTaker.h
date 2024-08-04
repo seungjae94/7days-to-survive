@@ -42,5 +42,5 @@ protected:
 	UStaticMeshComponent* SMComponent = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	UC_MapDamageTakerComponent* HpBarWidgetComponent = nullptr;
+	UC_MapDamageTakerComponent* DamageTakerComponent = nullptr;
 };

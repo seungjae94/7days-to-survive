@@ -14,14 +14,14 @@ AC_MapDamageTaker::AC_MapDamageTaker()
 	SMComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SM Component"));
 	SetRootComponent(SMComponent);
 
-	HpBarWidgetComponent = CreateDefaultSubobject<UC_MapDamageTakerComponent>(TEXT("HpBar"));
-	HpBarWidgetComponent->SetupAttachment(SMComponent);
-	HpBarWidgetComponent->SetIsReplicated(true);
+	DamageTakerComponent = CreateDefaultSubobject<UC_MapDamageTakerComponent>(TEXT("HpBar"));
+	DamageTakerComponent->SetupAttachment(SMComponent);
+	DamageTakerComponent->SetIsReplicated(true);
 }
 
 void AC_MapDamageTaker::SetMaxHp_Implementation(int _MaxHp)
 {
-	HpBarWidgetComponent->SetMaxHp(_MaxHp);
+	DamageTakerComponent->SetMaxHp(_MaxHp);
 }
 
 float AC_MapDamageTaker::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -38,9 +38,9 @@ void AC_MapDamageTaker::BeginPlay()
 
 void AC_MapDamageTaker::ReceiveDamage_Implementation(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	HpBarWidgetComponent->DecHp(DamageAmount);
+	DamageTakerComponent->DecHp(DamageAmount);
 
-	if (true == HpBarWidgetComponent->IsZero())
+	if (true == DamageTakerComponent->IsZero())
 	{
 		PreDestroy();
 		Destroy();

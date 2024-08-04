@@ -40,7 +40,7 @@ protected:
     virtual void BeginPlay() override;
 
 private:
-    UC_HealthBar* HpBarWidget = nullptr;
+    UC_HealthBar* GetHpBarWidget();
 
     UPROPERTY(ReplicatedUsing = OnRep_MaxHp)
     int MaxHp = 0;
@@ -50,6 +50,7 @@ private:
 
     UFUNCTION()
     void OnRep_MaxHp();
+
     UFUNCTION()
     void OnRep_Hp();
 };

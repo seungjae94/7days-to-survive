@@ -32,17 +32,21 @@ void UC_MapDamageTakerComponent::BeginPlay()
 {
     Super::BeginPlay();
 
-    HpBarWidget = Cast<UC_HealthBar>(GetWidget());
+    GetHpBarWidget()->SetCurHealth(Hp);
+    GetHpBarWidget()->SetMaxHealth(MaxHp);
 
     HideWidget();
 }
 
+UC_HealthBar* UC_MapDamageTakerComponent::GetHpBarWidget()
+{
+    return Cast<UC_HealthBar>(GetWidget());
+}
+
 void UC_MapDamageTakerComponent::SetMaxHp_Implementation(int _MaxHp)
 {
-    Hp = _MaxHp;
     MaxHp = _MaxHp;
-    HpBarWidget->SetCurHealth(Hp);
-    HpBarWidget->SetMaxHealth(MaxHp);
+    GetHpBarWidget()->SetMaxHealth(MaxHp);
 }
 
 int UC_MapDamageTakerComponent::GetHp() const
@@ -53,7 +57,7 @@ int UC_MapDamageTakerComponent::GetHp() const
 void UC_MapDamageTakerComponent::SetHp_Implementation(int _Hp)
 {
     Hp = _Hp;
-    HpBarWidget->SetCurHealth(Hp);
+    GetHpBarWidget()->SetCurHealth(Hp);
 }
 
 void UC_MapDamageTakerComponent::DecHp_Implementation(int _Hp)
@@ -65,7 +69,7 @@ void UC_MapDamageTakerComponent::DecHp_Implementation(int _Hp)
         Hp = 0;
     }
 
-    HpBarWidget->SetCurHealth(Hp);
+    GetHpBarWidget()->SetCurHealth(Hp);
 }
 
 bool UC_MapDamageTakerComponent::IsZero() const
@@ -75,10 +79,10 @@ bool UC_MapDamageTakerComponent::IsZero() const
 
 void UC_MapDamageTakerComponent::OnRep_MaxHp()
 {
-    HpBarWidget->SetMaxHealth(MaxHp);
+    GetHpBarWidget()->SetMaxHealth(MaxHp);
 }
 
 void UC_MapDamageTakerComponent::OnRep_Hp()
 {
-    HpBarWidget->SetCurHealth(Hp);
+    GetHpBarWidget()->SetCurHealth(Hp);
 }

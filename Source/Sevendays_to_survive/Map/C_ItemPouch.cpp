@@ -38,7 +38,6 @@ void AC_ItemPouch::SetItemAndCount_Implementation(FName _Id, int _Count)
 void AC_ItemPouch::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame

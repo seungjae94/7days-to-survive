@@ -20,6 +20,7 @@ UC_MapMessageComponent::UC_MapMessageComponent()
 
 void UC_MapMessageComponent::ShowWidget(int _Index)
 {
+    Super::ShowWidget();
     SetMessage();
 }
 

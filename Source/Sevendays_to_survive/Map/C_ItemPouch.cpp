@@ -15,6 +15,7 @@ AC_ItemPouch::AC_ItemPouch()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	bReplicates = true;
+	SetReplicateMovement(true);
 
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh Component"));
 	SetRootComponent(StaticMeshComponent);

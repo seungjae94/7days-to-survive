@@ -6,56 +6,19 @@
 #include "Map/BuildingSystem/C_BuildingPart.h"
 #include "C_Door.generated.h"
 
-enum class EDoorState : uint8
-{
-	Opened,
-	Closed,
-	Opening,
-	Closing,
-};
+class UC_DoorMessageComponent;
 
 UCLASS()
 class SEVENDAYS_TO_SURVIVE_API AC_Door : public AC_BuildingPart
 {
 	GENERATED_BODY()
 
-	friend class UC_MapInteractionComponent;
-
 public:
 	AC_Door();
 
-	UFUNCTION(BlueprintCallable)
-	void MapInteract();
-
-protected:
-	UFUNCTION(BlueprintCallable)
-	void BeginPlay() override;
-
-	UFUNCTION(BlueprintCallable)
-	void Tick(float DeltaSeconds) override;
-
-
 private:
-	UFUNCTION(BlueprintCallable)
-	void Open();
-
-	UFUNCTION(BlueprintCallable)
-	void Close();
-
-	FVector DoorForward;
-	FVector DoorRight;
-	FVector SpawnLocation;
-	FRotator SpawnRotation;
-	FVector BoxExtent;
-
-	EDoorState DoorState = EDoorState::Closed;
-	float Theta = 0.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	float OpenTime = 0.5f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	double RotAxisRadius = 5.0;
+	UPROPERTY()
+	UC_DoorMessageComponent* DoorMessageComp = nullptr;
 };
 
 	

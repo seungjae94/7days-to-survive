@@ -20,6 +20,9 @@ public:
 
     void ShowWidget(int _Index) override;
 
+    bool IsInteractOnServer() const;
+    void SetIsInteractOnServer(bool _bIsInteractOnServer);
+
 protected:
     UFUNCTION()
     virtual void SetMessage() PURE_VIRTUAL(SetMessage, );
@@ -30,4 +33,6 @@ protected:
 private:
     UPROPERTY()
     TSubclassOf<UUserWidget> MessageWidgetClass;
+
+    bool bIsInteractOnServer = false;
 };

@@ -24,6 +24,16 @@ void UC_MapMessageComponent::ShowWidget(int _Index)
     SetMessage();
 }
 
+bool UC_MapMessageComponent::IsInteractOnServer() const
+{
+    return bIsInteractOnServer;
+}
+
+void UC_MapMessageComponent::SetIsInteractOnServer(bool _bIsInteractOnServer)
+{
+    bIsInteractOnServer = _bIsInteractOnServer;
+}
+
 UC_MapMessageWidget* UC_MapMessageComponent::GetMessageWidget()
 {
     InitWidget();

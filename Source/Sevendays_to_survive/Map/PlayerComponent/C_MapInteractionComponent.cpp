@@ -101,7 +101,14 @@ void UC_MapInteractionComponent::OnMapInteractionKeyDown()
     ViewingActor->GetComponents<UC_MapMessageComponent>(Comps);
     for (UC_MapMessageComponent* Comp : Comps)
     {
-        Comp->MapInteract();
+        if (true == Comp->IsInteractOnServer())
+        {
+            Server_MapInteract(Comp);
+        }
+        else
+        {
+            Comp->MapInteract();
+        }
     }
 }
 

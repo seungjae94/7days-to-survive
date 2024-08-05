@@ -19,7 +19,7 @@ public:
     void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
     void ShowWidget(int _Index = 0) override;
-    void HideWidget(int _Index = 0) override;
+    void HideWidget() override;
 
     UFUNCTION(Server, Reliable)
     void SetMaxHp(int _MaxHp, int _InstCount);

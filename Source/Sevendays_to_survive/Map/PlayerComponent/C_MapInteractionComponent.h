@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "C_MapInteractionComponent.generated.h"
 
+class UC_MapWidgetComponent;
 class UC_MapMessageComponent;
 class UCameraComponent;
 class AC_MapPlayer;
@@ -69,5 +70,6 @@ private:
 
 private:
     void View(int _Index, AActor* _Actor);
-    void Unview(int _Index);
+    void ShowWidgets(TArray<UC_MapWidgetComponent*>& _ViewableMapWidgetComps, int _Index);
+    void Unview();
 };

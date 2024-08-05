@@ -22,7 +22,7 @@ void UC_MapWidgetComponent::ShowWidget(int _Index)
     GetWidget()->SetVisibility(ESlateVisibility::HitTestInvisible);
 }
 
-void UC_MapWidgetComponent::HideWidget(int _Index)
+void UC_MapWidgetComponent::HideWidget()
 {
     GetWidget()->SetVisibility(ESlateVisibility::Collapsed);
 }
@@ -31,5 +31,6 @@ void UC_MapWidgetComponent::BeginPlay()
 {
     Super::BeginPlay();
     InitWidget();
+    SetWidgetSpace(EWidgetSpace::Screen);
     HideWidget();
 }

@@ -54,7 +54,7 @@ void UC_MapInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickT
 
     if (nullptr == OutHit.GetActor())
     {
-        Unview(OutHit.Item);
+        Unview();
         return;
     }
 
@@ -129,35 +129,55 @@ void UC_MapInteractionComponent::Server_DestroyActor_Implementation(AActor* _Act
 
 void UC_MapInteractionComponent::View(int _Index, AActor* _Actor)
 {
-    UC_MapWidgetComponent* MapWidgetComp = _Actor->GetComponentByClass<UC_MapWidgetComponent>();
+    TArray<UC_MapWidgetComponent*> MapWidgetComps;
+    _Actor->GetComponents<UC_MapWidgetComponent>(MapWidgetComps);
 
-    if (nullptr == MapWidgetComp || false == MapWidgetComp->IsViewable())
+    TArray<UC_MapWidgetComponent*> ViewableMapWidgetComps;
+    for (UC_MapWidgetComponent* MapWidgetComp : MapWidgetComps)
     {
-        Unview(_Index);
+        if (true == MapWidgetComp->IsViewable())
+        {
+            ViewableMapWidgetComps.Add(MapWidgetComp);
+        }
+    }
+
+    // 액터를 안보게 되는 경우
+    if (true == ViewableMapWidgetComps.IsEmpty())
+    {
+        Unview();
         return;
     }
 
-    // 액터를 안보고 있다가 보는 경우 
-    if (false == IsValid(ViewingActor))
-    {
-        ViewingActor = _Actor;
-        MapWidgetComp->ShowWidget(_Index);
-        return;
-    }
-    
     // 같은 액터를 계속 보는 경우
     if (ViewingActor == _Actor)
     {
+        ShowWidgets(ViewableMapWidgetComps, _Index);
         return;
     }
 
-    // 다른 액터를 보게 되는 경우
-    Unview(_Index);
+    // 액터를 안보고 있다가 보는 경우
+    if (false == IsValid(ViewingActor))
+    {
+        ViewingActor = _Actor;
+        ShowWidgets(ViewableMapWidgetComps, _Index);
+        return;
+    }
+
+    // 기존에 보고 있던 액터와 다른 액터를 보는 경우
+    Unview();
     ViewingActor = _Actor;
-    MapWidgetComp->ShowWidget(_Index);
+    ShowWidgets(ViewableMapWidgetComps, _Index);
 }
 
-void UC_MapInteractionComponent::Unview(int _Index)
+void UC_MapInteractionComponent::ShowWidgets(TArray<UC_MapWidgetComponent*>& _ViewableMapWidgetComps, int _Index)
+{
+    for (UC_MapWidgetComponent* MapWidgetComp : _ViewableMapWidgetComps)
+    {
+        MapWidgetComp->ShowWidget(_Index);
+    }
+}
+
+void UC_MapInteractionComponent::Unview()
 {
     if (true == IsValid(ViewingActor))
     {
@@ -169,7 +189,7 @@ void UC_MapInteractionComponent::Unview(int _Index)
             return;
         }
         
-        MapWidgetComp->HideWidget(_Index);
+        MapWidgetComp->HideWidget();
         ViewingActor = nullptr;
     }
 }

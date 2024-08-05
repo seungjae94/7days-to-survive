@@ -21,7 +21,7 @@ public:
     virtual void ShowWidget(int _Index = 0);
 
     UFUNCTION(BlueprintCallable)
-    virtual void HideWidget(int _Index = 0);
+    virtual void HideWidget();
 
 protected:
     void BeginPlay() override;

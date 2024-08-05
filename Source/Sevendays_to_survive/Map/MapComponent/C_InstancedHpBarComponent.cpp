@@ -53,9 +53,9 @@ void UC_InstancedHpBarComponent::ShowWidget(int _Index)
     SetWorldLocation(Loc);
 }
 
-void UC_InstancedHpBarComponent::HideWidget(int _Index)
+void UC_InstancedHpBarComponent::HideWidget()
 {
-    Super::HideWidget(_Index);
+    Super::HideWidget();
     IsViewing = false;
 }
 

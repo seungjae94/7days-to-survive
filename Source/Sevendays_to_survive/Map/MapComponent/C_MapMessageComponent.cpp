@@ -34,6 +34,11 @@ void UC_MapMessageComponent::SetIsInteractOnServer(bool _bIsInteractOnServer)
     bIsInteractOnServer = _bIsInteractOnServer;
 }
 
+void UC_MapMessageComponent::BeginPlay()
+{
+    Super::BeginPlay();
+}
+
 UC_MapMessageWidget* UC_MapMessageComponent::GetMessageWidget()
 {
     InitWidget();

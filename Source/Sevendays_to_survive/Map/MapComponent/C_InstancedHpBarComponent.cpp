@@ -33,6 +33,12 @@ void UC_InstancedHpBarComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProp
 void UC_InstancedHpBarComponent::ShowWidget(int _Index)
 {
     Super::ShowWidget(_Index);
+
+    if (true == HpArray.IsEmpty())
+    {
+        return;
+    }
+
     IsViewing = true;
     ViewingIndex = _Index;
 

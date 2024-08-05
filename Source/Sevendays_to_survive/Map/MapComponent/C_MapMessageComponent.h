@@ -24,6 +24,8 @@ public:
     void SetIsInteractOnServer(bool _bIsInteractOnServer);
 
 protected:
+    void BeginPlay() override;
+
     UFUNCTION()
     virtual void SetMessage() PURE_VIRTUAL(SetMessage, );
 

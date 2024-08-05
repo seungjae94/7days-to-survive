@@ -54,6 +54,7 @@ void UC_DoorMessageComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	AddLocalOffset(FVector::UpVector * 50.0f);
 	SetIsInteractOnServer(true);
 
 	AActor* Actor = GetOwner();

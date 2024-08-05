@@ -44,7 +44,9 @@ UC_HealthBar* UC_HpBarComponent::GetHpBarWidget()
 void UC_HpBarComponent::SetMaxHp_Implementation(int _MaxHp)
 {
     // 서버
+    Hp = _MaxHp;
     MaxHp = _MaxHp;
+    GetHpBarWidget()->SetCurHealth(MaxHp);
     GetHpBarWidget()->SetMaxHealth(MaxHp);
 }
 

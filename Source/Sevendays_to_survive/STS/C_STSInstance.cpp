@@ -23,8 +23,8 @@ void UC_STSInstance::Init()
 {
 	Super::Init();
 
-	MapDataMemory = NewObject<UC_MapDataObject>(this);
-	MapDataMemory->Init(this);
+	MapDataObject = NewObject<UC_MapDataObject>(this);
+	MapDataObject->Init(this);
 }
 
 UC_MapDataAsset* UC_STSInstance::GetMapDataAsset()
@@ -32,9 +32,9 @@ UC_MapDataAsset* UC_STSInstance::GetMapDataAsset()
 	return MapDataAsset;
 }
 
-UC_MapDataObject* UC_STSInstance::GetMapDataMemory()
+UC_MapDataObject* UC_STSInstance::GetMapDataObject()
 {
-	return MapDataMemory;
+	return MapDataObject;
 }
 
 FMonsterDataRow* UC_STSInstance::GetMonsterData(FName _Name)

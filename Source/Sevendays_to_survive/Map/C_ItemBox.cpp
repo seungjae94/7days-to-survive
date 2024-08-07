@@ -21,7 +21,7 @@ void AC_ItemBox::BeginPlay()
 	Super::BeginPlay();
 
 	MapDataAsset = UC_STSGlobalFunctions::GetMapDataAsset(GetWorld());
-	MapDataMemory = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
+	MapDataObject = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
 	ItemPouchClass = MapDataAsset->GetItemPouchClass();
 
 	// 서버만
@@ -42,7 +42,7 @@ void AC_ItemBox::PreDestroy()
 
 void AC_ItemBox::SpawnItems_Implementation()
 {
-	TMap<FName, int> DropItems = MapDataMemory->GetRandomDropItems();
+	TMap<FName, int> DropItems = MapDataObject->GetRandomDropItems();
 
 	for (TPair<FName, int>& ItemAndCount : DropItems)
 	{

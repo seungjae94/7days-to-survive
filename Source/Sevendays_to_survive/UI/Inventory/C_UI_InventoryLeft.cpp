@@ -9,14 +9,14 @@
 
 void UC_UI_InventoryLeft::Refresh(int _Page)
 {
-    UC_MapDataObject* MapDataMemory = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
-    TArray<FName> ItemIds = MapDataMemory->GetCraftItems(_Page, PageSize);
+    UC_MapDataObject* MapDataObject = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
+    TArray<FName> ItemIds = MapDataObject->GetCraftItems(_Page, PageSize);
     
     for (int i = 0; i < PageSize; ++i)
     {
         if (true == ItemIds.IsValidIndex(i))
         {
-            const UC_Item* Item = MapDataMemory->FindItem(ItemIds[i]);
+            const UC_Item* Item = MapDataObject->FindItem(ItemIds[i]);
 
             CraftItemButtons[i]->SetVisibility(ESlateVisibility::Visible);
             CraftItemButtons[i]->Refresh(Item);
@@ -35,14 +35,14 @@ void UC_UI_InventoryLeft::RefreshCurPage()
 
 void UC_UI_InventoryLeft::IncPage()
 {
-    UC_MapDataObject* MapDataMemory = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
-    CurPage = UKismetMathLibrary::Clamp(CurPage + 1, 0, MapDataMemory->GetCraftListMaxPage(PageSize));
+    UC_MapDataObject* MapDataObject = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
+    CurPage = UKismetMathLibrary::Clamp(CurPage + 1, 0, MapDataObject->GetCraftListMaxPage(PageSize));
     Refresh(CurPage);
 }
 
 void UC_UI_InventoryLeft::DecPage()
 {
-    UC_MapDataObject* MapDataMemory = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
-    CurPage = UKismetMathLibrary::Clamp(CurPage - 1, 0, MapDataMemory->GetCraftListMaxPage(PageSize));
+    UC_MapDataObject* MapDataObject = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
+    CurPage = UKismetMathLibrary::Clamp(CurPage - 1, 0, MapDataObject->GetCraftListMaxPage(PageSize));
     Refresh(CurPage);
 }

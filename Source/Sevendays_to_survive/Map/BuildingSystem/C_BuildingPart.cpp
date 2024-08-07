@@ -17,5 +17,5 @@ void AC_BuildingPart::BeginPlay()
 	Super::BeginPlay();
 
 	MapDataAsset = UC_STSGlobalFunctions::GetMapDataAsset(GetWorld());
-	MapDataMemory = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
+	MapDataObject = UC_STSGlobalFunctions::GetMapDataObject(GetWorld());
 }

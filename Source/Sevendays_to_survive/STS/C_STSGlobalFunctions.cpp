@@ -75,7 +75,7 @@ UC_MapDataObject* UC_STSGlobalFunctions::GetMapDataObject(const UObject* WorldCo
     {
         return nullptr;
     }
-    return GetInst(WorldContextObject)->GetMapDataMemory();
+    return GetInst(WorldContextObject)->GetMapDataObject();
 }
 
 void UC_STSGlobalFunctions::Day_And_Night_Cycle(ALight* _DirectionLight)

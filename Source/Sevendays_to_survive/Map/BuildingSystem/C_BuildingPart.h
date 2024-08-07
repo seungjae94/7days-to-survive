@@ -23,5 +23,5 @@ protected:
 
 private:
 	UC_MapDataAsset* MapDataAsset = nullptr;
-	UC_MapDataObject* MapDataMemory = nullptr;
+	UC_MapDataObject* MapDataObject = nullptr;
 };

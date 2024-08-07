@@ -36,7 +36,7 @@ private:
     void SpawnItems_Implementation();
 
     UC_MapDataAsset* MapDataAsset = nullptr;
-    UC_MapDataObject* MapDataMemory = nullptr;
+    UC_MapDataObject* MapDataObject = nullptr;
 
     TSubclassOf<AC_ItemPouch> ItemPouchClass = nullptr;
 };

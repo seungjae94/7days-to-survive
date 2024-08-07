@@ -46,9 +46,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
 	TMap<EItemType, UDataTable*> ItemTableForTypes;
 
-	UPROPERTY(EditDefaultsOnly, Category = "DataTable", meta = (AllowPrivateAccess = "true"))
-	UDataTable* BuildingPartTable;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AC_ItemPouch> ItemPouchClass = nullptr;
 

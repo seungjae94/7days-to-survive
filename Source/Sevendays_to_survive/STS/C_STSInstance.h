@@ -33,7 +33,7 @@ public:
 	UC_MapDataAsset* GetMapDataAsset();
 
 	UFUNCTION(BlueprintPure)
-	UC_MapDataObject* GetMapDataMemory();
+	UC_MapDataObject* GetMapDataObject();
 
 	FMonsterDataRow* GetMonsterData(FName _Name);
 
@@ -152,7 +152,7 @@ private:
 	UC_MapDataAsset* MapDataAsset = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "DataAsset", meta = (AllowPrivateAccess = "true"))
-	UC_MapDataObject* MapDataMemory = nullptr;
+	UC_MapDataObject* MapDataObject = nullptr;
 
 	FRandomStream RandomStream;
 

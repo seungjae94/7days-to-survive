@@ -7,6 +7,7 @@
 #include "Engine/Texture2D.h"
 #include "Map/C_MapEnums.h"
 #include "Player/Global/C_PlayerEnum.h"
+#include "STS/C_STSMacros.h"
 #include "C_Items.generated.h"
 
 class UC_MapDataObject;
@@ -25,26 +26,39 @@ public:
     UFUNCTION(BlueprintPure)
     bool IsCraftable() const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    FName Id;
+    UFUNCTION(BlueprintPure)
+    FName GetId() const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    FString Name;
+    UFUNCTION(BlueprintPure)
+    FString GetName() const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    EItemType Type = EItemType::NONE;
+    UFUNCTION(BlueprintPure)
+    EItemType GetType() const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    UTexture2D* Icon = nullptr;
+    UFUNCTION(BlueprintPure)
+    UTexture2D* GetIcon() const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    TMap<FName, int> CraftMaterials;
+    UFUNCTION(BlueprintPure)
+    const TMap<FName, int>& GetCraftMaterials() const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    int DropWeight = 0;
+    UFUNCTION(BlueprintPure)
+    int GetDropWeight() const;
 
 protected:
-    void Init(FName _Id, FC_ItemRow* _ItemRow);
+    FName Id;
+    const FC_ItemRow* ItemRow = nullptr;
+
+    template<typename ItemRowType>
+    const ItemRowType* RowCast() const
+    {
+        if (nullptr == ItemRow)
+        {
+            STS_FATAL("[%s] ItemRow is unset.", TEXT(__FUNCTION__));
+            return nullptr;
+        }
+
+        return reinterpret_cast<const ItemRowType*>(ItemRow);
+    }
 };
 
 UCLASS(BlueprintType)
@@ -55,11 +69,8 @@ class SEVENDAYS_TO_SURVIVE_API UC_ItemMaterial : public UC_Item
     friend UC_MapDataObject;
 
 public:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    int MaxCount = 0;
-
-private:
-    void Init(FName _Id, FC_MaterialRow* _ItemRow);
+    UFUNCTION(BlueprintPure)
+    int GetMaxCount() const;
 };
 
 UCLASS(BlueprintType)
@@ -70,23 +81,20 @@ class SEVENDAYS_TO_SURVIVE_API UC_Weapon : public UC_Item
     friend UC_MapDataObject;
 
 public:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    int Damage = 0;
+    UFUNCTION(BlueprintPure)
+    int GetDamage() const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool IsStatic = true;
+    UFUNCTION(BlueprintPure)
+    bool GetIsStatic() const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    EStaticItemSlot StaticItemSlot = EStaticItemSlot::SlotMax;
+    UFUNCTION(BlueprintPure)
+    EStaticItemSlot GetStaticItemSlot() const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    UStaticMesh* StaticMesh = nullptr;
+    UFUNCTION(BlueprintPure)
+    UStaticMesh* GetStaticMesh() const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    ESkerItemSlot SkeletalItemSlot = ESkerItemSlot::SlotMax;
-
-private:
-    void Init(FName _Id, FC_WeaponRow* _ItemRow);
+    UFUNCTION(BlueprintPure)
+    ESkerItemSlot GetSkeletalItemSlot() const;
 };
 
 UCLASS(BlueprintType)
@@ -99,14 +107,11 @@ class SEVENDAYS_TO_SURVIVE_API UC_Consumable : public UC_Item
 public:
     void Use(UWorld* _World) const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    int Hp = 0;
+    UFUNCTION(BlueprintPure)
+    int GetHp() const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    int Stamina = 0;
-
-private:
-    void Init(FName _Id, FC_ConsumableRow* _ItemRow);
+    UFUNCTION(BlueprintPure)
+    int GetStamina() const;
 };
 
 UCLASS(BlueprintType)
@@ -117,18 +122,15 @@ class SEVENDAYS_TO_SURVIVE_API UC_ItemBuildingPart : public UC_Item
     friend UC_MapDataObject;
 
 public:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    int MaxHp = 0;
+    UFUNCTION(BlueprintPure)
+    int GetMaxHp() const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    UStaticMesh* Mesh = nullptr;
+    UFUNCTION(BlueprintPure)
+    UStaticMesh* GetMesh() const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    TSubclassOf<AActor> ActorClass;
+    UFUNCTION(BlueprintPure)
+    TSubclassOf<AActor> GetActorClass() const;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    TEnumAsByte<ETraceTypeQuery> TraceType = ETraceTypeQuery::TraceTypeQuery1;
-
-private:
-    void Init(FName _Id, FC_ItemBuildingPartRow* _ItemRow);
+    UFUNCTION(BlueprintPure)
+    TEnumAsByte<ETraceTypeQuery> GetTraceType() const;
 };

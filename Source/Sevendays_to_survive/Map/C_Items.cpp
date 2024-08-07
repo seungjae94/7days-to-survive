@@ -9,7 +9,37 @@
 
 bool UC_Item::IsCraftable() const
 {
-    return !CraftMaterials.IsEmpty();
+    return GetCraftMaterials().IsEmpty();
+}
+
+FName UC_Item::GetId() const
+{
+    return Id;
+}
+
+FString UC_Item::GetName() const
+{
+    return ItemRow->Name;
+}
+
+EItemType UC_Item::GetType() const
+{
+    return ItemRow->Type;
+}
+
+UTexture2D* UC_Item::GetIcon() const
+{
+    return ItemRow->Icon;
+}
+
+const TMap<FName, int>& UC_Item::GetCraftMaterials() const
+{
+    return ItemRow->CraftMaterials;
+}
+
+int UC_Item::GetDropWeight() const
+{
+    return ItemRow->DropWeight;
 }
 
 void UC_Consumable::Use(UWorld* _World) const
@@ -20,60 +50,66 @@ void UC_Consumable::Use(UWorld* _World) const
         return;
     }
 
-    Player->AddHp(Hp);
-    Player->Addstamina(Stamina);
+    Player->AddHp(GetHp());
+    Player->Addstamina(GetStamina());
 }
 
-// Init functions
-
-void UC_Item::Init(FName _Id, FC_ItemRow* _ItemRow)
+int UC_Consumable::GetHp() const
 {
-    if (nullptr == _ItemRow)
-    {
-        UE_LOG(LogTemp, Fatal, TEXT("Row should be FC_ItemRow type."));
-        return;
-    }
-
-    Id = _Id;
-    Name = _ItemRow->Name;
-    Type = _ItemRow->Type;
-    Icon = _ItemRow->Icon;
-    DropWeight = _ItemRow->DropWeight;
-    CraftMaterials = _ItemRow->CraftMaterials;
+    return 0;
 }
 
-void UC_ItemMaterial::Init(FName _Id, FC_MaterialRow* _ItemRow)
+int UC_Consumable::GetStamina() const
 {
-    Super::Init(_Id, _ItemRow);
-
-    MaxCount = _ItemRow->MaxCount;
+    return 0;
 }
 
-void UC_Weapon::Init(FName _Id, FC_WeaponRow* _ItemRow)
+int UC_ItemMaterial::GetMaxCount() const
 {
-    Super::Init(_Id, _ItemRow);
-
-    Damage = _ItemRow->Damage;
-    IsStatic = _ItemRow->IsStatic;
-    StaticItemSlot = _ItemRow->StaticItemSlot;
-    StaticMesh = _ItemRow->StaticMesh;
-    SkeletalItemSlot = _ItemRow->SkeletalItemSlot;
+    return RowCast<FC_MaterialRow>()->MaxCount;
 }
 
-void UC_Consumable::Init(FName _Id, FC_ConsumableRow* _ItemRow)
+int UC_Weapon::GetDamage() const
 {
-    Super::Init(_Id, _ItemRow);
-
-    Hp = _ItemRow->Hp;
-    Stamina = _ItemRow->Stamina;
+    return RowCast<FC_WeaponRow>()->Damage;
 }
 
-void UC_ItemBuildingPart::Init(FName _Id, FC_ItemBuildingPartRow* _ItemRow)
+bool UC_Weapon::GetIsStatic() const
 {
-    Super::Init(_Id, _ItemRow);
+    return RowCast<FC_WeaponRow>()->IsStatic;
+}
 
-    MaxHp = _ItemRow->MaxHp;
-    Mesh = _ItemRow->Mesh;
-    ActorClass = _ItemRow->ActorClass;
-    TraceType = _ItemRow->TraceType;
+EStaticItemSlot UC_Weapon::GetStaticItemSlot() const
+{
+    return RowCast<FC_WeaponRow>()->StaticItemSlot;
+}
+
+UStaticMesh* UC_Weapon::GetStaticMesh() const
+{
+    return RowCast<FC_WeaponRow>()->StaticMesh;
+}
+
+ESkerItemSlot UC_Weapon::GetSkeletalItemSlot() const
+{
+    return RowCast<FC_WeaponRow>()->SkeletalItemSlot;
+}
+
+int UC_ItemBuildingPart::GetMaxHp() const
+{
+    return RowCast<FC_ItemBuildingPartRow>()->MaxHp;
+}
+
+UStaticMesh* UC_ItemBuildingPart::GetMesh() const
+{
+    return RowCast<FC_ItemBuildingPartRow>()->Mesh;
+}
+
+TSubclassOf<AActor> UC_ItemBuildingPart::GetActorClass() const
+{
+    return RowCast<FC_ItemBuildingPartRow>()->ActorClass;
+}
+
+TEnumAsByte<ETraceTypeQuery> UC_ItemBuildingPart::GetTraceType() const
+{
+    return RowCast<FC_ItemBuildingPartRow>()->TraceType;
 }

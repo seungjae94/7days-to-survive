@@ -170,7 +170,7 @@ void UC_BuildingComponent::HoldBuildingPart(FName _BuildingPartId)
 	else
 	{
 		HoldingBuildingPart = Cast<UC_ItemBuildingPart>(UC_STSGlobalFunctions::GetMapDataObject(GetWorld())->FindItem(_BuildingPartId));
-		SetPreviewMesh(HoldingBuildingPart->Mesh);
+		SetPreviewMesh(HoldingBuildingPart->GetMesh());
 	}
 }
 
@@ -181,7 +181,7 @@ void UC_BuildingComponent::PlaceBuildPart()
 		return;
 	}
 
-	SpawnBuildPart(HoldingBuildingPart->ActorClass, BuildTransform, HoldingBuildingPart->MaxHp);
+	SpawnBuildPart(HoldingBuildingPart->GetActorClass(), BuildTransform, HoldingBuildingPart->GetMaxHp());
 
 	UC_InventoryComponent* InvenComp = UC_STSGlobalFunctions::GetInventoryComponent(GetWorld());
 	int CurQuickSlot = InvenComp->GetCurQuickSlot();

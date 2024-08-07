@@ -49,7 +49,7 @@ void UC_ItemMessageComponent::SetMessage()
         return;
     }
 
-    FString Message = Item->Name + TEXT(" × ") + FString::FromInt(Count);
+    FString Message = Item->GetName() + TEXT(" × ") + FString::FromInt(Count);
     if (nullptr == GetMessageWidget())
     {
         return;

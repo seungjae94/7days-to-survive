@@ -63,9 +63,9 @@ void UC_MapDataObject::Init(UC_STSInstance* _Inst)
 
             Items.Emplace(RowName, NewItem);
 
-            if (false == NewItem->CraftMaterials.IsEmpty())
+            if (true == NewItem->IsCraftable())
             {
-                CraftItems.Add(NewItem->Id);
+                CraftItems.Add(NewItem->GetId());
             }
 
             if (EItemType::BuildingPart == ItemType)
@@ -78,7 +78,7 @@ void UC_MapDataObject::Init(UC_STSInstance* _Inst)
             {
                 PrevAcc = Type_To_AccDropWeights[ItemType].Last();
             }
-            Type_To_AccDropWeights[ItemType].Add(PrevAcc + NewItem->DropWeight);
+            Type_To_AccDropWeights[ItemType].Add(PrevAcc + NewItem->GetDropWeight());
             Type_To_AccDropIds[ItemType].Add(RowName);
         }
 

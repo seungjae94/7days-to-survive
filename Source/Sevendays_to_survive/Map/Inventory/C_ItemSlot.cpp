@@ -80,7 +80,7 @@ void UItemSlot::UpdateUI()
     {
         if (nullptr != Item)
         {
-            GetInventoryWidget()->SetIcon(Index, Item->Icon);
+            GetInventoryWidget()->SetIcon(Index, Item->GetIcon());
         }
         else
         {
@@ -93,7 +93,7 @@ void UItemSlot::UpdateUI()
     {
         if (nullptr != Item)
         {
-            GetQuickSlotWidget()->SetQuickSlotIcon(Index, Item->Icon);
+            GetQuickSlotWidget()->SetQuickSlotIcon(Index, Item->GetIcon());
         }
         else
         {

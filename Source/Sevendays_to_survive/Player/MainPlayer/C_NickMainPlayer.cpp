@@ -92,10 +92,10 @@ void AC_NickMainPlayer::OnQuickSlotSelected(int _Index)
 	switch (Item->GetType())
 	{
 	case EItemType::Weapon:
-		OnWeaponSelected(Cast<const UC_Weapon>(Item));
+		OnWeaponSelected(Cast<const UC_WeaponItem>(Item));
 		break;
 	case EItemType::BuildingPart:
-		OnBuildingPartSelected(Cast<const UC_ItemBuildingPart>(Item));
+		OnBuildingPartSelected(Cast<const UC_BuildingPartItem>(Item));
 		break;
 	default:
 		break;
@@ -103,7 +103,7 @@ void AC_NickMainPlayer::OnQuickSlotSelected(int _Index)
 
 }
 
-void AC_NickMainPlayer::OnWeaponSelected(const UC_Weapon* _Weapon)
+void AC_NickMainPlayer::OnWeaponSelected(const UC_WeaponItem* _Weapon)
 {
 	if (true == _Weapon->GetIsStatic())
 	{
@@ -115,7 +115,7 @@ void AC_NickMainPlayer::OnWeaponSelected(const UC_Weapon* _Weapon)
 	}
 }
 
-void AC_NickMainPlayer::OnBuildingPartSelected(const UC_ItemBuildingPart* _BuildingPart)
+void AC_NickMainPlayer::OnBuildingPartSelected(const UC_BuildingPartItem* _BuildingPart)
 {
 	BuildingComp->HoldBuildingPart(_BuildingPart->GetId());
 }

@@ -9,7 +9,7 @@
 #include "C_BuildingComponent.generated.h"
 
 class AC_BuildingPreview;
-class UC_ItemBuildingPart;
+class UC_BuildingPartItem;
 
 UCLASS( Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class SEVENDAYS_TO_SURVIVE_API UC_BuildingComponent : public UActorComponent
@@ -46,7 +46,7 @@ private:
 
 private:
 	UPROPERTY(Category = "Variable", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	const UC_ItemBuildingPart* HoldingBuildingPart = nullptr;
+	const UC_BuildingPartItem* HoldingBuildingPart = nullptr;
 
 	UPROPERTY(Category = "Variable", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	FTransform BuildTransform;

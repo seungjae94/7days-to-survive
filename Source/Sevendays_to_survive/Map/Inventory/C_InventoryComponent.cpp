@@ -75,7 +75,7 @@ void UC_InventoryComponent::UseInvenItem(int _Index)
     }
 
     const UC_Item* Item = Inventory[_Index]->GetItem();
-    const UC_Consumable* Consumable = Cast<const UC_Consumable>(Item);
+    const UC_ConsumableItem* Consumable = Cast<const UC_ConsumableItem>(Item);
     Consumable->Use(GetWorld());
     Inventory[_Index]->DecCount(1);
 
@@ -196,7 +196,7 @@ void UC_InventoryComponent::SwapQuickToInven(int _FromIndex, int _ToIndex)
 
     if (false == FromSlot->IsEmpty())
     {
-        FName FromItemId = FromSlot->GetItem()->Id;
+        FName FromItemId = FromSlot->GetItem()->GetId();
         ItemIdToIndex.Emplace(FromItemId, _ToIndex);
     }
 

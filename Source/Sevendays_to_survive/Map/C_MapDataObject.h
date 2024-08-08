@@ -35,10 +35,10 @@ public:
 private:
     void Init(UC_STSInstance* _Inst);
 
-    template<typename RowStructType, typename ItemObjectType>
+    template<typename ItemRowType, typename ItemObjectType>
     UC_Item* CreateItemObject(UDataTable* _ItemTable, FName _RowName)
     {
-        RowStructType* ItemData = _ItemTable->FindRow<RowStructType>(_RowName, TEXT(""));
+        ItemRowType* ItemData = _ItemTable->FindRow<ItemRowType>(_RowName, TEXT(""));
         if (nullptr == ItemData)
         {
             STS_FATAL("[%s] There is no row %s in the table %s", _RowName, *_ItemTable->GetName());
@@ -52,7 +52,8 @@ private:
             return nullptr;
         }
 
-        ItemObject->Init(_RowName, ItemData);
+        ItemObject->Id = _RowName;
+        ItemObject->ItemRow = ItemData;
         return Cast<UC_Item>(ItemObject);
     }
 

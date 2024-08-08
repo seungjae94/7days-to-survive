@@ -38,22 +38,22 @@ void UC_MapDataObject::Init(UC_STSInstance* _Inst)
             {
             case EItemType::Material:
             {
-                NewItem = CreateItemObject<FC_MaterialRow, UC_ItemMaterial>(ItemTable, RowName);
+                NewItem = CreateItemObject<FC_MaterialRow, UC_MaterialItem>(ItemTable, RowName);
                 break;
             }
             case EItemType::Weapon:
             {
-                NewItem = CreateItemObject<FC_WeaponRow, UC_Weapon>(ItemTable, RowName);
+                NewItem = CreateItemObject<FC_WeaponRow, UC_WeaponItem>(ItemTable, RowName);
                 break;
             }
             case EItemType::Consumable:
             {
-                NewItem = CreateItemObject<FC_ConsumableRow, UC_Consumable>(ItemTable, RowName);
+                NewItem = CreateItemObject<FC_ConsumableRow, UC_ConsumableItem>(ItemTable, RowName);
                 break;
             }
             case EItemType::BuildingPart:
             {
-                NewItem = CreateItemObject<FC_ItemBuildingPartRow, UC_ItemBuildingPart>(ItemTable, RowName);
+                NewItem = CreateItemObject<FC_ItemBuildingPartRow, UC_BuildingPartItem>(ItemTable, RowName);
                 break;
             }
             default:

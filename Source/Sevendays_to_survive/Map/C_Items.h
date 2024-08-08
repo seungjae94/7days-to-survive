@@ -62,7 +62,7 @@ protected:
 };
 
 UCLASS(BlueprintType)
-class SEVENDAYS_TO_SURVIVE_API UC_ItemMaterial : public UC_Item
+class SEVENDAYS_TO_SURVIVE_API UC_MaterialItem : public UC_Item
 {
     GENERATED_BODY()
 
@@ -74,7 +74,7 @@ public:
 };
 
 UCLASS(BlueprintType)
-class SEVENDAYS_TO_SURVIVE_API UC_Weapon : public UC_Item
+class SEVENDAYS_TO_SURVIVE_API UC_WeaponItem : public UC_Item
 {
     GENERATED_BODY()
 
@@ -98,7 +98,7 @@ public:
 };
 
 UCLASS(BlueprintType)
-class SEVENDAYS_TO_SURVIVE_API UC_Consumable : public UC_Item
+class SEVENDAYS_TO_SURVIVE_API UC_ConsumableItem : public UC_Item
 {
     GENERATED_BODY()
 
@@ -115,7 +115,7 @@ public:
 };
 
 UCLASS(BlueprintType)
-class SEVENDAYS_TO_SURVIVE_API UC_ItemBuildingPart : public UC_Item
+class SEVENDAYS_TO_SURVIVE_API UC_BuildingPartItem : public UC_Item
 {
     GENERATED_BODY()
 

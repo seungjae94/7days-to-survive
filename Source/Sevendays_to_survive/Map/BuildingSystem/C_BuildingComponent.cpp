@@ -56,7 +56,7 @@ void UC_BuildingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 		GetWorld(),
 		TraceStart,
 		TraceEnd,
-		HoldingBuildingPart->TraceType,
+		HoldingBuildingPart->GetTraceType(),
 		false,
 		ActorsToIgnore,
 		EDrawDebugTrace::None,
@@ -169,7 +169,7 @@ void UC_BuildingComponent::HoldBuildingPart(FName _BuildingPartId)
 	}
 	else
 	{
-		HoldingBuildingPart = Cast<UC_ItemBuildingPart>(UC_STSGlobalFunctions::GetMapDataObject(GetWorld())->FindItem(_BuildingPartId));
+		HoldingBuildingPart = Cast<UC_BuildingPartItem>(UC_STSGlobalFunctions::GetMapDataObject(GetWorld())->FindItem(_BuildingPartId));
 		SetPreviewMesh(HoldingBuildingPart->GetMesh());
 	}
 }

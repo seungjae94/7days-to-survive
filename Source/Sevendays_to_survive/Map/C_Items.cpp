@@ -9,7 +9,7 @@
 
 bool UC_Item::IsCraftable() const
 {
-    return GetCraftMaterials().IsEmpty();
+    return !GetCraftMaterials().IsEmpty();
 }
 
 FName UC_Item::GetId() const
@@ -42,7 +42,7 @@ int UC_Item::GetDropWeight() const
     return ItemRow->DropWeight;
 }
 
-void UC_Consumable::Use(UWorld* _World) const
+void UC_ConsumableItem::Use(UWorld* _World) const
 {
     AC_MapPlayer* Player = UC_STSGlobalFunctions::GetMapPlayerCharacter(_World);
     if (false == Player->IsValidLowLevel())
@@ -54,62 +54,62 @@ void UC_Consumable::Use(UWorld* _World) const
     Player->Addstamina(GetStamina());
 }
 
-int UC_Consumable::GetHp() const
+int UC_ConsumableItem::GetHp() const
 {
-    return 0;
+    return RowCast<FC_ConsumableRow>()->Hp;
 }
 
-int UC_Consumable::GetStamina() const
+int UC_ConsumableItem::GetStamina() const
 {
-    return 0;
+    return RowCast<FC_ConsumableRow>()->Stamina;
 }
 
-int UC_ItemMaterial::GetMaxCount() const
+int UC_MaterialItem::GetMaxCount() const
 {
     return RowCast<FC_MaterialRow>()->MaxCount;
 }
 
-int UC_Weapon::GetDamage() const
+int UC_WeaponItem::GetDamage() const
 {
     return RowCast<FC_WeaponRow>()->Damage;
 }
 
-bool UC_Weapon::GetIsStatic() const
+bool UC_WeaponItem::GetIsStatic() const
 {
     return RowCast<FC_WeaponRow>()->IsStatic;
 }
 
-EStaticItemSlot UC_Weapon::GetStaticItemSlot() const
+EStaticItemSlot UC_WeaponItem::GetStaticItemSlot() const
 {
     return RowCast<FC_WeaponRow>()->StaticItemSlot;
 }
 
-UStaticMesh* UC_Weapon::GetStaticMesh() const
+UStaticMesh* UC_WeaponItem::GetStaticMesh() const
 {
     return RowCast<FC_WeaponRow>()->StaticMesh;
 }
 
-ESkerItemSlot UC_Weapon::GetSkeletalItemSlot() const
+ESkerItemSlot UC_WeaponItem::GetSkeletalItemSlot() const
 {
     return RowCast<FC_WeaponRow>()->SkeletalItemSlot;
 }
 
-int UC_ItemBuildingPart::GetMaxHp() const
+int UC_BuildingPartItem::GetMaxHp() const
 {
     return RowCast<FC_ItemBuildingPartRow>()->MaxHp;
 }
 
-UStaticMesh* UC_ItemBuildingPart::GetMesh() const
+UStaticMesh* UC_BuildingPartItem::GetMesh() const
 {
     return RowCast<FC_ItemBuildingPartRow>()->Mesh;
 }
 
-TSubclassOf<AActor> UC_ItemBuildingPart::GetActorClass() const
+TSubclassOf<AActor> UC_BuildingPartItem::GetActorClass() const
 {
     return RowCast<FC_ItemBuildingPartRow>()->ActorClass;
 }
 
-TEnumAsByte<ETraceTypeQuery> UC_ItemBuildingPart::GetTraceType() const
+TEnumAsByte<ETraceTypeQuery> UC_BuildingPartItem::GetTraceType() const
 {
     return RowCast<FC_ItemBuildingPartRow>()->TraceType;
 }

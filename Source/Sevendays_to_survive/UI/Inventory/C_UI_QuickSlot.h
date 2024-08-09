@@ -37,9 +37,6 @@ public:
 	UFUNCTION()
 	void UPdateQuickSlot();
 
-	UFUNCTION(BlueprintCallable)
-	void QuickSlotAdd(UWidget* _Widget, FC_ItemRow& _Data);
-
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetQuickSlotIcon(int _Index, UTexture2D* _Icon);
 

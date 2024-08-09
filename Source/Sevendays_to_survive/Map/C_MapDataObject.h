@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "Map/C_MapEnums.h"
+#include "Map/C_ItemRows.h"
 #include "STS/C_STSMacros.h"
 #include "C_MapDataObject.generated.h"
 
@@ -35,29 +36,24 @@ public:
 private:
     void Init(UC_STSInstance* _Inst);
 
-    template<typename ItemRowType, typename ItemObjectType>
-    UC_Item* CreateItemObject(UDataTable* _ItemTable, FName _RowName)
-    {
-        ItemRowType* ItemData = _ItemTable->FindRow<ItemRowType>(_RowName, TEXT(""));
-        if (nullptr == ItemData)
-        {
-            STS_FATAL("[%s] There is no row %s in the table %s", _RowName, *_ItemTable->GetName());
-            return nullptr;
-        }
-
-        ItemObjectType* ItemObject = NewObject<ItemObjectType>(this);
-        if (nullptr == ItemObject)
-        {
-            STS_FATAL("[%s] Failed to create item with row name %s.", _RowName);
-            return nullptr;
-        }
-
-        ItemObject->Id = _RowName;
-        ItemObject->ItemRow = ItemData;
-        return Cast<UC_Item>(ItemObject);
-    }
-
     int BisectRight(TArray<int>& _Arr, int _Value);
+
+    template<typename ItemObjectType, typename ItemRowType>
+    ItemObjectType* CreateItemObject(UDataTable* _BaseDataTable, UDataTable* _DetailDataTable, FName _RowName, UC_Item** _ItemPtr)
+    {
+        FC_ItemBaseRow* BaseData = _BaseDataTable->FindRow<FC_ItemBaseRow>(_RowName, TEXT(""));
+        ItemRowType* DetailData = _BaseDataTable->FindRow<ItemRowType>(_RowName, TEXT(""));
+        ItemObjectType* ItemObject = NewObject<ItemObjectType>(this);
+        if (nullptr == BaseData || nullptr == DetailData || false == ItemObject->IsValidLowLevel())
+        {
+            STS_FATAL("[%s] Failed to create item object.", TEXT(__FUNCTION__));
+            return nullptr;
+        }
+
+        ItemObject->BaseData = *BaseData;
+        *_ItemPtr = ItemObject;
+        return ItemObject;
+    }
 
 private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))

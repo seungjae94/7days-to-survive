@@ -15,14 +15,14 @@ void UC_UI_CraftItemButton::Refresh(const UC_Item* _Item)
     Item = _Item;
 
     // 아이콘 수정
-    Image->SetBrushFromTexture(Item->GetIcon());
+    Image->SetBrushFromTexture(Item->BaseData.Icon);
 
     // 텍스트 수정
     TextBlock->SetText(FText::FromString(Item->GetName()));
 
     // 버튼 활성화/비활성화
     UC_InventoryComponent* InventoryComp = UC_STSGlobalFunctions::GetInventoryComponent(GetWorld());
-    if (true == InventoryComp->IsCraftable(Item->GetId()))
+    if (true == InventoryComp->IsCraftable(Item->Id))
     {
         TextBlock->SetColorAndOpacity(FLinearColor::Blue);
     }

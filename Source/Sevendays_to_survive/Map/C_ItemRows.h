@@ -4,22 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "Map/C_Items.h"
 #include "Engine/Texture2D.h"
+#include "Map/C_MapEnums.h"
 #include "Player/Global/C_PlayerEnum.h"
 #include "C_ItemRows.generated.h"
 
 USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_ItemRow : public FTableRowBase
+struct SEVENDAYS_TO_SURVIVE_API FC_ItemBaseRow : public FTableRowBase
 {
 	GENERATED_BODY()
-	
-public:
-	FC_ItemRow() { }
-	~FC_ItemRow() { }
 
 public:
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString Name;
 
@@ -37,13 +32,9 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_MaterialRow : public FC_ItemRow
+struct SEVENDAYS_TO_SURVIVE_API FC_MaterialRow : public FTableRowBase
 {
 	GENERATED_BODY()
-
-public:
-	FC_MaterialRow() { }
-	~FC_MaterialRow() { }
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -51,16 +42,11 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_WeaponRow : public FC_ItemRow
+struct SEVENDAYS_TO_SURVIVE_API FC_WeaponRow : public FTableRowBase
 {
 	GENERATED_BODY()
 
 public:
-	FC_WeaponRow() {}
-	~FC_WeaponRow() {}
-
-public:
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int Damage = 0;
 
@@ -78,13 +64,9 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_ConsumableRow : public FC_ItemRow
+struct SEVENDAYS_TO_SURVIVE_API FC_ConsumableRow : public FTableRowBase
 {
 	GENERATED_BODY()
-
-public:
-	FC_ConsumableRow() {}
-	~FC_ConsumableRow() {}
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -95,13 +77,9 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_ItemBuildingPartRow : public FC_ItemRow
+struct SEVENDAYS_TO_SURVIVE_API FC_ItemBuildingPartRow : public FTableRowBase
 {
 	GENERATED_BODY()
-
-public:
-	FC_ItemBuildingPartRow() {}
-	~FC_ItemBuildingPartRow() {}
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

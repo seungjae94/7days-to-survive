@@ -89,7 +89,7 @@ void AC_NickMainPlayer::OnQuickSlotSelected(int _Index)
 		return;
 	}
 
-	switch (Item->GetType())
+	switch (Item->BaseData.Type)
 	{
 	case EItemType::Weapon:
 		OnWeaponSelected(Cast<const UC_WeaponItem>(Item));
@@ -105,18 +105,18 @@ void AC_NickMainPlayer::OnQuickSlotSelected(int _Index)
 
 void AC_NickMainPlayer::OnWeaponSelected(const UC_WeaponItem* _Weapon)
 {
-	if (true == _Weapon->GetIsStatic())
+	if (true == _Weapon->WeaponData.IsStatic)
 	{
-		ChangeSlotMeshServer(_Weapon->GetStaticItemSlot(), _Weapon->GetStaticMesh());
+		ChangeSlotMeshServer(_Weapon->WeaponData.StaticItemSlot, _Weapon->WeaponData.StaticMesh);
 	}
 	else
 	{
-		ChangeSlotSkeletalServer(_Weapon->GetSkeletalItemSlot());
+		ChangeSlotSkeletalServer(_Weapon->WeaponData.SkeletalItemSlot);
 	}
 }
 
 void AC_NickMainPlayer::OnBuildingPartSelected(const UC_BuildingPartItem* _BuildingPart)
 {
-	BuildingComp->HoldBuildingPart(_BuildingPart->GetId());
+	BuildingComp->HoldBuildingPart(_BuildingPart->Id);
 }
 

@@ -56,7 +56,7 @@ void UC_BuildingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 		GetWorld(),
 		TraceStart,
 		TraceEnd,
-		HoldingBuildingPart->GetTraceType(),
+		HoldingBuildingPart->BuildingPartData.TraceType,
 		false,
 		ActorsToIgnore,
 		EDrawDebugTrace::None,
@@ -170,7 +170,7 @@ void UC_BuildingComponent::HoldBuildingPart(FName _BuildingPartId)
 	else
 	{
 		HoldingBuildingPart = Cast<UC_BuildingPartItem>(UC_STSGlobalFunctions::GetMapDataObject(GetWorld())->FindItem(_BuildingPartId));
-		SetPreviewMesh(HoldingBuildingPart->GetMesh());
+		SetPreviewMesh(HoldingBuildingPart->BuildingPartData.Mesh);
 	}
 }
 
@@ -181,7 +181,7 @@ void UC_BuildingComponent::PlaceBuildPart()
 		return;
 	}
 
-	SpawnBuildPart(HoldingBuildingPart->GetActorClass(), BuildTransform, HoldingBuildingPart->GetMaxHp());
+	SpawnBuildPart(HoldingBuildingPart->BuildingPartData.ActorClass, BuildTransform, HoldingBuildingPart->BuildingPartData.MaxHp);
 
 	UC_InventoryComponent* InvenComp = UC_STSGlobalFunctions::GetInventoryComponent(GetWorld());
 	int CurQuickSlot = InvenComp->GetCurQuickSlot();

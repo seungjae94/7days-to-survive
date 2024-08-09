@@ -72,7 +72,7 @@ void USTSBlueprintFunctionLibrary::ItemDataTableSetting(UDataTable* DataTable, F
 
 	for (size_t i = 0; i < FoundFileName.Num(); i++)
 	{
-		FC_ItemRow ItemDataTable = FC_ItemRow(); // [ Name: X, Type : X, ...  ]
+		FC_ItemBaseRow ItemDataTable = FC_ItemBaseRow(); // [ Name: X, Type : X, ...  ]
 
 
 		FString FileName = FoundFileName[i];

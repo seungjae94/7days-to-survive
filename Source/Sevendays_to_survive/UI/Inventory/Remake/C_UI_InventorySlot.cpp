@@ -8,18 +8,6 @@
 #include "Map/Inventory/C_InventoryComponent.h"
 
 
-void UC_UI_InventorySlot::SetIcon(const FC_ItemRow& _ItemData)
-{
-	ItemIcons.Add(_ItemData.Name, _ItemData.Icon);
-	DragSlot->CopySlotName(ItemName);
-	DragSlot->CopySlotItemImage(ItemImage);
-	//Itemicon = _ItemData.Icon;
-	//여기서 될듯 
-
-
-}
-
-
 UTexture2D* UC_UI_InventorySlot::GetIcons(FString _Key)
 {
 

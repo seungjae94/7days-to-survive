@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
-#include "Map/C_ItemRows.h"
 #include "Components/Image.h"
 #include "UI/Inventory/Remake/C_UI_Inventory.h"
 #include "UI/Inventory/C_UI_SlotDrag.h"
@@ -28,9 +27,6 @@ class SEVENDAYS_TO_SURVIVE_API UC_UI_InventorySlot : public UUserWidget
 	GENERATED_BODY()
 
 public:
-
-	UFUNCTION(BlueprintCallable)
-	void SetIcon(const FC_ItemRow& _ItemData);
 
 	//UFUNCTION(BlueprintCallable)
 	//void GetItemInfo(const UWidget* _PrevSlot);

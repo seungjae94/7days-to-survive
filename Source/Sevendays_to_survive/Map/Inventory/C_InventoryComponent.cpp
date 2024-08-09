@@ -69,7 +69,7 @@ void UC_InventoryComponent::DecQuickSlotItemCount(int _Index)
 
 void UC_InventoryComponent::UseInvenItem(int _Index)
 {
-    if (true == Inventory[_Index]->IsEmpty() || Inventory[_Index]->GetItem()->GetType() != EItemType::Consumable)
+    if (true == Inventory[_Index]->IsEmpty() || Inventory[_Index]->GetItem()->BaseData.Type != EItemType::Consumable)
     {
         return;
     }
@@ -81,7 +81,7 @@ void UC_InventoryComponent::UseInvenItem(int _Index)
 
     if (true == Inventory[_Index]->IsEmpty())
     {
-        ItemIdToIndex.Remove(Item->GetId());
+        ItemIdToIndex.Remove(Item->Id);
     }
 }
 
@@ -90,7 +90,7 @@ void UC_InventoryComponent::AddItem(const UC_Item* _Item, int _Count)
     // 인벤토리에 이미 가지고 있는 아이템을 추가하는 경우
     if (true == HasItemByObject(_Item))
     {
-        int Index = ItemIdToIndex[_Item->GetId()];
+        int Index = ItemIdToIndex[_Item->Id];
         Inventory[Index]->IncCount(_Count);
         RefreshInventoryCore();
         return;
@@ -110,13 +110,13 @@ void UC_InventoryComponent::AddItem(const UC_Item* _Item, int _Count)
     // 인벤토리가 꽉 차 있는 경우
     if (true == IsFull())
     {
-        SpawnItem(GetItemSpawnTransform(), _Item->GetId(), _Count);
+        SpawnItem(GetItemSpawnTransform(), _Item->Id, _Count);
         return;
     }
 
     // 가지고 있지 않은 아이템을 추가하는 경우
     int Index = FindEmptySlot();
-    ItemIdToIndex.Emplace(_Item->GetId(), Index);
+    ItemIdToIndex.Emplace(_Item->Id, Index);
     Inventory[Index]->SetSlot(_Item, _Count);
     RefreshInventoryCore();
 
@@ -148,13 +148,13 @@ void UC_InventoryComponent::Swap(int _FromIndex, int _ToIndex)
 
     if (false == FromSlot->IsEmpty())
     {
-        FName FromItemId = FromSlot->GetItem()->GetId();
+        FName FromItemId = FromSlot->GetItem()->Id;
         ItemIdToIndex[FromItemId] = _ToIndex;
     }
 
     if (false == ToSlot->IsEmpty())
     {
-        FName ToItemId = ToSlot->GetItem()->GetId();
+        FName ToItemId = ToSlot->GetItem()->Id;
         ItemIdToIndex[ToItemId] = _FromIndex;
     }
 
@@ -169,19 +169,19 @@ void UC_InventoryComponent::SwapInvenToQuick(int _FromIndex, int _ToIndex)
     if (false == FromSlot->IsEmpty())
     {
         // 재료 아이템이나 소비 아이템은 퀵슬롯에 올릴 수 없다.
-        if (EItemType::Material == FromSlot->GetItem()->GetType()
-            || EItemType::Consumable == FromSlot->GetItem()->GetType())
+        if (EItemType::Material == FromSlot->GetItem()->BaseData.Type
+            || EItemType::Consumable == FromSlot->GetItem()->BaseData.Type)
         {
             return;
         }
 
-        FName FromItemId = FromSlot->GetItem()->GetId();
+        FName FromItemId = FromSlot->GetItem()->Id;
         ItemIdToIndex.Remove(FromItemId);
     }
     
     if (false == ToSlot->IsEmpty())
     {
-        FName ToItemId = ToSlot->GetItem()->GetId();
+        FName ToItemId = ToSlot->GetItem()->Id;
         ItemIdToIndex.Emplace(ToItemId, _FromIndex);
     }
     
@@ -196,20 +196,20 @@ void UC_InventoryComponent::SwapQuickToInven(int _FromIndex, int _ToIndex)
 
     if (false == FromSlot->IsEmpty())
     {
-        FName FromItemId = FromSlot->GetItem()->GetId();
+        FName FromItemId = FromSlot->GetItem()->Id;
         ItemIdToIndex.Emplace(FromItemId, _ToIndex);
     }
 
     if (false == ToSlot->IsEmpty())
     {
         // 재료 아이템이나 소비 아이템은 퀵슬롯에 올릴 수 없다.
-        if (EItemType::Material == ToSlot->GetItem()->GetType()
-            || EItemType::Consumable == ToSlot->GetItem()->GetType())
+        if (EItemType::Material == ToSlot->GetItem()->BaseData.Type
+            || EItemType::Consumable == ToSlot->GetItem()->BaseData.Type)
         {
             return;
         }
 
-        FName ToItemId = ToSlot->GetItem()->GetId();
+        FName ToItemId = ToSlot->GetItem()->Id;
         ItemIdToIndex.Remove(ToItemId);
     }
 
@@ -238,7 +238,7 @@ void UC_InventoryComponent::Empty(int _Index)
     const UC_Item* DropItem = Slot->GetItem();
     int DropCount = Slot->GetCount();
 
-    ItemIdToIndex.Remove(DropItem->GetId());
+    ItemIdToIndex.Remove(DropItem->Id);
     Slot->Empty();
     RefreshInventoryCore();
 
@@ -258,7 +258,7 @@ void UC_InventoryComponent::DropItemAll(int _Index)
     int DropCount = Slot->GetCount();
 
     Empty(_Index);
-    SpawnItem(GetItemSpawnTransform(), DropItem->GetId(), DropCount);
+    SpawnItem(GetItemSpawnTransform(), DropItem->Id, DropCount);
 }
 
 bool UC_InventoryComponent::HasItemByObject(const UC_Item* _Item) const
@@ -268,7 +268,7 @@ bool UC_InventoryComponent::HasItemByObject(const UC_Item* _Item) const
         return false;
     }
 
-    return ItemIdToIndex.Contains(_Item->GetId());
+    return ItemIdToIndex.Contains(_Item->Id);
 }
 
 bool UC_InventoryComponent::HasItem(FName _Id) const
@@ -322,7 +322,7 @@ void UC_InventoryComponent::Craft(FName _Id)
 
     const UC_Item* CraftItem = UC_STSGlobalFunctions::FindItem(GetWorld(), _Id);
 
-    TMap<FName, int> CraftMaterials = CraftItem->GetCraftMaterials();
+    TMap<FName, int> CraftMaterials = CraftItem->BaseData.CraftMaterials;
 
     for (TPair<FName, int>& Pair : CraftMaterials)
     {
@@ -350,7 +350,7 @@ bool UC_InventoryComponent::IsCraftable(FName _Id) const
         return false;
     }
 
-    TMap<FName, int> CraftMaterials = CraftItem->GetCraftMaterials();
+    TMap<FName, int> CraftMaterials = CraftItem->BaseData.CraftMaterials;
 
     for (TPair<FName, int>& Pair : CraftMaterials)
     {

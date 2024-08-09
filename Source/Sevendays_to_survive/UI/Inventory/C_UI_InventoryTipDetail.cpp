@@ -17,12 +17,12 @@ void UC_UI_InventoryTipDetail::Refresh(const UC_Item* _Item)
         return;
     }
 
-    GetItemImage()->SetBrushFromTexture(Item->GetIcon());
+    GetItemImage()->SetBrushFromTexture(Item->BaseData.Icon);
 
     UC_InventoryComponent* InventoryComp = UC_STSGlobalFunctions::GetInventoryComponent(GetWorld());
 
     TArray<TPair<FName, int>> CraftMaterials;
-    for (TPair<FName, int> Pair : Item->GetCraftMaterials())
+    for (TPair<FName, int> Pair : Item->BaseData.CraftMaterials)
     {
         CraftMaterials.Add(Pair);
     }
@@ -42,7 +42,7 @@ void UC_UI_InventoryTipDetail::Refresh(const UC_Item* _Item)
         MaterialInfoBoxes[i]->SetVisibility(ESlateVisibility::Hidden);
     }
 
-    if (true == InventoryComp->IsCraftable(Item->GetId()))
+    if (true == InventoryComp->IsCraftable(Item->Id))
     {
         GetCraftButton()->SetIsEnabled(true);
     }

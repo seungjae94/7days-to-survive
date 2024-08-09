@@ -23,7 +23,7 @@ void UC_MapDataObject::Init(UC_STSInstance* _Inst)
 
     FString ContextString;
 
-    for (TPair<EItemType, UDataTable*> Pair : Asset->ItemTableForTypes)
+    for (TPair<EItemType, UDataTable*> Pair : Asset->ItemDetailDataTables)
     {
         EItemType ItemType = Pair.Key;
         UDataTable* ItemTable = Pair.Value;
@@ -38,22 +38,26 @@ void UC_MapDataObject::Init(UC_STSInstance* _Inst)
             {
             case EItemType::Material:
             {
-                NewItem = CreateItemObject<FC_MaterialRow, UC_MaterialItem>(ItemTable, RowName);
+                UC_MaterialItem* CreatedItem = CreateItemObject<UC_MaterialItem, FC_MaterialRow>(Asset->ItemBaseDataTable, ItemTable, RowName, &NewItem);
+                CreatedItem->MaterialData = *ItemTable->FindRow<FC_MaterialRow>(RowName, TEXT(""));
                 break;
             }
             case EItemType::Weapon:
             {
-                NewItem = CreateItemObject<FC_WeaponRow, UC_WeaponItem>(ItemTable, RowName);
+                UC_WeaponItem* CreatedItem = CreateItemObject<UC_WeaponItem, FC_WeaponRow>(Asset->ItemBaseDataTable, ItemTable, RowName, &NewItem);
+                CreatedItem->WeaponData = *ItemTable->FindRow<FC_WeaponRow>(RowName, TEXT(""));
                 break;
             }
             case EItemType::Consumable:
             {
-                NewItem = CreateItemObject<FC_ConsumableRow, UC_ConsumableItem>(ItemTable, RowName);
+                UC_ConsumableItem* CreatedItem = CreateItemObject<UC_ConsumableItem, FC_ConsumableRow>(Asset->ItemBaseDataTable, ItemTable, RowName, &NewItem);
+                CreatedItem->ConsumableData = *ItemTable->FindRow<FC_ConsumableRow>(RowName, TEXT(""));
                 break;
             }
             case EItemType::BuildingPart:
             {
-                NewItem = CreateItemObject<FC_ItemBuildingPartRow, UC_BuildingPartItem>(ItemTable, RowName);
+                UC_BuildingPartItem* CreatedItem = CreateItemObject<UC_BuildingPartItem, FC_ItemBuildingPartRow>(Asset->ItemBaseDataTable, ItemTable, RowName, &NewItem);
+                CreatedItem->BuildingPartData = *ItemTable->FindRow<FC_ItemBuildingPartRow>(RowName, TEXT(""));
                 break;
             }
             default:
@@ -65,7 +69,7 @@ void UC_MapDataObject::Init(UC_STSInstance* _Inst)
 
             if (true == NewItem->IsCraftable())
             {
-                CraftItems.Add(NewItem->GetId());
+                CraftItems.Add(NewItem->Id);
             }
 
             if (EItemType::BuildingPart == ItemType)
@@ -78,7 +82,7 @@ void UC_MapDataObject::Init(UC_STSInstance* _Inst)
             {
                 PrevAcc = Type_To_AccDropWeights[ItemType].Last();
             }
-            Type_To_AccDropWeights[ItemType].Add(PrevAcc + NewItem->GetDropWeight());
+            Type_To_AccDropWeights[ItemType].Add(PrevAcc + NewItem->BaseData.DropWeight);
             Type_To_AccDropIds[ItemType].Add(RowName);
         }
 

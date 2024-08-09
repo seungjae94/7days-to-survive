@@ -72,7 +72,7 @@ void USTSBlueprintFunctionLibrary::ItemDataTableSetting(UDataTable* DataTable, F
 
 	for (size_t i = 0; i < FoundFileName.Num(); i++)
 	{
-		FC_ItemBaseRow ItemDataTable = FC_ItemBaseRow(); // [ Name: X, Type : X, ...  ]
+		FC_ItemBaseData ItemDataTable = FC_ItemBaseData(); // [ Name: X, Type : X, ...  ]
 
 
 		FString FileName = FoundFileName[i];
@@ -156,7 +156,7 @@ void USTSBlueprintFunctionLibrary::ConsumableDataRowSetting(UDataTable* DataTabl
 	for (size_t i = 0; i < ItemNameList.Num(); i++)
 	{
 
-		FC_ConsumableRow ConsumableDataTable = FC_ConsumableRow();
+		FC_ConsumableItemData ConsumableDataTable = FC_ConsumableItemData();
 
 		FString ConsumableDataName = ItemNameList[i];
 		DataTable->AddRow(*ConsumableDataName, ConsumableDataTable);
@@ -176,7 +176,7 @@ void USTSBlueprintFunctionLibrary::MaterialDataRowSetting(UDataTable* DataTable,
 
 	for (size_t i = 0; i < ItemNameList.Num(); i++)
 	{
-		FC_MaterialRow MaterialDataTable = FC_MaterialRow();
+		FC_MaterialItemData MaterialDataTable = FC_MaterialItemData();
 
 		FString MaterialRowDataName = ItemNameList[i];
 
@@ -195,7 +195,7 @@ void USTSBlueprintFunctionLibrary::WeaponDataRowSetting(UDataTable* DataTable, E
 	for (size_t i = 0; i < ItemNameList.Num(); i++)
 	{
 
-		FC_WeaponRow WeaponDataTable = FC_WeaponRow();
+		FC_WeaponItemData WeaponDataTable = FC_WeaponItemData();
 
 		FString WeaponRowDataName = ItemNameList[i];
 		DataTable->AddRow(*WeaponRowDataName, WeaponDataTable);

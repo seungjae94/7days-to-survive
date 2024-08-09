@@ -10,7 +10,7 @@
 #include "C_ItemRows.generated.h"
 
 USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_ItemBaseRow : public FTableRowBase
+struct SEVENDAYS_TO_SURVIVE_API FC_ItemBaseData : public FTableRowBase
 {
 	GENERATED_BODY()
 
@@ -32,7 +32,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_MaterialRow : public FTableRowBase
+struct SEVENDAYS_TO_SURVIVE_API FC_MaterialItemData : public FTableRowBase
 {
 	GENERATED_BODY()
 
@@ -42,7 +42,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_WeaponRow : public FTableRowBase
+struct SEVENDAYS_TO_SURVIVE_API FC_WeaponItemData : public FTableRowBase
 {
 	GENERATED_BODY()
 
@@ -64,7 +64,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_ConsumableRow : public FTableRowBase
+struct SEVENDAYS_TO_SURVIVE_API FC_ConsumableItemData : public FTableRowBase
 {
 	GENERATED_BODY()
 
@@ -77,7 +77,7 @@ public:
 };
 
 USTRUCT(BlueprintType)
-struct SEVENDAYS_TO_SURVIVE_API FC_ItemBuildingPartRow : public FTableRowBase
+struct SEVENDAYS_TO_SURVIVE_API FC_BuildingPartItemData : public FTableRowBase
 {
 	GENERATED_BODY()
 

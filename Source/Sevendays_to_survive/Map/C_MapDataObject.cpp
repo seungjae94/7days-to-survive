@@ -38,26 +38,26 @@ void UC_MapDataObject::Init(UC_STSInstance* _Inst)
             {
             case EItemType::Material:
             {
-                UC_MaterialItem* CreatedItem = CreateItemObject<UC_MaterialItem, FC_MaterialRow>(Asset->ItemBaseDataTable, ItemTable, RowName, &NewItem);
-                CreatedItem->MaterialData = *ItemTable->FindRow<FC_MaterialRow>(RowName, TEXT(""));
+                UC_MaterialItem* CreatedItem = CreateItemObject<UC_MaterialItem, FC_MaterialItemData>(Asset->ItemBaseDataTable, ItemTable, RowName, &NewItem);
+                CreatedItem->MaterialData = *ItemTable->FindRow<FC_MaterialItemData>(RowName, TEXT(""));
                 break;
             }
             case EItemType::Weapon:
             {
-                UC_WeaponItem* CreatedItem = CreateItemObject<UC_WeaponItem, FC_WeaponRow>(Asset->ItemBaseDataTable, ItemTable, RowName, &NewItem);
-                CreatedItem->WeaponData = *ItemTable->FindRow<FC_WeaponRow>(RowName, TEXT(""));
+                UC_WeaponItem* CreatedItem = CreateItemObject<UC_WeaponItem, FC_WeaponItemData>(Asset->ItemBaseDataTable, ItemTable, RowName, &NewItem);
+                CreatedItem->WeaponData = *ItemTable->FindRow<FC_WeaponItemData>(RowName, TEXT(""));
                 break;
             }
             case EItemType::Consumable:
             {
-                UC_ConsumableItem* CreatedItem = CreateItemObject<UC_ConsumableItem, FC_ConsumableRow>(Asset->ItemBaseDataTable, ItemTable, RowName, &NewItem);
-                CreatedItem->ConsumableData = *ItemTable->FindRow<FC_ConsumableRow>(RowName, TEXT(""));
+                UC_ConsumableItem* CreatedItem = CreateItemObject<UC_ConsumableItem, FC_ConsumableItemData>(Asset->ItemBaseDataTable, ItemTable, RowName, &NewItem);
+                CreatedItem->ConsumableData = *ItemTable->FindRow<FC_ConsumableItemData>(RowName, TEXT(""));
                 break;
             }
             case EItemType::BuildingPart:
             {
-                UC_BuildingPartItem* CreatedItem = CreateItemObject<UC_BuildingPartItem, FC_ItemBuildingPartRow>(Asset->ItemBaseDataTable, ItemTable, RowName, &NewItem);
-                CreatedItem->BuildingPartData = *ItemTable->FindRow<FC_ItemBuildingPartRow>(RowName, TEXT(""));
+                UC_BuildingPartItem* CreatedItem = CreateItemObject<UC_BuildingPartItem, FC_BuildingPartItemData>(Asset->ItemBaseDataTable, ItemTable, RowName, &NewItem);
+                CreatedItem->BuildingPartData = *ItemTable->FindRow<FC_BuildingPartItemData>(RowName, TEXT(""));
                 break;
             }
             default:

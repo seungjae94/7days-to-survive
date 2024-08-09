@@ -26,7 +26,7 @@ public:
     FName Id;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    FC_ItemBaseRow BaseData;
+    FC_ItemBaseData BaseData;
 };
 
 UCLASS(BlueprintType)
@@ -36,7 +36,7 @@ class SEVENDAYS_TO_SURVIVE_API UC_MaterialItem : public UC_Item
 
 public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    FC_MaterialRow MaterialData;
+    FC_MaterialItemData MaterialData;
 };
 
 UCLASS(BlueprintType)
@@ -46,7 +46,7 @@ class SEVENDAYS_TO_SURVIVE_API UC_WeaponItem : public UC_Item
 
 public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    FC_WeaponRow WeaponData;
+    FC_WeaponItemData WeaponData;
 };
 
 UCLASS(BlueprintType)
@@ -58,7 +58,7 @@ public:
     void Use(UWorld* _World) const;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    FC_ConsumableRow ConsumableData;
+    FC_ConsumableItemData ConsumableData;
 };
 
 UCLASS(BlueprintType)
@@ -68,5 +68,5 @@ class SEVENDAYS_TO_SURVIVE_API UC_BuildingPartItem : public UC_Item
 
 public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-    FC_ItemBuildingPartRow BuildingPartData;
+    FC_BuildingPartItemData BuildingPartData;
 };

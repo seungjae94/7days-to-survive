@@ -21,7 +21,7 @@ void UC_UI_MaterialInfoBox::Refresh(const UC_Item* _Item, int _CurCount, int _Ne
     GetImage()->SetBrushFromTexture(Item->BaseData.Icon);
 
     // 텍스트 수정
-    GetNameText()->SetText(FText::FromString(Item->GetName()));
+    GetNameText()->SetText(FText::FromString(Item->BaseData.Name));
 
     FString CountText = FString::FromInt(CurCount);
     CountText += " / ";

@@ -12,6 +12,11 @@ bool UC_Item::IsCraftable() const
     return !BaseData.CraftMaterials.IsEmpty();
 }
 
+FString UC_Item::GetName() const
+{
+    return BaseData.Name;
+}
+
 void UC_ConsumableItem::Use(UWorld* _World) const
 {
     AC_MapPlayer* Player = UC_STSGlobalFunctions::GetMapPlayerCharacter(_World);

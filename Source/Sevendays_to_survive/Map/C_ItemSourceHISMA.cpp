@@ -90,7 +90,6 @@ void AC_ItemSourceHISMA::NetMulticast_GainDropItems_Implementation(AC_MapPlayer*
     {
         const UC_Item* Item = UC_STSGlobalFunctions::FindItem(GetWorld(), DropItem.Key);
         InventoryComponent->AddItem(Item, DropItem.Value);
-        STS_LOG("got %d %ss.", DropItem.Value, *Item->GetName());
     }
 }
 

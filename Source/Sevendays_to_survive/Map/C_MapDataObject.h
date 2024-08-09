@@ -42,7 +42,7 @@ private:
     ItemObjectType* CreateItemObject(UDataTable* _BaseDataTable, UDataTable* _DetailDataTable, FName _RowName, UC_Item** _ItemPtr)
     {
         FC_ItemBaseData* BaseData = _BaseDataTable->FindRow<FC_ItemBaseData>(_RowName, TEXT(""));
-        ItemRowType* DetailData = _BaseDataTable->FindRow<ItemRowType>(_RowName, TEXT(""));
+        ItemRowType* DetailData = _DetailDataTable->FindRow<ItemRowType>(_RowName, TEXT(""));
         ItemObjectType* ItemObject = NewObject<ItemObjectType>(this);
         if (nullptr == BaseData || nullptr == DetailData || false == ItemObject->IsValidLowLevel())
         {
@@ -50,6 +50,7 @@ private:
             return nullptr;
         }
 
+        ItemObject->Id = _RowName;
         ItemObject->BaseData = *BaseData;
         *_ItemPtr = ItemObject;
         return ItemObject;

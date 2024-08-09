@@ -22,6 +22,9 @@ public:
     UFUNCTION(BlueprintPure)
     bool IsCraftable() const;
 
+    UFUNCTION(BlueprintPure)
+    FString GetName() const;
+
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     FName Id;
 

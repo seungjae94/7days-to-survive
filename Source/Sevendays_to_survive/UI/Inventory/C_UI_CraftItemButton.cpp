@@ -18,7 +18,7 @@ void UC_UI_CraftItemButton::Refresh(const UC_Item* _Item)
     Image->SetBrushFromTexture(Item->BaseData.Icon);
 
     // 텍스트 수정
-    TextBlock->SetText(FText::FromString(Item->GetName()));
+    TextBlock->SetText(FText::FromString(Item->BaseData.Name));
 
     // 버튼 활성화/비활성화
     UC_InventoryComponent* InventoryComp = UC_STSGlobalFunctions::GetInventoryComponent(GetWorld());

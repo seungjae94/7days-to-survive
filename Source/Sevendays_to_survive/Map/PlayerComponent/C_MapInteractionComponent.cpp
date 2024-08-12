@@ -181,15 +181,14 @@ void UC_MapInteractionComponent::Unview()
 {
     if (true == IsValid(ViewingActor))
     {
-        UC_MapWidgetComponent* MapWidgetComp = ViewingActor->GetComponentByClass<UC_MapWidgetComponent>();
-        
-        if (nullptr == MapWidgetComp || false == MapWidgetComp->IsViewable())
+        TArray<UC_MapWidgetComponent*> MapWidgetComps;
+        ViewingActor->GetComponents<UC_MapWidgetComponent>(MapWidgetComps);
+
+        for (UC_MapWidgetComponent* MapWidgetComp : MapWidgetComps)
         {
-            STS_FATAL("[%s] ViewingActor has no MapWidgetComp.", __FUNCTION__);
-            return;
+            MapWidgetComp->HideWidget();
         }
-        
-        MapWidgetComp->HideWidget();
+
         ViewingActor = nullptr;
     }
 }

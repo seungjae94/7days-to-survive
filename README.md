@@ -15,8 +15,8 @@
 - 이동: <kbd>&larr;</kbd><kbd>&uarr;</kbd><kbd>&rarr;</kbd><kbd>&darr;</kbd>
 - 달리기: <kbd>Shift</kbd>
 - 점프: <kbd>Space</kbd>
-- 공격: <img src=https://github.com/user-attachments/assets/60dc22ad-5360-4ed6-840f-674ce3b823ba width=2% height=2%>
-- 조준: <img src=https://github.com/user-attachments/assets/78b492db-9add-41b4-a95a-00e4ca5580ab width=2% height=2%>
+- 공격: <img src=https://github.com/user-attachments/assets/60dc22ad-5360-4ed6-840f-674ce3b823ba width=3% height=3%>
+- 조준: <img src=https://github.com/user-attachments/assets/78b492db-9add-41b4-a95a-00e4ca5580ab width=3% height=3%>
 - 상호작용: <kbd>E</kbd>
 - 인벤토리: <kbd>I</kbd>
 - 미니맵: <kbd>M</kbd>

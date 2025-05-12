@@ -22,4 +22,4 @@
 - 미니맵: <kbd>M</kbd>
 
 ### 플레이 영상
-https://youtu.be/1cjIU0K5Fh4
+https://youtu.be/lmF5ueic8QA

@@ -12,7 +12,7 @@
 - IDE: Visual Studio 2022
 
 ### 조작법
-- 이동: <kbd>&larr;</kbd><kbd>&uarr;</kbd><kbd>&rarr;</kbd><kbd>&darr;</kbd>
+- 이동: <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>
 - 달리기: <kbd>Shift</kbd>
 - 점프: <kbd>Space</kbd>
 - 공격: <img src=https://github.com/user-attachments/assets/60dc22ad-5360-4ed6-840f-674ce3b823ba width=3% height=3%>
